@@ -1468,7 +1468,6 @@ function renderComp() {
       <div class="pop" style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:18px;padding:18px;color:#fff;font-weight:800;font-size:16px;line-height:1.5;margin-bottom:14px;">${q.q}</div>
       <textarea id="comp-ta" rows="4" placeholder="Write your answer in full sentences…" ${fb?'disabled':''} style="width:100%;padding:12px;font-size:14px;border-radius:14px;border:3px solid #e9d5ff;outline:none;resize:vertical;background:#faf5ff;color:#4c1d95;line-height:1.6;"></textarea>
 
-```
   ${!fb?`<button onclick="checkComp()" style="width:100%;margin-top:9px;padding:13px;font-size:17px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">Submit ✓</button>`:''}
   ${fb?`<div class="pop" style="background:#f5f3ff;border-radius:14px;padding:14px;margin-top:10px;border:2px solid #c4b5fd;">
     <div style="font-weight:800;color:#7c3aed;margin-bottom:5px;">📖 A great answer includes:</div>
@@ -1476,15 +1475,14 @@ function renderComp() {
     <button onclick="nextComp()" style="display:block;margin:10px auto 0;padding:8px 24px;font-size:15px;font-weight:800;border-radius:10px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">Next →</button>
   </div>`:''}
 </div>`;
-```
 
 }
 }
 
-function startCompQs() { TASK.compPhase=‘questions’; TASK.compQIdx=0; renderComp(); }
+function startCompQs() { TASK.compPhase='questions'; TASK.compQIdx=0; renderComp(); }
 
 function checkComp() {
-const el = document.getElementById(‘comp-ta’);
+const el = document.getElementById('comp-ta');
 if (!el || !el.value.trim()) return;
 const pts = el.value.trim().length > 20 ? 1 : 0;
 TASK.compScore += pts;
@@ -1504,7 +1502,7 @@ TASK.qs = { length: TASK.passages.reduce((t,p)=>t+p.questions.length,0) };
 finishLevel();
 return;
 }
-TASK.compPhase = ‘read’;
+TASK.compPhase = 'read';
 TASK.compQIdx = 0;
 }
 renderComp();
@@ -1522,8 +1520,8 @@ function renderWriting(q) {
 writeAssessing = false;
 writeHasContent = false;
 const isWord = q.char.length > 1;
-const fontSize = isWord ? (q.char.length > 4 ? ‘44px’ : ‘60px’) : ‘100px’;
-document.getElementById(‘screen-task’).innerHTML = `<div style="max-width:420px;margin:0 auto;text-align:center;">
+const fontSize = isWord ? (q.char.length > 4 ? '44px' : '60px') : '100px';
+document.getElementById('screen-task').innerHTML = `<div style="max-width:420px;margin:0 auto;text-align:center;">
 ${starBar(TASK.score, TASK.qIdx)}
 <div style="color:#ec4899;font-weight:700;font-size:13px;margin-bottom:6px;">Writing ${TASK.qIdx+1} of ${TASK.qs.length}</div>
 <div style="background:linear-gradient(135deg,#f472b6,#ec4899);border-radius:20px;padding:14px 20px;margin-bottom:12px;color:#fff;box-shadow:0 6px 20px rgba(244,114,182,0.4);">
@@ -1547,15 +1545,15 @@ style="border-radius:16px;border:3px solid #f9a8d4;background:#fff;touch-action:
 }
 
 function setupWriteCanvas(q) {
-const canvas = document.getElementById(‘write-canvas’);
+const canvas = document.getElementById('write-canvas');
 if (!canvas) return;
-writeCtx = canvas.getContext(‘2d’);
+writeCtx = canvas.getContext('2d');
 writeDrawing = false;
 writeHasContent = false;
 
 // Draw guide grid
 writeCtx.clearRect(0,0,canvas.width,canvas.height);
-writeCtx.strokeStyle = ‘rgba(249,168,212,0.3)’;
+writeCtx.strokeStyle = 'rgba(249,168,212,0.3)';
 writeCtx.lineWidth = 1;
 writeCtx.setLineDash([4,4]);
 // horizontal baseline and midline
@@ -1569,17 +1567,17 @@ writeCtx.setLineDash([]);
 // Draw faint guide character
 const isWord = q.char.length > 1;
 const fontSize = isWord ? (q.char.length > 4 ? 52 : 72) : 130;
-writeCtx.fillStyle = ‘rgba(244,114,182,0.08)’;
-writeCtx.font = ’bold ’ + fontSize + ‘px Nunito, Arial’;
-writeCtx.textAlign = ‘center’;
-writeCtx.textBaseline = ‘middle’;
+writeCtx.fillStyle = 'rgba(244,114,182,0.08)';
+writeCtx.font = 'bold ' + fontSize + 'px Nunito, Arial';
+writeCtx.textAlign = 'center';
+writeCtx.textBaseline = 'middle';
 writeCtx.fillText(q.char, canvas.width/2, canvas.height*0.52);
 
 // Drawing style
-writeCtx.strokeStyle = ‘#1e1b4b’;
+writeCtx.strokeStyle = '#1e1b4b';
 writeCtx.lineWidth = 4;
-writeCtx.lineCap = ‘round’;
-writeCtx.lineJoin = ‘round’;
+writeCtx.lineCap = 'round';
+writeCtx.lineJoin = 'round';
 
 function getPos(e) {
 const rect = canvas.getBoundingClientRect();
@@ -1588,7 +1586,7 @@ const scaleY = canvas.height / rect.height;
 return { x:(e.clientX-rect.left)*scaleX, y:(e.clientY-rect.top)*scaleY };
 }
 
-canvas.addEventListener(‘pointerdown’, e => {
+canvas.addEventListener('pointerdown', e => {
 if (writeAssessing) return;
 writeDrawing = true; writeHasContent = true;
 const p = getPos(e);
@@ -1600,7 +1598,7 @@ writeCtx.moveTo(p.x, p.y);
 e.preventDefault();
 }, {passive:false});
 
-canvas.addEventListener(‘pointermove’, e => {
+canvas.addEventListener('pointermove', e => {
 if (!writeDrawing || writeAssessing) return;
 const p = getPos(e);
 const pressure = (e.pressure && e.pressure > 0) ? e.pressure : 0.5;
@@ -1612,29 +1610,29 @@ writeCtx.moveTo(p.x, p.y);
 e.preventDefault();
 }, {passive:false});
 
-canvas.addEventListener(‘pointerup’, e => { writeDrawing = false; e.preventDefault(); }, {passive:false});
-canvas.addEventListener(‘pointercancel’, () => { writeDrawing = false; });
+canvas.addEventListener('pointerup', e => { writeDrawing = false; e.preventDefault(); }, {passive:false});
+canvas.addEventListener('pointercancel', () => { writeDrawing = false; });
 }
 
 function clearWriteCanvas() {
-const canvas = document.getElementById(‘write-canvas’);
+const canvas = document.getElementById('write-canvas');
 if (!canvas || !writeCtx) return;
 writeAssessing = false;
 writeHasContent = false;
 const q = TASK.qs[TASK.qIdx];
 setupWriteCanvas(q);
-document.getElementById(‘assess-box’).innerHTML = ‘’;
+document.getElementById('assess-box').innerHTML = '';
 }
 
 function submitWriting() {
 if (!writeHasContent) {
-const b = document.getElementById(‘assess-box’);
-if(b) b.innerHTML = ‘<div style="color:#be185d;font-weight:700;font-size:14px;padding:8px;">Pick up your pencil and write it first! ✏️</div>’;
+const b = document.getElementById('assess-box');
+if(b) b.innerHTML = '<div style="color:#be185d;font-weight:700;font-size:14px;padding:8px;">Pick up your pencil and write it first! ✏️</div>';
 return;
 }
 writeAssessing = true;
 const q = TASK.qs[TASK.qIdx];
-const ab = document.getElementById(‘assess-box’);
+const ab = document.getElementById('assess-box');
 if (!ab) return;
 ab.innerHTML = `<div class="pop" style="background:#fdf2f8;border-radius:14px;padding:14px;border:2px solid #f9a8d4;">
 <div style="font-size:14px;font-weight:800;color:#be185d;margin-bottom:8px;">Does yours look like this? 👀</div>
@@ -1652,7 +1650,7 @@ if (ok) {
 TASK.score++;
 confetti();
 TASK.feedback = { ok: true };
-const ab = document.getElementById(‘assess-box’);
+const ab = document.getElementById('assess-box');
 if(ab) ab.innerHTML = `<div class="pop" style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:18px;"> 🌟 Amazing writing Adela! <button onclick="nextWriteQ()" style="display:block;margin:8px auto 0;padding:8px 28px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:#16a34a;">Next →</button> </div>`;
 } else {
 clearWriteCanvas();
@@ -1691,29 +1689,29 @@ STATE[child][subj][idx+1] = 0;
 // Add XP
 const xpGain = stars * 10;
 STATE[child].xp = (STATE[child].xp || 0) + xpGain;
-document.getElementById(‘xp-display’).textContent = `⭐ ${STATE[child].xp} XP`;
+document.getElementById('xp-display').textContent = `⭐ ${STATE[child].xp} XP`;
 saveState();
 confetti();
-const grade = pct>=90?‘Superstar! 🏆’:pct>=80?‘Excellent! 🌟’:‘Well done! 🎉’;
+const grade = pct>=90?'Superstar! 🏆':pct>=80?'Excellent! 🌟':'Well done! 🎉';
 const nextLevel = idx+1 < CUR[child][subj].levels.length ? CUR[child][subj].levels[idx+1] : null;
-document.getElementById(‘screen-complete’).innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:80px;margin-bottom:6px;animation:unlock 0.6s ease-out both;">🏆</div> <h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin:0 0 4px;">Level Complete!</h2> <div style="font-size:28px;margin:6px 0;">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</div> <div style="font-size:19px;font-weight:800;color:#7c3aed;margin-bottom:4px;">${grade}</div> <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">+${stars*10} XP earned!</div> </div> ${nextLevel?`<div style="background:#f0fdf4;border-radius:14px;padding:12px;margin-bottom:12px;border:2px solid #22c55e;">
+document.getElementById('screen-complete').innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:80px;margin-bottom:6px;animation:unlock 0.6s ease-out both;">🏆</div> <h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin:0 0 4px;">Level Complete!</h2> <div style="font-size:28px;margin:6px 0;">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</div> <div style="font-size:19px;font-weight:800;color:#7c3aed;margin-bottom:4px;">${grade}</div> <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">+${stars*10} XP earned!</div> </div> ${nextLevel?`<div style="background:#f0fdf4;border-radius:14px;padding:12px;margin-bottom:12px;border:2px solid #22c55e;">
 <div style="font-size:13px;font-weight:700;color:#16a34a;">🔓 UNLOCKED: ${nextLevel.emoji} ${nextLevel.title}</div>
 </div>`:''} <div style="display:flex;gap:10px;"> <button onclick="startLevel('${child}','${subj}',${idx})" style="flex:1;padding:12px;font-size:15px;font-weight:800;border-radius:13px;background:#f5f3ff;color:#7c3aed;border:2px solid #e9d5ff;">Replay ↺</button> <button onclick="showMap('${child}','${subj}')" style="flex:2;padding:12px;font-size:15px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;">Back to Map 🗺️</button> </div> </div>`;
 notify(`${child} completed ${level.title}! Score: ${score}/${total} (${pct}%) — ${grade}`);
 } else {
 // Failed — must retry
-const grade = pct>=50?‘So close! Try again 💪’:‘Keep practising! 💪’;
-document.getElementById(‘screen-complete’).innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:72px;margin-bottom:6px;">💪</div> <h2 style="font-size:24px;font-weight:900;color:#dc2626;margin:0 0 4px;">Not quite there yet!</h2> <div style="font-size:17px;font-weight:700;color:#6b7280;margin-bottom:12px;">You need 70% to unlock the next level</div> <div style="background:linear-gradient(135deg,#ef4444,#dc2626);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">Need ${70-pct}% more to pass</div> </div> <div style="background:#fef9c3;border-radius:14px;padding:12px;margin-bottom:14px;border:2px solid #fbbf24;"> <div style="font-size:14px;font-weight:700;color:#854d0e;">${grade}</div> </div> <button onclick="startLevel('${child}','${subj}',${idx})" style="width:100%;padding:14px;font-size:17px;font-weight:800;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">Try Again! 🔄</button> </div>`;
+const grade = pct>=50?'So close! Try again 💪':'Keep practising! 💪';
+document.getElementById('screen-complete').innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:72px;margin-bottom:6px;">💪</div> <h2 style="font-size:24px;font-weight:900;color:#dc2626;margin:0 0 4px;">Not quite there yet!</h2> <div style="font-size:17px;font-weight:700;color:#6b7280;margin-bottom:12px;">You need 70% to unlock the next level</div> <div style="background:linear-gradient(135deg,#ef4444,#dc2626);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">Need ${70-pct}% more to pass</div> </div> <div style="background:#fef9c3;border-radius:14px;padding:12px;margin-bottom:14px;border:2px solid #fbbf24;"> <div style="font-size:14px;font-weight:700;color:#854d0e;">${grade}</div> </div> <button onclick="startLevel('${child}','${subj}',${idx})" style="width:100%;padding:14px;font-size:17px;font-weight:800;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">Try Again! 🔄</button> </div>`;
 notify(`${child} needs to retry ${level.title} — scored ${pct}% (need 70%)`);
 }
-showScreen(‘complete’);
+showScreen('complete');
 }
 
 // ═══════════════════════════════════════════════
 // DASHBOARD
 // ═══════════════════════════════════════════════
 function openDashboard() {
-document.getElementById(‘dash-inner’).innerHTML = `<div style="text-align:center;padding:16px 0;">
+document.getElementById('dash-inner').innerHTML = `<div style="text-align:center;padding:16px 0;">
 <div style="font-size:40px;margin-bottom:8px;">🔒</div>
 <h3 style="font-weight:900;color:#4c1d95;margin:0 0 14px;">Parent Dashboard</h3>
 <input type="password" id="pin-in" placeholder="Enter PIN (default: 1234)" onkeydown="if(event.key==='Enter')unlockDash()"
@@ -1725,12 +1723,12 @@ style="width:100%;padding:11px;font-size:19px;border-radius:12px;border:2px soli
   document.getElementById('modal-dashboard').style.display = 'flex';
 }
 
-function closeDash() { document.getElementById(‘modal-dashboard’).style.display=‘none’; }
+function closeDash() { document.getElementById('modal-dashboard').style.display='none'; }
 
 function unlockDash() {
-const pin = document.getElementById(‘pin-in’).value;
-const stored = localStorage.getItem(‘parentPin’) || ‘1234’;
-if (pin !== stored) { alert(‘Wrong PIN’); document.getElementById(‘pin-in’).value=’’; return; }
+const pin = document.getElementById('pin-in').value;
+const stored = localStorage.getItem('parentPin') || '1234';
+if (pin !== stored) { alert('Wrong PIN'); document.getElementById('pin-in').value=''; return; }
 
 let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
 <h2 style="margin:0;font-weight:900;color:#4c1d95;font-size:19px;">📊 Parent Dashboard</h2>
@@ -1740,7 +1738,7 @@ let html = `<div style="display:flex;justify-content:space-between;align-items:c
 
 // Stats cards
 html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">`;
-for (const [child, emoji, color] of [[‘Amelia’,‘🦋’,’#7c3aed’],[‘Adela’,‘🌸’,’#059669’]]) {
+for (const [child, emoji, color] of [['Amelia','🦋','#7c3aed'],['Adela','🌸','#059669']]) {
 const xp = STATE[child].xp || 0;
 let totalDone = 0, totalLevels = 0;
 for (const subj of Object.keys(CUR[child])) {
@@ -1751,15 +1749,15 @@ html += `<div style="background:#f8f7ff;border-radius:14px;padding:14px;text-ali
 html += `</div>`;
 
 // Progress detail
-for (const [child, emoji] of [[‘Amelia’,‘🦋’],[‘Adela’,‘🌸’]]) {
+for (const [child, emoji] of [['Amelia','🦋'],['Adela','🌸']]) {
 html += `<h3 style="font-weight:800;color:#4c1d95;font-size:14px;margin:0 0 8px;">${emoji} ${child}'s Progress</h3>`;
 for (const [subjKey, subj] of Object.entries(CUR[child])) {
 html += `<div style="font-size:13px;font-weight:700;color:#7c3aed;margin:6px 0 4px;">${subj.emoji} ${subj.title}</div>`;
 html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">`;
 STATE[child][subjKey].forEach((stars, i) => {
 const level = CUR[child][subjKey].levels[i];
-const bg = stars===null?’#f1f5f9’:stars===0?’#e0e7ff’:stars>=1?’#dcfce7’:’#f1f5f9’;
-const text = stars===null?‘🔒’:stars===0?‘⬜’:[’’,‘⭐’,‘⭐⭐’,‘⭐⭐⭐’][stars];
+const bg = stars===null?'#f1f5f9':stars===0?'#e0e7ff':stars>=1?'#dcfce7':'#f1f5f9';
+const text = stars===null?'🔒':stars===0?'⬜':['','⭐','⭐⭐','⭐⭐⭐'][stars];
 html += `<div style="background:${bg};border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#374151;" title="${level.title}">${level.emoji} ${text}</div>`;
 });
 html += `</div>`;
@@ -1787,13 +1785,13 @@ style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px s
 }
 
 function saveDashSettings() {
-const ntfy = document.getElementById(‘ntfy-in’).value.trim();
-const np = document.getElementById(‘newpin-in’).value.trim();
-localStorage.setItem(‘ntfyTopic’, ntfy);
-if (np.length >= 4) localStorage.setItem(‘parentPin’, np);
-const btn = document.getElementById(‘save-dash-btn’);
-btn.textContent = ‘✓ Saved!’;
-setTimeout(() => btn.textContent = ‘Save Settings’, 2000);
+const ntfy = document.getElementById('ntfy-in').value.trim();
+const np = document.getElementById('newpin-in').value.trim();
+localStorage.setItem('ntfyTopic', ntfy);
+if (np.length >= 4) localStorage.setItem('parentPin', np);
+const btn = document.getElementById('save-dash-btn');
+btn.textContent = '✓ Saved!';
+setTimeout(() => btn.textContent = 'Save Settings', 2000);
 }
 
 // ═══════════════════════════════════════════════
