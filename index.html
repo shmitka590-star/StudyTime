@@ -12,17 +12,36 @@ body{min-height:100vh;background:linear-gradient(160deg,#fdf4ff 0%,#eff6ff 50%,#
 button{cursor:pointer;border:none;font-family:'Nunito',sans-serif;}
 #write-canvas{touch-action:none;}
 input,textarea{font-family:'Nunito',sans-serif;}
-.screen{display:none;padding:20px;max-width:500px;margin:0 auto;}
+
+/* ── Responsive layout ── */
+.screen{display:none;padding:16px;max-width:500px;margin:0 auto;}
 .screen.active{display:block;}
-#header{padding:12px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.9);border-bottom:2px solid #e9d5ff;position:sticky;top:0;z-index:100;backdrop-filter:blur(8px);}
+@media(min-width:640px){
+  .screen{padding:24px;max-width:600px;}
+  .mcq-btn{font-size:17px;padding:16px 18px;}
+}
+@media(min-width:1024px){
+  .screen{max-width:720px;}
+  #screen-home .child-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  #screen-child .subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+}
+
+#header{padding:12px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.92);border-bottom:3px solid #bfdbfe;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
+
+/* ── Core animations ── */
 .pop{animation:pop 0.3s cubic-bezier(.36,.07,.19,.97) both;}
 .float{animation:float 3s ease-in-out infinite;}
 .pulse{animation:pulse 1.5s ease-in-out infinite;}
 @keyframes pop{0%{transform:scale(0.6);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(124,58,237,0.4)}50%{box-shadow:0 0 0 12px rgba(124,58,237,0)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.45)}50%{box-shadow:0 0 0 14px rgba(59,130,246,0)}}
 @keyframes fall{0%{top:-20px;transform:rotate(0)}100%{top:110vh;transform:rotate(720deg)}}
 @keyframes unlock{0%{transform:scale(0) rotate(-10deg);opacity:0}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
+
+/* ── Bouncing-star success burst ── */
+@keyframes star-rise{0%{transform:translate(-50%,-50%) scale(0.2);opacity:1}60%{transform:translate(-50%,-120%) scale(1.3);opacity:1}100%{transform:translate(-50%,-200%) scale(0.8);opacity:0}}
+.star-burst{position:fixed;left:50%;top:50%;font-size:52px;pointer-events:none;z-index:9998;animation:star-rise 0.85s ease-out forwards;}
+
 .bar-fill{transition:width 0.5s ease;}
 .level-node{border-radius:20px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:transform 0.15s;}
 .level-node:active{transform:scale(0.97);}
@@ -34,11 +53,15 @@ input,textarea{font-family:'Nunito',sans-serif;}
 .subject-card{border-radius:22px;padding:20px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(0,0,0,0.15);}
 input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;overflow-y:auto;padding:16px;display:flex;align-items:flex-start;justify-content:center;}
-.modal-box{background:#fff;border-radius:24px;padding:24px;width:100%;max-width:500px;margin-top:20px;}
+.modal-box{background:#fff;border-radius:24px;padding:24px;width:100%;max-width:540px;margin-top:20px;}
 table{width:100%;border-collapse:collapse;font-size:13px;}
-th{padding:6px 8px;text-align:left;color:#7c3aed;font-weight:800;background:#f5f3ff;}
+th{padding:6px 8px;text-align:left;color:#2563eb;font-weight:800;background:#eff6ff;}
 td{padding:6px 8px;border-bottom:1px solid #f3f4f6;}
 .badge{border-radius:8px;padding:2px 8px;font-weight:800;font-size:12px;}
+/* ── Age-level badges ── */
+.age-badge{display:inline-block;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;}
+.age-badge-foundation{background:#d1fae5;color:#065f46;}
+.age-badge-primary{background:#dbeafe;color:#1e40af;}
 </style>
 </head>
 <body>
@@ -1099,6 +1122,14 @@ function loadState() {
       for (const subj of Object.keys(CUR[child])) {
         if (!STATE[child][subj]) {
           STATE[child][subj] = CUR[child][subj].levels.map((_,i)=>i===0?0:null);
+        } else {
+          // Extend array if new levels were added to curriculum after last save
+          const saved = STATE[child][subj];
+          const cur   = CUR[child][subj].levels;
+          for (let i = saved.length; i < cur.length; i++) {
+            // Unlock new level only if the previous level has been passed
+            saved.push(saved[i-1] > 0 ? 0 : null);
+          }
         }
       }
     }
@@ -1114,6 +1145,14 @@ function saveState() {
 // ═══════════════════════════════════════════════
 function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
 function lev(a,b){const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);return d[m][n];}
+
+function showStarBurst() {
+  const star = document.createElement('div');
+  star.className = 'star-burst';
+  star.textContent = '⭐';
+  document.body.appendChild(star);
+  setTimeout(() => star.remove(), 900);
+}
 
 function confetti() {
   const c = document.getElementById('confetti-wrap');
@@ -1159,6 +1198,7 @@ function goHome() {
 
 function selectChild(child) {
   TASK.child = child;
+  localStorage.setItem('lastChild', child); // persist so refresh restores the right child
   document.getElementById('xp-display').style.display = 'inline';
   document.getElementById('xp-display').textContent = `⭐ ${STATE[child].xp} XP`;
   renderChildHome(child);
@@ -1168,12 +1208,15 @@ function selectChild(child) {
 function renderChildHome(child) {
   const cfg = CUR[child];
   const isAmelia = child === 'Amelia';
-  const headerColor = isAmelia ? '#4c1d95' : '#065f46';
+  const headerColor = isAmelia ? '#1e40af' : '#065f46';
   const emoji = isAmelia ? '🦋' : '🌸';
+  const badgeClass = isAmelia ? 'age-badge-primary' : 'age-badge-foundation';
+  const badgeText = isAmelia ? 'Year 5/6 · Ages 9–11' : 'Foundation · Ages 4–6';
   let html = `<div style="text-align:center;margin-bottom:20px;">
-    <div style="font-size:48px;">${emoji}</div>
+    <div style="font-size:52px;">${emoji}</div>
     <h2 style="font-weight:900;color:${headerColor};margin:4px 0;">Hi ${child}! 👋</h2>
-    <p style="color:${isAmelia?'#7c3aed':'#059669'};font-weight:700;">Choose a subject:</p>
+    <span class="age-badge ${badgeClass}" style="margin-bottom:10px;display:inline-block;">${badgeText}</span>
+    <p style="color:${isAmelia?'#3b82f6':'#059669'};font-weight:700;margin-top:6px;">Choose a subject:</p>
   </div>`;
   for (const [subjKey, subj] of Object.entries(cfg)) {
     const levels = STATE[child][subjKey];
@@ -1202,10 +1245,14 @@ function showMap(child, subj) {
 function renderMap(child, subj) {
   const cfg = CUR[child][subj];
   const levels = STATE[child][subj];
+  const isAmelia = child === 'Amelia';
+  const mapBadgeClass = isAmelia ? 'age-badge-primary' : 'age-badge-foundation';
+  const mapBadgeText = isAmelia ? 'Year 5/6' : 'Foundation';
   let html = `<div style="text-align:center;margin-bottom:16px;">
     <div style="font-size:36px;">${cfg.emoji}</div>
-    <h2 style="font-weight:900;color:#4c1d95;margin:4px 0;">${cfg.title}</h2>
-    <p style="color:#6b7280;font-size:14px;font-weight:700;">Reach 70% to unlock the next level</p>
+    <h2 style="font-weight:900;color:#1e40af;margin:4px 0;">${cfg.title}</h2>
+    <span class="age-badge ${mapBadgeClass}" style="margin-bottom:6px;display:inline-block;">${mapBadgeText}</span>
+    <p style="color:#6b7280;font-size:14px;font-weight:700;margin-top:4px;">Reach 70% to unlock the next level</p>
   </div>`;
   cfg.levels.forEach((level, i) => {
     const stars = levels[i];
@@ -1300,7 +1347,7 @@ function renderMCQ(q) {
 function mcqPick(chosen) {
   const q = TASK.qs[TASK.qIdx];
   const ok = chosen === q.a;
-  if (ok) { TASK.score++; confetti(); }
+  if (ok) { TASK.score++; confetti(); showStarBurst(); }
   TASK.feedback = { ok, chosen };
   renderMCQ(q);
 }
@@ -1326,8 +1373,18 @@ function checkInput() {
   const el = document.getElementById('ans-input');
   if (!el || !el.value.trim()) return;
   const q = TASK.qs[TASK.qIdx];
-  const ok = el.value.trim().toLowerCase() === q.a.toLowerCase();
-  if (ok) { TASK.score++; confetti(); }
+  const given  = el.value.trim().toLowerCase();
+  const target = q.a.trim().toLowerCase();
+  // Primary: exact string match (handles fractions, words, £ values, etc.)
+  let ok = given === target;
+  // Fallback: numeric equality so '12.10' matches '12.1', '100' matches '100.0'
+  if (!ok) {
+    const gNum = parseFloat(given), tNum = parseFloat(target);
+    if (!isNaN(gNum) && !isNaN(tNum) && String(given).replace(/,/g,'') !== '' ) {
+      ok = Math.abs(gNum - tNum) < 1e-9;
+    }
+  }
+  if (ok) { TASK.score++; confetti(); showStarBurst(); }
   TASK.feedback = { ok };
   renderInput(q);
 }
@@ -1438,9 +1495,13 @@ function retryType() { TASK.feedback=null; renderPhonics(TASK.qs[TASK.qIdx]); }
 function nextQ() {
   TASK.qIdx++;
   TASK.feedback = null;
+  TASK._shuffled = null; // clear cached option order so next MCQ gets a fresh shuffle
   TASK.orderSel = []; TASK.orderRem = [];
-  const nextQ = TASK.qs[TASK.qIdx];
-  if (nextQ && nextQ.t === 'o') initOrder();
+  // Clear the container before rendering to guarantee no stale HTML carries over
+  const taskEl = document.getElementById('screen-task');
+  if (taskEl) taskEl.innerHTML = '';
+  const nq = TASK.qs[TASK.qIdx];
+  if (nq && nq.t === 'o') initOrder();
   renderQ();
 }
 
@@ -1487,6 +1548,7 @@ if (!el || !el.value.trim()) return;
 const pts = el.value.trim().length > 20 ? 1 : 0;
 TASK.compScore += pts;
 TASK.feedback = {ok: pts===1};
+renderComp(); // was missing — screen never updated after Submit
 }
 
 function nextComp() {
@@ -1651,7 +1713,7 @@ TASK.score++;
 confetti();
 TASK.feedback = { ok: true };
 const ab = document.getElementById('assess-box');
-if(ab) ab.innerHTML = `<div class="pop" style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:18px;"> 🌟 Amazing writing Adela! <button onclick="nextWriteQ()" style="display:block;margin:8px auto 0;padding:8px 28px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:#16a34a;">Next →</button> </div>`;
+if(ab) ab.innerHTML = `<div class="pop" style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:18px;"> 🌟 Amazing writing ${TASK.child}! <button onclick="nextWriteQ()" style="display:block;margin:8px auto 0;padding:8px 28px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:#16a34a;">Next →</button> </div>`;
 } else {
 clearWriteCanvas();
 }
@@ -1771,10 +1833,6 @@ html += `<div style="background:#f8f7ff;border-radius:14px;padding:14px;margin-t
 <input id="ntfy-in" value="${localStorage.getItem('ntfyTopic')||''}" placeholder="e.g. smith-kids-2025"
 style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px solid #e9d5ff;outline:none;margin-bottom:3px;">
 <div style="font-size:10px;color:#94a3b8;margin-bottom:10px;">Free <strong>ntfy</strong> app → Subscribe to topic → get notified when tasks finish</div>
-<div style="font-size:12px;color:#6b7280;margin-bottom:3px;font-weight:700;">ntfy.sh topic (notifications):</div>
-<input id="ntfy-in" value="${localStorage.getItem('ntfyTopic')||''}" placeholder="e.g. smith-kids-2025"
-style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px solid #e9d5ff;outline:none;margin-bottom:3px;">
-<div style="font-size:10px;color:#94a3b8;margin-bottom:10px;">Free <strong>ntfy</strong> app → Subscribe to topic → get notified when tasks finish</div>
 <div style="font-size:12px;color:#6b7280;margin-bottom:3px;font-weight:700;">New PIN (4+ digits):</div>
 <input type="password" id="newpin-in" placeholder="Leave blank to keep current"
 style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px solid #e9d5ff;outline:none;margin-bottom:10px;">
@@ -1798,9 +1856,11 @@ setTimeout(() => btn.textContent = 'Save Settings', 2000);
 // INIT
 // ═══════════════════════════════════════════════
 loadState();
-
-// Init order chips when first ordering question loads
-const origStartLevel = startLevel;
+// Restore last active child so a page refresh lands back on their home screen
+(function restoreChild() {
+  const last = localStorage.getItem('lastChild');
+  if (last && CUR[last]) selectChild(last);
+})();
 </script>
 
 </body>
