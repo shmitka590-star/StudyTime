@@ -82,11 +82,11 @@ td{padding:6px 8px;border-bottom:1px solid #f3f4f6;}
     <div style="display:flex;flex-direction:column;gap:14px;">
       <button onclick="selectChild('Amelia')" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:22px;padding:20px 22px;color:#fff;text-align:left;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(124,58,237,0.35);">
         <span style="font-size:48px;">🦋</span>
-        <div><div style="font-size:24px;font-weight:900;">Amelia</div><div style="font-size:13px;opacity:0.9;">Maths &amp; English</div></div>
+        <div><div style="font-size:24px;font-weight:900;">Amelia</div><div style="font-size:13px;opacity:0.9;">Maths & English</div></div>
       </button>
       <button onclick="selectChild('Adela')" style="background:linear-gradient(135deg,#34d399,#059669);border-radius:22px;padding:20px 22px;color:#fff;text-align:left;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(5,150,105,0.35);">
         <span style="font-size:48px;">🌸</span>
-        <div><div style="font-size:24px;font-weight:900;">Adela</div><div style="font-size:13px;opacity:0.9;">Phonics &amp; Numbers</div></div>
+        <div><div style="font-size:24px;font-weight:900;">Adela</div><div style="font-size:13px;opacity:0.9;">Phonics & Numbers</div></div>
       </button>
     </div>
   </div>
@@ -112,32 +112,113 @@ Amelia:{
   maths:{
     title:'Maths', emoji:'🔢', color:'linear-gradient(135deg,#7c3aed,#a855f7)', bg:'#faf5ff',
     levels:[
-      {id:'placevalue',title:'Place Value',emoji:'🏛️',gen:'placevalue',qs:[
-        {t:'m',q:'What is the value of the digit 4 in 47,382?',o:['4','400','4,000','40,000'],a:'40,000'},
-        {t:'m',q:'What is the value of the digit 6 in 362,541?',o:['6','60','600','6,000'],a:'600'},
-        {t:'m',q:'Which number is 10,000 more than 45,230?',o:['46,230','55,230','45,330','45,240'],a:'55,230'},
-        {t:'m',q:'What is 300,000 + 40,000 + 7,000 + 200 + 50 + 3?',o:['347,253','374,253','347,523','374,523'],a:'347,253'},
-        {t:'m',q:'Which is the largest number?',o:['54,321','54,231','54,312','54,132'],a:'54,321'},
-        {t:'m',q:'What is 1,000 less than 73,405?',o:['72,405','63,405','73,305','73,395'],a:'72,405'},
-        {t:'m',q:'Which number has 8 in the ten-thousands column?',o:['380,412','83,412','830,412','38,412'],a:'83,412'},
-        {t:'m',q:'What is the digit 5 worth in 250,634?',o:['5','500','5,000','50,000'],a:'50,000'},
-        {t:'i',q:'Write in digits: forty-two thousand, three hundred and six',a:'42306'},
-        {t:'i',q:'What is 10 times greater than 4,250?',a:'42500'},
-        {t:'m',q:'What is the digit 3 worth in 531,024?',o:['3','300','3,000','30,000'],a:'30,000'},
-        {t:'m',q:'Which number is 100,000 more than 234,567?',o:['334,567','244,567','234,667','235,567'],a:'334,567'},
-        {t:'m',q:'What is 500,000 + 30,000 + 400 + 7?',o:['530,407','503,470','530,047','503,047'],a:'530,407'},
-        {t:'m',q:'Order from smallest: 34,521 / 34,512 / 34,215 / 34,152',o:['34,152','34,215','34,512','34,521'],a:'34,152'},
-        {t:'m',q:'What is 10,000 less than 256,000?',o:['246,000','255,000','156,000','255,990'],a:'246,000'},
-        {t:'i',q:'Write in digits: three hundred and five thousand and twelve',a:'305012'},
-        {t:'m',q:'What does the digit 9 represent in 294,385?',o:['9','90','900','9,000'],a:'9,000'},
-        {t:'m',q:'Which number is exactly halfway between 40,000 and 50,000?',o:['44,000','45,000','46,000','48,000'],a:'45,000'},
-        {t:'i',q:'What is 100 times greater than 730?',a:'73000'},
-        {t:'m',q:'Which number rounds to 300,000 to the nearest 100,000?',o:['249,999','350,001','289,000','350,000'],a:'289,000'},
-        {t:'m',q:'What is the value of the underlined digit in 4_7,823 where the underlined digit is 7?',o:['7','70','700','7,000'],a:'7,000'},
-        {t:'m',q:'Roman numeral for 40 is:',o:['XL','VX','LL','XXXX'],a:'XL'},
-        {t:'m',q:'Roman numeral for 90 is:',o:['LXXXX','XC','CX','VC'],a:'XC'},
-        {t:'m',q:'What number does CDXLV represent?',o:['345','445','545','645'],a:'445'},
-        {t:'m',q:'Count in powers of 10: 7 × 10³ = ?',o:['70','700','7,000','70,000'],a:'7,000'},
+      {id:'counting',title:'Counting & Number Recognition',emoji:'🔢',qs:[
+        {t:'m',q:'How many apples are there? 🍎🍎🍎🍎🍎',o:['3','4','5','6'],a:'5'},
+        {t:'m',q:'Which number comes after 15?',o:['14','16','17','18'],a:'16'},
+        {t:'m',q:'Which number comes before 20?',o:['18','19','21','22'],a:'19'},
+        {t:'m',q:'Count these stars: ⭐⭐⭐⭐⭐⭐⭐',o:['5','6','7','8'],a:'7'},
+        {t:'m',q:'What number is between 23 and 25?',o:['22','24','26','27'],a:'24'},
+        {t:'m',q:'Which is the smallest number?',o:['34','28','41','19'],a:'19'},
+        {t:'m',q:'Which is the largest number?',o:['56','65','47','73'],a:'73'},
+        {t:'m',q:'Count by 2s: 2, 4, 6, 8, ?',o:['9','10','11','12'],a:'10'},
+        {t:'m',q:'Count by 5s: 5, 10, 15, 20, ?',o:['21','22','25','30'],a:'25'},
+        {t:'m',q:'Count by 10s: 10, 20, 30, 40, ?',o:['45','50','55','60'],a:'50'},
+        {t:'m',q:'How many fingers do you have on both hands?',o:['5','8','10','12'],a:'10'},
+        {t:'m',q:'How many toes do you have on both feet?',o:['8','10','12','20'],a:'20'},
+        {t:'m',q:'If you have 7 candies and eat 2, how many are left?',o:['5','6','8','9'],a:'5'},
+        {t:'m',q:'If you have 12 stickers and get 3 more, how many do you have?',o:['14','15','16','18'],a:'15'},
+        {t:'m',q:'What number is 10 more than 35?',o:['40','45','50','55'],a:'45'},
+        {t:'m',q:'What number is 10 less than 67?',o:['57','66','68','77'],a:'57'},
+        {t:'m',q:'Order from smallest to largest: 18, 12, 25, 9',o:['9,12,18,25','12,9,18,25','25,18,12,9','9,18,12,25'],a:'9,12,18,25'},
+        {t:'m',q:'Order from largest to smallest: 42, 38, 51, 29',o:['51,42,38,29','42,51,38,29','29,38,42,51','38,29,51,42'],a:'51,42,38,29'},
+        {t:'m',q:'Which number has 3 tens and 7 ones?',o:['37','73','307','703'],a:'37'},
+        {t:'m',q:'Which number has 5 tens and 2 ones?',o:['25','52','502','520'],a:'52'},
+        {t:'m',q:'How many tens are in 80?',o:['8','80','800','10'],a:'8'},
+        {t:'m',q:'How many ones are in 45?',o:['4','5','40','45'],a:'5'},
+        {t:'m',q:'What number comes between 49 and 51?',o:['48','50','52','53'],a:'50'},
+        {t:'m',q:'What number comes between 98 and 100?',o:['97','99','101','102'],a:'99'},
+        {t:'m',q:'If today is the 15th, what date is tomorrow?',o:['14','15','16','17'],a:'16'},
+      ]},
+      {id:'addition',title:'Addition within 20',emoji:'➕',qs:[
+        {t:'i',q:'5 + 3 = ?',a:'8'},
+        {t:'i',q:'7 + 6 = ?',a:'13'},
+        {t:'i',q:'9 + 4 = ?',a:'13'},
+        {t:'i',q:'8 + 7 = ?',a:'15'},
+        {t:'i',q:'6 + 9 = ?',a:'15'},
+        {t:'i',q:'10 + 5 = ?',a:'15'},
+        {t:'i',q:'12 + 3 = ?',a:'15'},
+        {t:'i',q:'11 + 6 = ?',a:'17'},
+        {t:'i',q:'14 + 5 = ?',a:'19'},
+        {t:'i',q:'8 + 8 = ?',a:'16'},
+        {t:'i',q:'9 + 9 = ?',a:'18'},
+        {t:'i',q:'7 + 7 = ?',a:'14'},
+        {t:'i',q:'10 + 10 = ?',a:'20'},
+        {t:'i',q:'13 + 4 = ?',a:'17'},
+        {t:'i',q:'15 + 3 = ?',a:'18'},
+        {t:'i',q:'16 + 2 = ?',a:'18'},
+        {t:'i',q:'18 + 1 = ?',a:'19'},
+        {t:'i',q:'19 + 1 = ?',a:'20'},
+        {t:'i',q:'17 + 2 = ?',a:'19'},
+        {t:'i',q:'14 + 6 = ?',a:'20'},
+        {t:'m',q:'Which adds up to 12?',o:['5+6','7+5','8+3','9+4'],a:'7+5'},
+        {t:'m',q:'Which adds up to 18?',o:['9+8','10+7','12+5','15+3'],a:'15+3'},
+        {t:'m',q:'If you have 8 marbles and find 7 more, how many do you have?',o:['14','15','16','17'],a:'15'},
+        {t:'m',q:'A basket has 9 apples and 6 oranges. How many fruits?',o:['14','15','16','17'],a:'15'},
+        {t:'m',q:'Tom has 11 stickers, Sarah has 8. How many together?',o:['18','19','20','21'],a:'19'},
+      ]},
+      {id:'subtraction',title:'Subtraction within 20',emoji:'➖',qs:[
+        {t:'i',q:'10 - 3 = ?',a:'7'},
+        {t:'i',q:'15 - 6 = ?',a:'9'},
+        {t:'i',q:'18 - 9 = ?',a:'9'},
+        {t:'i',q:'14 - 5 = ?',a:'9'},
+        {t:'i',q:'17 - 8 = ?',a:'9'},
+        {t:'i',q:'20 - 7 = ?',a:'13'},
+        {t:'i',q:'16 - 4 = ?',a:'12'},
+        {t:'i',q:'19 - 6 = ?',a:'13'},
+        {t:'i',q:'13 - 5 = ?',a:'8'},
+        {t:'i',q:'11 - 4 = ?',a:'7'},
+        {t:'i',q:'12 - 7 = ?',a:'5'},
+        {t:'i',q:'15 - 8 = ?',a:'7'},
+        {t:'i',q:'18 - 10 = ?',a:'8'},
+        {t:'i',q:'20 - 12 = ?',a:'8'},
+        {t:'i',q:'14 - 9 = ?',a:'5'},
+        {t:'i',q:'17 - 9 = ?',a:'8'},
+        {t:'i',q:'19 - 11 = ?',a:'8'},
+        {t:'i',q:'16 - 8 = ?',a:'8'},
+        {t:'i',q:'13 - 6 = ?',a:'7'},
+        {t:'i',q:'11 - 3 = ?',a:'8'},
+        {t:'m',q:'Which equals 7?',o:['15-8','14-6','12-4','18-9'],a:'15-8'},
+        {t:'m',q:'Which equals 12?',o:['20-7','18-6','16-3','19-5'],a:'18-6'},
+        {t:'m',q:'You have 15 cookies and eat 6. How many left?',o:['8','9','10','11'],a:'9'},
+        {t:'m',q:'There were 18 birds, 7 flew away. How many remain?',o:['10','11','12','13'],a:'11'},
+        {t:'m',q:'A book has 20 pages, you read 13. How many left?',o:['6','7','8','9'],a:'7'},
+      ]},
+      {id:'placevalue',title:'Place Value (2-3 digits)',emoji:'🏛️',qs:[
+        {t:'m',q:'What is the value of the digit 4 in 47?',o:['4','40','400','4,000'],a:'40'},
+        {t:'m',q:'What is the value of the digit 6 in 162?',o:['6','60','600','6,000'],a:'60'},
+        {t:'m',q:'Which number has 3 tens and 5 ones?',o:['35','53','305','503'],a:'35'},
+        {t:'m',q:'Which number has 7 tens and 2 ones?',o:['27','72','702','720'],a:'72'},
+        {t:'m',q:'What is 100 + 40 + 7?',o:['147','174','417','471'],a:'147'},
+        {t:'m',q:'What is 200 + 50 + 3?',o:['253','235','523','532'],a:'253'},
+        {t:'m',q:'Which is the largest number?',o:['134','143','314','413'],a:'413'},
+        {t:'m',q:'Which is the smallest number?',o:['256','265','526','625'],a:'256'},
+        {t:'m',q:'What number is 10 more than 87?',o:['88','97','107','117'],a:'97'},
+        {t:'m',q:'What number is 10 less than 156?',o:['146','155','166','167'],a:'146'},
+        {t:'m',q:'How many tens are in 180?',o:['8','18','80','180'],a:'18'},
+        {t:'m',q:'How many ones are in 247?',o:['2','4','7','47'],a:'7'},
+        {t:'m',q:'What number has 5 hundreds, 3 tens, and 8 ones?',o:['538','583','835','853'],a:'538'},
+        {t:'m',q:'What number has 2 hundreds, 9 tens, and 1 one?',o:['219','291','912','921'],a:'291'},
+        {t:'m',q:'Order from smallest: 145, 154, 415, 451',o:['145,154,415,451','154,145,415,451','415,451,145,154','145,154,451,415'],a:'145,154,415,451'},
+        {t:'m',q:'Order from largest: 367, 376, 637, 736',o:['736,637,376,367','637,736,367,376','367,376,637,736','376,367,736,637'],a:'736,637,376,367'},
+        {t:'m',q:'What is 100 more than 234?',o:['235','334','244','134'],a:'334'},
+        {t:'m',q:'What is 100 less than 567?',o:['467','557','577','667'],a:'467'},
+        {t:'m',q:'If you have 3 hundreds, 4 tens, and 5 ones, what number is it?',o:['345','354','435','543'],a:'345'},
+        {t:'m',q:'Which digit is in the tens place in 482?',o:['2','4','8','48'],a:'8'},
+        {t:'m',q:'Which digit is in the hundreds place in 719?',o:['1','7','9','71'],a:'7'},
+        {t:'m',q:'What number comes between 299 and 301?',o:['298','300','302','303'],a:'300'},
+        {t:'m',q:'What number comes between 499 and 501?',o:['498','500','502','503'],a:'500'},
+        {t:'m',q:'How many hundreds are in 800?',o:['8','80','800','8000'],a:'8'},
+        {t:'m',q:'How many tens are in 500?',o:['5','50','500','5000'],a:'50'},
       ]},
       {id:'rounding',title:'Rounding',emoji:'🎯',gen:'rounding',qs:[
         {t:'i',q:'Round 0.98 to the nearest whole number',a:'1'},
@@ -515,9 +596,36 @@ Amelia:{
         {t:'m',q:'"She ___ here since 2020." Correct form?',o:['lives','has lived','had lived','is living'],a:'has lived'},
         {t:'m',q:'Which sentence is PASSIVE voice?',o:['She ate the cake.','The cake was eaten by her.','She has eaten cake.','She is eating cake.'],a:'The cake was eaten by her.'},
         {t:'m',q:'To form past tense of IRREGULAR verbs, you:',o:['Always add -ed','Change the word entirely','Add -ing','Add -s'],a:'Change the word entirely'},
-        {t:'m',q:'"He might be coming." Identify the modal verb.',o:['He','might','be','coming'],a:'might'},
         {t:'m',q:'Which is the correct past tense of "fly"?',o:['flied','flyed','flew','flown'],a:'flew'},
         {t:'m',q:'"By next year I ___ finished my course." Which form fits?',o:['will','have','will have','am'],a:'will have'},
+        {t:'m',q:'"She ___ to the store yesterday."',o:['go','goes','went','gone'],a:'went'},
+        {t:'m',q:'"They ___ playing football when it started raining."',o:['were','are','have been','had been'],a:'were'},
+        {t:'m',q:'"I ___ my homework before dinner."',o:['finish','finished','have finished','will finish'],a:'finished'},
+        {t:'m',q:'"He ___ a book every week."',o:['reads','read','reading','has read'],a:'reads'},
+        {t:'m',q:'"We ___ to the beach last summer."',o:['go','went','have gone','will go'],a:'went'},
+        {t:'m',q:'"She ___ her keys, so she couldn\'t open the door."',o:['loses','lost','has lost','had lost'],a:'lost'},
+        {t:'m',q:'"They ___ their project by tomorrow."',o:['finish','finished','will finish','have finished'],a:'will finish'},
+        {t:'m',q:'"I ___ to school by bus every day."',o:['go','went','goes','am going'],a:'go'},
+        {t:'m',q:'"He ___ his car for three years."',o:['has','had','have','is having'],a:'has'},
+        {t:'m',q:'"We ___ dinner when the phone rang."',o:['eat','ate','were eating','have eaten'],a:'were eating'},
+        {t:'m',q:'"She ___ her grandmother every Sunday."',o:['visits','visited','has visited','will visit'],a:'visits'},
+        {t:'m',q:'"They ___ to London next month."',o:['travel','traveled','will travel','have traveled'],a:'will travel'},
+        {t:'m',q:'"I ___ my favorite book twice."',o:['read','reads','have read','reading'],a:'have read'},
+        {t:'m',q:'"He ___ his homework before he went out to play."',o:['finish','finished','has finished','will finish'],a:'finished'},
+        {t:'m',q:'"She ___ to the store yesterday."',o:['go','goes','went','gone'],a:'went'},
+        {t:'m',q:'"They ___ playing football when it started raining."',o:['were','are','have been','had been'],a:'were'},
+        {t:'m',q:'"I ___ my homework before dinner."',o:['finish','finished','have finished','will finish'],a:'finished'},
+        {t:'m',q:'"He ___ a book every week."',o:['reads','read','reading','has read'],a:'reads'},
+        {t:'m',q:'"We ___ to the beach last summer."',o:['go','went','have gone','will go'],a:'went'},
+        {t:'m',q:'"She ___ her keys, so she couldn\'t open the door."',o:['loses','lost','has lost','had lost'],a:'lost'},
+        {t:'m',q:'"They ___ their project by tomorrow."',o:['finish','finished','will finish','have finished'],a:'will finish'},
+        {t:'m',q:'"I ___ to school by bus every day."',o:['go','went','goes','am going'],a:'go'},
+        {t:'m',q:'"He ___ his car for three years."',o:['has','had','have','is having'],a:'has'},
+        {t:'m',q:'"We ___ dinner when the phone rang."',o:['eat','ate','were eating','have eaten'],a:'were eating'},
+        {t:'m',q:'"She ___ her grandmother every Sunday."',o:['visits','visited','has visited','will visit'],a:'visits'},
+        {t:'m',q:'"They ___ to London next month."',o:['travel','traveled','will travel','have traveled'],a:'will travel'},
+        {t:'m',q:'"I ___ my favorite book twice."',o:['read','reads','have read','reading'],a:'have read'},
+        {t:'m',q:'"He ___ his homework before he went out to play."',o:['finish','finished','has finished','will finish'],a:'finished'},
       ]},
       {id:'punctuation',title:'Sentence Punctuation',emoji:'❕',qs:[
         {t:'m',q:'Which is correctly punctuated?',o:['where are you going','Where are you going?','where are you going?','Where are you going'],a:'Where are you going?'},
@@ -539,7 +647,7 @@ Amelia:{
         {t:'m',q:'Months of the year:',o:['need no capitals','always need capitals','only need capitals in sentences','only need capitals at the start'],a:'always need capitals'},
         {t:'m',q:'Which title is correctly capitalised?',o:['the wind in the willows','The Wind in the Willows','The wind in the Willows','The Wind In The Willows'],a:'The Wind in the Willows'},
         {t:'m',q:'Which sentence correctly uses a HYPHEN?',o:['Well done work','Well-done work','Well done-work','Welldone work'],a:'Well-done work'},
-        {t:'m',q:'Which question is an INDIRECT question?',o:['Where is she going?','She wondered where she was going.','Go and find her!','She is going home.'],a:'She wondered where she was going.'},
+        {t:'m',q:'Which is an INDIRECT question?',o:['Where is she going?','She wondered where she was going.','Go and find her!','She is going home.'],a:'She wondered where she was going.'},
         {t:'m',q:'Which is correctly punctuated using a semicolon?',o:['She loved reading; she had 200 books.','She loved reading; had 200 books.','She; loved reading had 200 books.','She loved; reading she had 200 books.'],a:'She loved reading; she had 200 books.'},
         {t:'m',q:'Which sentence correctly uses PARENTHETICAL dashes?',o:['The cake — which was — chocolate was delicious.','The cake — which was chocolate — was delicious.','The cake which — was chocolate was — delicious.','— The cake which was chocolate was delicious.'],a:'The cake — which was chocolate — was delicious.'},
         {t:'m',q:'Which sentence is correctly punctuated?',o:['The three children: Tom, Lucy and Ben played outside.','The three children, Tom, Lucy and Ben, played outside.','The three children, Tom Lucy and Ben played outside.','The three children Tom, Lucy and Ben played outside.'],a:'The three children, Tom, Lucy and Ben, played outside.'},
@@ -568,9 +676,9 @@ Amelia:{
         {t:'m',q:'"In the morning before school she practices piano." Commas after:',o:['morning only','morning and school','school only','In and before'],a:'morning and school'},
         {t:'m',q:'Which sentence has TOO MANY commas?',o:['She, ran quickly home.','She ran quickly, but stumbled.','After running, she was tired.','She ran, jumped, and danced.'],a:'She, ran quickly home.'},
         {t:'m',q:'A comma splice is when:',o:['You use no comma','You use a comma instead of a full stop to join two sentences','You use two commas','You forget the comma in a list'],a:'You use a comma instead of a full stop to join two sentences'},
-        {t:'m',q:'Which sentence avoids a comma splice?',o:['She ran home, she was tired.','She ran home; she was tired.','She ran home, being tired.','She ran, she was tired.'],a:'She ran home; she was tired.'},
+        {t:'m',q:'Which sentence avoids a comma splice?',o:['She ran home, she was tired.','She ran home; she was tired.','She ran, she was tired.','She ran home, being tired.'],a:'She ran home; she was tired.'},
         {t:'m',q:'"Yes I agree with you." Comma after:',o:['Yes','I','agree','with'],a:'Yes'},
-        {t:'m',q:'Which correctly uses an Oxford comma?',o:['I like cats dogs and rabbits.','I like cats, dogs, and rabbits.','I like cats, dogs and, rabbits.','I like, cats, dogs and rabbits.'],a:'I like cats, dogs, and rabbits.'},
+        {t:'m',q:'Which correctly uses an Oxford comma?',o:["I like cats dogs and rabbits.","I like cats, dogs, and rabbits.","I like cats, dogs and, rabbits.","I like, cats, dogs and rabbits."],a:"I like cats, dogs, and rabbits."},
         {t:'m',q:'Parenthetical commas are used around:',o:['Lists','Extra information that could be removed','Questions','Commands'],a:'Extra information that could be removed'},
       ]},
       {id:'apostrophes',title:'Apostrophes',emoji:"'",qs:[
@@ -691,7 +799,7 @@ Amelia:{
         {t:'m',q:'"The ___ of the storm was devastating."',o:["affect","effect","afect","efect"],a:"effect"},
         {t:'m',q:'Which is correctly spelt?',o:["beleive","believe","beleave","beleve"],a:"believe"},
         {t:'m',q:'"___ or ___?" — homophones of "pear" and "pair":',o:["paire/pear","pair/pare","pear/pair","pere/pair"],a:"pear/pair"},
-        {t:'m',q:'"She ___ the door open." (past of hold)',o:["holded","held","hold","holded"],a:"held"},
+        {t:'m',q:'"He ___ the door open." (past of hold)',o:["holded","held","hold","holded"],a:"held"},
         {t:'m',q:'"The ___ of the class was 28." (number)',o:["number","amount","quantity","sum"],a:"number"},
         {t:'m',q:'"He looked ___ the window." (through/threw)',o:["threw","through","thru","throo"],a:"through"},
         {t:'m',q:'"I ___ here since Monday." (correct form)',o:["am","was","have been","had been"],a:"have been"},
@@ -783,14 +891,14 @@ Adela:{
       {id:'ai_ee',title:'ai / ee / igh / oa',emoji:'🌈',qs:[
         {t:'p',w:'rain',e:'🌧️'},{t:'p',w:'feet',e:'🦶'},{t:'p',w:'night',e:'🌙'},
         {t:'p',w:'boat',e:'⛵'},{t:'p',w:'tail',e:'🦊'},{t:'p',w:'tree',e:'🌳'},
-        {t:'p',w:'light',e:'💡'},{t:'p',w:'road',e:'🛣️'},{t:'p',w:'snail',e:'🐌'},
-        {t:'p',w:'sleep',e:'😴'},{t:'p',w:'bright',e:'☀️'},{t:'p',w:'coat',e:'🧥'},
-        {t:'p',w:'chain',e:'⛓️'},{t:'p',w:'clean',e:'🧹'},{t:'p',w:'flight',e:'✈️'},
-        {t:'p',w:'float',e:'🎈'},{t:'p',w:'grain',e:'🌾'},{t:'p',w:'green',e:'🟢'},
-        {t:'p',w:'groan',e:'😩'},{t:'p',w:'plain',e:'🏔️'},{t:'p',w:'right',e:'✅'},
-        {t:'p',w:'sheet',e:'🛏️'},{t:'p',w:'sight',e:'👁️'},{t:'p',w:'sleet',e:'🌨️'},
-        {t:'p',w:'steam',e:'♨️'},{t:'p',w:'stain',e:'👕'},{t:'p',w:'throat',e:'🗣️'},
-        {t:'p',w:'tight',e:'👖'},{t:'p',w:'toast',e:'🍞'},{t:'p',w:'wheat',e:'🌾'},
+        {t:'p',w:'snail',e:'🐌'},{t:'p',w:'sleep',e:'😴'},{t:'p',w:'light',e:'💡'},
+        {t:'p',w:'road',e:'🛣️'},{t:'p',w:'chain',e:'⛓️'},{t:'p',w:'clean',e:'🧹'},
+        {t:'p',w:'flight',e:'✈️'},{t:'p',w:'float',e:'🎈'},{t:'p',w:'grain',e:'🌾'},
+        {t:'p',w:'green',e:'🟢'},{t:'p',w:'groan',e:'😩'},{t:'p',w:'plain',e:'🏔️'},
+        {t:'p',w:'right',e:'✅'},{t:'p',w:'sheet',e:'🛏️'},{t:'p',w:'sight',e:'👁️'},
+        {t:'p',w:'sleet',e:'🌨️'},{t:'p',w:'steam',e:'♨️'},{t:'p',w:'stain',e:'👕'},
+        {t:'p',w:'throat',e:'🗣️'},{t:'p',w:'tight',e:'👖'},{t:'p',w:'toast',e:'🍞'},
+        {t:'p',w:'wheat',e:'🌾'},
       ]},
       {id:'trickyw',title:'Tricky Words',emoji:'⭐',qs:[
         {t:'p',w:'the',e:'👆'},{t:'p',w:'said',e:'💬'},{t:'p',w:'have',e:'✋'},
@@ -982,6 +1090,35 @@ Adela:{
         {t:'m',q:'10 - ? = 7',o:['2','3','4','5'],a:'3'},
         {t:'i',q:'1, 2, 3, ?, 5, 6',a:'4'},
         {t:'m',q:'5, ?, 9 — counting in 2s, what is missing?',o:['6','7','8','10'],a:'7'},
+        {t:'i',q:'Count by 3s: 3, 6, 9, 12, ?',a:'15'},
+        {t:'i',q:'Count by 3s: 15, 18, 21, ?',a:'24'},
+        {t:'i',q:'Count by 4s: 4, 8, 12, 16, ?',a:'20'},
+        {t:'i',q:'Count by 4s: 20, 24, 28, ?',a:'32'},
+        {t:'i',q:'Count by 5s: 10, 15, 20, 25, ?',a:'30'},
+        {t:'i',q:'Count by 5s: 35, 40, 45, ?',a:'50'},
+        {t:'i',q:'Count by 10s: 20, 30, 40, 50, ?',a:'60'},
+        {t:'i',q:'Count by 10s: 70, 80, 90, ?',a:'100'},
+        {t:'m',q:'Which number is between 15 and 17?',o:['14','16','18','19'],a:'16'},
+        {t:'m',q:'Which number is between 28 and 30?',o:['27','29','31','32'],a:'29'},
+        {t:'m',q:'Order from smallest: 12, 15, 11, 14, 13',o:['11,12,13,14,15','15,14,13,12,11','12,11,14,13,15','11,13,12,14,15'],a:'11,12,13,14,15'},
+        {t:'m',q:'Order from largest: 25, 22, 24, 21, 23',o:['25,24,23,22,21','21,22,23,24,25','24,25,23,22,21','22,21,24,23,25'],a:'25,24,23,22,21'},
+        {t:'m',q:'What number comes after 19?',o:['18','20','21','22'],a:'20'},
+        {t:'m',q:'What number comes before 30?',o:['28','29','31','32'],a:'29'},
+        {t:'m',q:'Which is the smallest number?',o:['17','15','19','13'],a:'13'},
+        {t:'m',q:'Which is the largest number?',o:['33','37','31','39'],a:'39'},
+        {t:'m',q:'How many fingers and toes altogether?',o:['10','15','20','25'],a:'20'},
+        {t:'m',q:'A week has 7 days. How many days in 2 weeks?',o:['12','14','16','18'],a:'14'},
+        {t:'m',q:'A month has about 30 days. How many days in 3 months?',o:['60','90','120','150'],a:'90'},
+        {t:'m',q:'If today is the 25th, what date is in 5 days?',o:['29','30','31','1st'],a:'30'},
+        {t:'m',q:'If today is the 28th, what date is in 3 days?',o:['31','1st','2nd','3rd'],a:'31'},
+        {t:'m',q:'How many legs do 3 dogs have?',o:'12',o:'14',o:'16',o:'18',a:'12'},
+        {t:'m',q:'How many legs do 4 spiders have?',o:'24',o:'28',o:'32',o:'36',a:'32'},
+        {t:'m',q:'How many wheels do 5 bicycles have?',o:'8',o:'10',o:'12',o:'14',a:'10'},
+        {t:'m',q:'How many wheels do 3 tricycles have?',o:'6',o:'9',o:'12',o:'15',a:'9'},
+        {t:'m',q:'How many sides do 2 squares have?',o:'6',o:'8',o:'10',o:'12',a:'8'},
+        {t:'m',q:'How many sides do 3 triangles have?',o:'6',o:'9',o:'12',o:'15',a:'9'},
+        {t:'m',q:'How many corners do 4 rectangles have?',o:'8',o:'12',o:'16',o:'20',a:'16'},
+        {t:'m',q:'How many corners do 2 pentagons have?',o:'8',o:'10',o:'12',o:'14',a:'10'},
       ]},
     ]
   },
@@ -1022,846 +1159,3 @@ Adela:{
         {t:'w',char:'u',label:'lowercase u practice',hint:'Both sides should be the same height'},
         {t:'w',char:'i',label:'lowercase i practice',hint:'Remember the dot — it goes right above the stick'},
       ]},
-      {id:'wcon1',title:'Letters s t p n d',emoji:'🔡',qs:[
-        {t:'w',char:'s',label:'lowercase s',hint:'A wiggly snake shape'},
-        {t:'w',char:'t',label:'lowercase t',hint:'Tall stick down, little cross near the top'},
-        {t:'w',char:'p',label:'lowercase p',hint:'Stick down below the line, circle on the right'},
-        {t:'w',char:'n',label:'lowercase n',hint:'Down, then a hump to the right'},
-        {t:'w',char:'d',label:'lowercase d',hint:'Circle first, then a tall stick up on the right'},
-        {t:'w',char:'b',label:'lowercase b',hint:'Tall stick down, then a bump to the right'},
-        {t:'w',char:'c',label:'lowercase c',hint:'A curve that opens to the right'},
-        {t:'w',char:'g',label:'lowercase g',hint:'Circle, then tail curling down below the line'},
-        {t:'w',char:'h',label:'lowercase h',hint:'Tall stick, then a hump to the right'},
-        {t:'w',char:'m',label:'lowercase m',hint:'Down, then two humps'},
-        {t:'w',char:'S',label:'capital S',hint:'Like the small s but bigger and bolder'},
-        {t:'w',char:'T',label:'capital T',hint:'Line across the top, tall stick straight down'},
-        {t:'w',char:'B',label:'capital B',hint:'Line down, then two bumps on the right'},
-        {t:'w',char:'D',label:'capital D',hint:'Line down, then one big curve to the right'},
-        {t:'w',char:'M',label:'capital M',hint:'Two tall lines with two diagonals in the middle forming a V'},
-      ]},
-      {id:'wcon2',title:'Letters f j k l r',emoji:'🔡',qs:[
-        {t:'w',char:'f',label:'lowercase f',hint:'Curved tall stick, little cross near top'},
-        {t:'w',char:'j',label:'lowercase j',hint:'Stick down with a hook, dot on top'},
-        {t:'w',char:'k',label:'lowercase k',hint:'Tall stick, then two diagonal lines from the middle'},
-        {t:'w',char:'l',label:'lowercase l',hint:'Just a tall straight line down'},
-        {t:'w',char:'r',label:'lowercase r',hint:'Down, then a little bump to the right at the top'},
-        {t:'w',char:'v',label:'lowercase v',hint:'Down to a point, back up — like a V!'},
-        {t:'w',char:'w',label:'lowercase w',hint:'Two V shapes joined together'},
-        {t:'w',char:'x',label:'lowercase x',hint:'Two diagonal lines crossing in the middle'},
-        {t:'w',char:'y',label:'lowercase y',hint:'Two lines meeting, then tail below the line'},
-        {t:'w',char:'z',label:'lowercase z',hint:'Across, diagonal down, across again'},
-        {t:'w',char:'F',label:'capital F',hint:'Line down, line across top, shorter line across middle'},
-        {t:'w',char:'K',label:'capital K',hint:'Line down, two diagonal lines from the middle'},
-        {t:'w',char:'L',label:'capital L',hint:'Line down, short line right at the bottom'},
-        {t:'w',char:'V',label:'capital V',hint:'Two diagonal lines meeting at the bottom point'},
-        {t:'w',char:'Z',label:'capital Z',hint:'Across top, diagonal to bottom left, across bottom'},
-      ]},
-      {id:'wwords1',title:'Simple Words',emoji:'📝',qs:[
-        {t:'w',char:'sat',label:'word: sat',hint:'s - a - t'},
-        {t:'w',char:'pin',label:'word: pin',hint:'p - i - n'},
-        {t:'w',char:'tap',label:'word: tap',hint:'t - a - p'},
-        {t:'w',char:'net',label:'word: net',hint:'n - e - t'},
-        {t:'w',char:'big',label:'word: big',hint:'b - i - g'},
-        {t:'w',char:'hot',label:'word: hot',hint:'h - o - t'},
-        {t:'w',char:'cap',label:'word: cap',hint:'c - a - p'},
-        {t:'w',char:'dog',label:'word: dog',hint:'d - o - g'},
-        {t:'w',char:'sit',label:'word: sit',hint:'s - i - t'},
-        {t:'w',char:'pet',label:'word: pet',hint:'p - e - t'},
-        {t:'w',char:'cat',label:'word: cat',hint:'c - a - t'},
-        {t:'w',char:'hen',label:'word: hen',hint:'h - e - n'},
-        {t:'w',char:'mud',label:'word: mud',hint:'m - u - d'},
-        {t:'w',char:'bed',label:'word: bed',hint:'b - e - d'},
-        {t:'w',char:'cup',label:'word: cup',hint:'c - u - p'},
-      ]},
-      {id:'wwords2',title:'/oo/ Words',emoji:'🌙',qs:[
-        {t:'w',char:'moon',label:'word: moon',hint:'m - oo - n'},
-        {t:'w',char:'food',label:'word: food',hint:'f - oo - d'},
-        {t:'w',char:'book',label:'word: book',hint:'b - oo - k'},
-        {t:'w',char:'look',label:'word: look',hint:'l - oo - k'},
-        {t:'w',char:'good',label:'word: good',hint:'g - oo - d'},
-        {t:'w',char:'cool',label:'word: cool',hint:'c - oo - l'},
-        {t:'w',char:'pool',label:'word: pool',hint:'p - oo - l'},
-        {t:'w',char:'roof',label:'word: roof',hint:'r - oo - f'},
-        {t:'w',char:'wood',label:'word: wood',hint:'w - oo - d'},
-        {t:'w',char:'zoom',label:'word: zoom',hint:'z - oo - m'},
-        {t:'w',char:'boot',label:'word: boot',hint:'b - oo - t'},
-        {t:'w',char:'soon',label:'word: soon',hint:'s - oo - n'},
-        {t:'w',char:'tool',label:'word: tool',hint:'t - oo - l'},
-        {t:'w',char:'foot',label:'word: foot',hint:'f - oo - t (short oo sound)'},
-        {t:'w',char:'hook',label:'word: hook',hint:'h - oo - k (short oo sound)'},
-      ]},
-    ]
-  }
-}
-};
-
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
-let STATE = {};
-let TASK = {};
-
-function defaultProgress() {
-  const p = {};
-  for (const child of ['Amelia','Adela']) {
-    p[child] = { xp: 0 };
-    for (const subj of Object.keys(CUR[child])) {
-      p[child][subj] = CUR[child][subj].levels.map((_, i) => i === 0 ? 0 : null);
-    }
-  }
-  return p;
-}
-
-function loadState() {
-  try {
-    const s = localStorage.getItem('studytime_v2');
-    STATE = s ? JSON.parse(s) : defaultProgress();
-    // ensure all levels exist if curriculum was extended
-    for (const child of ['Amelia','Adela']) {
-      if (!STATE[child]) STATE[child] = { xp: 0 };
-      for (const subj of Object.keys(CUR[child])) {
-        if (!STATE[child][subj]) {
-          STATE[child][subj] = CUR[child][subj].levels.map((_,i)=>i===0?0:null);
-        } else {
-          // Extend array if new levels were added to curriculum after last save
-          const saved = STATE[child][subj];
-          const cur   = CUR[child][subj].levels;
-          for (let i = saved.length; i < cur.length; i++) {
-            // Unlock new level only if the previous level has been passed
-            saved.push(saved[i-1] > 0 ? 0 : null);
-          }
-        }
-      }
-    }
-  } catch(e) { STATE = defaultProgress(); }
-}
-
-function saveState() {
-  localStorage.setItem('studytime_v2', JSON.stringify(STATE));
-}
-
-// ═══════════════════════════════════════════════
-// UTILS
-// ═══════════════════════════════════════════════
-function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
-function lev(a,b){const m=a.length,n=b.length,d=Array.from({length:m+1},(_,i)=>Array.from({length:n+1},(_,j)=>i===0?j:j===0?i:0));for(let i=1;i<=m;i++)for(let j=1;j<=n;j++)d[i][j]=a[i-1]===b[j-1]?d[i-1][j-1]:1+Math.min(d[i-1][j],d[i][j-1],d[i-1][j-1]);return d[m][n];}
-
-function showStarBurst() {
-  const star = document.createElement('div');
-  star.className = 'star-burst';
-  star.textContent = '⭐';
-  document.body.appendChild(star);
-  setTimeout(() => star.remove(), 900);
-}
-
-function confetti() {
-  const c = document.getElementById('confetti-wrap');
-  c.innerHTML = '';
-  const cols = ["#f87171","#fb923c","#fbbf24","#34d399","#60a5fa","#a78bfa","#f472b6"];
-  for (let i = 0; i < 30; i++) {
-    const d = document.createElement('div');
-    const s = 5 + Math.random() * 8;
-    d.style.cssText = `position:fixed;top:-20px;left:${Math.random()*100}%;width:${s}px;height:${s}px;background:${cols[i%7]};border-radius:2px;animation:fall 1.6s ${Math.random()*0.6}s ease-in forwards;pointer-events:none;z-index:9999;`;
-    c.appendChild(d);
-  }
-  setTimeout(() => c.innerHTML = '', 2500);
-}
-
-function starBar(score, total) {
-  const pct = total ? Math.round(score/total*100) : 0;
-  const stars = pct>=90?3:pct>=70?2:pct>=50?1:0;
-  return `<div style="background:rgba(255,255,255,0.6);border-radius:12px;padding:7px 12px;display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-    <div style="flex:1;background:rgba(0,0,0,0.1);border-radius:8px;height:10px;overflow:hidden;"><div class="bar-fill" style="width:${pct}%;height:100%;background:linear-gradient(90deg,#fbbf24,#f59e0b);border-radius:8px;"></div></div>
-    <span style="font-size:16px;">${[...Array(3)].map((_,i)=>i<stars?'⭐':'☆').join('')}</span>
-  </div>`;
-}
-
-async function notify(msg) {
-  const topic = localStorage.getItem('ntfyTopic') || '';
-  if (!topic) return;
-  try { await fetch(`https://ntfy.sh/${topic}`, {method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({topic,title:'📚 Study Time!',message:msg,priority:3})}); } catch(e){}
-}
-
-// ═══════════════════════════════════════════════
-// NAVIGATION
-// ═══════════════════════════════════════════════
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen-'+id).classList.add('active');
-  window.scrollTo(0,0);
-}
-
-function goHome() {
-  document.getElementById('xp-display').style.display = 'none';
-  showScreen('home');
-}
-
-function selectChild(child) {
-  TASK.child = child;
-  localStorage.setItem('lastChild', child); // persist so refresh restores the right child
-  document.getElementById('xp-display').style.display = 'inline';
-  document.getElementById('xp-display').textContent = `⭐ ${STATE[child].xp} XP`;
-  renderChildHome(child);
-  showScreen('child');
-}
-
-function renderChildHome(child) {
-  const cfg = CUR[child];
-  const isAmelia = child === 'Amelia';
-  const headerColor = isAmelia ? '#1e40af' : '#065f46';
-  const emoji = isAmelia ? '🦋' : '🌸';
-  const badgeClass = isAmelia ? 'age-badge-primary' : 'age-badge-foundation';
-  const badgeText = isAmelia ? 'Year 5/6 · Ages 9–11' : 'Foundation · Ages 4–6';
-  let html = `<div style="text-align:center;margin-bottom:20px;">
-    <div style="font-size:52px;">${emoji}</div>
-    <h2 style="font-weight:900;color:${headerColor};margin:4px 0;">Hi ${child}! 👋</h2>
-    <span class="age-badge ${badgeClass}" style="margin-bottom:10px;display:inline-block;">${badgeText}</span>
-    <p style="color:${isAmelia?'#3b82f6':'#059669'};font-weight:700;margin-top:6px;">Choose a subject:</p>
-  </div>`;
-  for (const [subjKey, subj] of Object.entries(cfg)) {
-    const levels = STATE[child][subjKey];
-    const done = levels.filter(s => s !== null && s > 0).length;
-    const total = levels.length;
-    const currentIdx = levels.findIndex(s => s === 0);
-    const currentLevel = currentIdx >= 0 ? subj.levels[currentIdx] : null;
-    html += `<button onclick="showMap('${child}','${subjKey}')" style="background:${subj.color};border-radius:22px;padding:18px 20px;color:#fff;display:flex;align-items:center;gap:14px;width:100%;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,0,0,0.15);text-align:left;">
-      <span style="font-size:40px;">${subj.emoji}</span>
-      <div style="flex:1;">
-        <div style="font-size:19px;font-weight:900;">${subj.title}</div>
-        <div style="font-size:13px;opacity:0.9;margin-top:2px;">${done}/${total} levels complete${currentLevel?` · Next: ${currentLevel.title}`:' · All done!'}</div>
-        <div style="background:rgba(255,255,255,0.3);border-radius:6px;height:6px;margin-top:6px;overflow:hidden;"><div style="background:#fff;height:100%;width:${Math.round(done/total*100)}%;border-radius:6px;transition:width 0.4s;"></div></div>
-      </div>
-    </button>`;
-  }
-  document.getElementById('screen-child').innerHTML = html;
-}
-
-function showMap(child, subj) {
-  TASK.child = child; TASK.subj = subj;
-  renderMap(child, subj);
-  showScreen('map');
-}
-
-function renderMap(child, subj) {
-  const cfg = CUR[child][subj];
-  const levels = STATE[child][subj];
-  const isAmelia = child === 'Amelia';
-  const mapBadgeClass = isAmelia ? 'age-badge-primary' : 'age-badge-foundation';
-  const mapBadgeText = isAmelia ? 'Year 5/6' : 'Foundation';
-  let html = `<div style="text-align:center;margin-bottom:16px;">
-    <div style="font-size:36px;">${cfg.emoji}</div>
-    <h2 style="font-weight:900;color:#1e40af;margin:4px 0;">${cfg.title}</h2>
-    <span class="age-badge ${mapBadgeClass}" style="margin-bottom:6px;display:inline-block;">${mapBadgeText}</span>
-    <p style="color:#6b7280;font-size:14px;font-weight:700;margin-top:4px;">Reach 70% to unlock the next level</p>
-  </div>`;
-  cfg.levels.forEach((level, i) => {
-    const stars = levels[i];
-    const locked = stars === null;
-    const done = stars !== null && stars > 0;
-    const current = stars === 0;
-    let nodeClass = locked ? 'level-locked' : done ? 'level-done' : 'level-unlocked';
-    let onclick = locked ? '' : `onclick="startLevel('${child}','${subj}',${i})"`;
-    let statusIcon = locked ? '🔒' : done ? ['','⭐','⭐⭐','⭐⭐⭐'][stars] : '▶️';
-    let borderStyle = current ? 'border:2px solid #7c3aed;' : done ? 'border:2px solid #22c55e;' : '';
-    html += `<div class="level-node ${nodeClass}" ${onclick} style="${borderStyle}cursor:${locked?'default':'pointer'};">
-      <div style="font-size:36px;min-width:44px;text-align:center;">${level.emoji}</div>
-      <div style="flex:1;">
-        <div style="font-size:16px;font-weight:800;color:${locked?'#94a3b8':done?'#166534':'#1e1b4b'};">
-          Level ${i+1}: ${level.title}
-        </div>
-        <div style="font-size:13px;color:#6b7280;margin-top:2px;">${locked?'Complete previous level to unlock':done?'Completed!':'Ready to play'}</div>
-      </div>
-      <div style="font-size:18px;min-width:40px;text-align:right;">${statusIcon}</div>
-    </div>`;
-    if (i < cfg.levels.length - 1) {
-      html += `<div style="text-align:center;color:${levels[i+1]===null?'#cbd5e1':'#a78bfa'};font-size:20px;margin:-4px 0;">↓</div>`;
-    }
-  });
-  document.getElementById('screen-map').innerHTML = html;
-}
-
-// ═══════════════════════════════════════════════
-// TASK ENGINE
-// ═══════════════════════════════════════════════
-function startLevel(child, subj, levelIdx) {
-  TASK = { child, subj, levelIdx, qIdx: 0, score: 0, feedback: null, orderSel: [], orderRem: [], compPhase: 'read', compQIdx: 0, compScore: 0 };
-  const level = CUR[child][subj].levels[levelIdx];
-  // Handle comprehension specially
-  if (level.qs[0] && level.qs[0].t === 'comp') {
-    TASK.passages = level.qs.filter(q => q.t === 'comp');
-    TASK.passIdx = 0;
-    TASK.compPhase = 'read';
-    TASK.compQIdx = 0;
-    TASK.compScore = 0;
-    renderComp();
-    showScreen('task');
-    return;
-  }
-  // Writing tasks: use all questions (shuffle but keep all)
-  const isWriting = level.qs.length > 0 && level.qs[0].t === 'w';
-  // Normal task: pick 8 questions
-  TASK.qs = isWriting 
-    ? shuffle(level.qs.filter(q => q.t !== 'comp')).slice(0, 10)
-    : shuffle(level.qs.filter(q => q.t !== 'comp')).slice(0, 8);
-  // init order if first q is ordering
-  if (TASK.qs[0] && TASK.qs[0].t === 'o') { TASK.orderSel=[]; TASK.orderRem=shuffle([...TASK.qs[0].n]); }
-  renderQ();
-  showScreen('task');
-}
-
-function renderQ() {
-  if (TASK.qIdx >= TASK.qs.length) { finishLevel(); return; }
-  const q = TASK.qs[TASK.qIdx];
-  if (q.t === 'o') { renderOrder(q); return; }
-  if (q.t === 'p') { renderPhonics(q); return; }
-  if (q.t === 'w') { renderWriting(q); return; }
-  if (q.t === 'm') { renderMCQ(q); return; }
-  renderInput(q);
-}
-
-function renderMCQ(q) {
-  const fb = TASK.feedback;
-  const opts = fb ? q.o : shuffle(q.o);
-  if (!fb) TASK._shuffled = opts;
-  const displayOpts = fb ? TASK._shuffled : opts;
-  let optsHtml = displayOpts.map(o => {
-    let bg = '#f8fafc', border = '#e2e8f0', color = '#1e1b4b';
-    if (fb) {
-      if (o === q.a) { bg='#dcfce7'; border='#22c55e'; color='#166534'; }
-      else if (o === fb.chosen && o !== q.a) { bg='#fee2e2'; border='#ef4444'; color='#991b1b'; }
-    }
-    return `<button class="mcq-btn" onclick="${fb?'':'mcqPick(\''+o.replace(/'/g,"\\'")+'\')'}" style="background:${bg};border-color:${border};color:${color};">${o}</button>`;
-  }).join('');
-  document.getElementById('screen-task').innerHTML = `<div style="max-width:500px;margin:0 auto;">
-    ${starBar(TASK.score, TASK.qIdx)}
-    <div style="text-align:center;color:#7c3aed;font-weight:700;font-size:13px;margin-bottom:8px;">Question ${TASK.qIdx+1} of ${TASK.qs.length}</div>
-    <div class="pop" style="background:${CUR[TASK.child][TASK.subj].color};border-radius:20px;padding:20px;color:#fff;font-weight:800;font-size:17px;line-height:1.5;margin-bottom:16px;">${q.q}</div>
-    ${optsHtml}
-    ${fb ? `<div class="pop" style="background:${fb.ok?'linear-gradient(135deg,#22c55e,#16a34a)':'linear-gradient(135deg,#ef4444,#dc2626)'};border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:16px;margin-top:4px;">
-      ${fb.ok?'🎉 Correct!':'❌ The answer is: '+q.a}
-      <button onclick="nextQ()" style="display:block;margin:8px auto 0;padding:8px 24px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:${fb.ok?'#16a34a':'#dc2626'};">Next →</button>
-    </div>` : ''}
-  </div>`;
-}
-
-function mcqPick(chosen) {
-  const q = TASK.qs[TASK.qIdx];
-  const ok = chosen === q.a;
-  if (ok) { TASK.score++; confetti(); showStarBurst(); }
-  TASK.feedback = { ok, chosen };
-  renderMCQ(q);
-}
-
-function renderInput(q) {
-  const fb = TASK.feedback;
-  document.getElementById('screen-task').innerHTML = `<div style="max-width:500px;margin:0 auto;">
-    ${starBar(TASK.score, TASK.qIdx)}
-    <div style="text-align:center;color:#7c3aed;font-weight:700;font-size:13px;margin-bottom:8px;">Question ${TASK.qIdx+1} of ${TASK.qs.length}</div>
-    <div class="pop" style="background:${CUR[TASK.child][TASK.subj].color};border-radius:20px;padding:22px;color:#fff;font-weight:800;font-size:18px;text-align:center;margin-bottom:16px;">${q.q}</div>
-    <input id="ans-input" type="text" value="${fb?q.a:''}" placeholder="Type your answer…" ${fb?'disabled':''} onkeydown="if(event.key==='Enter')checkInput()"
-      style="width:100%;padding:14px 18px;font-size:22px;font-weight:800;border-radius:14px;border:3px solid ${fb?fb.ok?'#22c55e':'#ef4444':'#e9d5ff'};outline:none;text-align:center;background:${fb?fb.ok?'#f0fdf4':'#fef2f2':'#faf5ff'};color:#4c1d95;">
-    ${!fb?`<button onclick="checkInput()" style="width:100%;margin-top:10px;padding:13px;font-size:17px;font-weight:800;border-radius:13px;background:${CUR[TASK.child][TASK.subj].color};color:#fff;">Check ✓</button>`:''}
-    ${fb?`<div class="pop" style="background:${fb.ok?'linear-gradient(135deg,#22c55e,#16a34a)':'linear-gradient(135deg,#ef4444,#dc2626)'};border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:16px;margin-top:10px;">
-      ${fb.ok?'🎉 Brilliant!':'❌ Answer: '+q.a}
-      <button onclick="nextQ()" style="display:block;margin:8px auto 0;padding:8px 24px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:${fb.ok?'#16a34a':'#dc2626'};">Next →</button>
-    </div>` : ''}
-  </div>`;
-  if (!fb) setTimeout(() => { const el=document.getElementById('ans-input'); if(el) el.focus(); }, 80);
-}
-
-function checkInput() {
-  const el = document.getElementById('ans-input');
-  if (!el || !el.value.trim()) return;
-  const q = TASK.qs[TASK.qIdx];
-  const given  = el.value.trim().toLowerCase();
-  const target = q.a.trim().toLowerCase();
-  // Primary: exact string match (handles fractions, words, £ values, etc.)
-  let ok = given === target;
-  // Fallback: numeric equality so '12.10' matches '12.1', '100' matches '100.0'
-  if (!ok) {
-    const gNum = parseFloat(given), tNum = parseFloat(target);
-    if (!isNaN(gNum) && !isNaN(tNum) && String(given).replace(/,/g,'') !== '' ) {
-      ok = Math.abs(gNum - tNum) < 1e-9;
-    }
-  }
-  if (ok) { TASK.score++; confetti(); showStarBurst(); }
-  TASK.feedback = { ok };
-  renderInput(q);
-}
-
-function initOrder() {
-  const q = TASK.qs[TASK.qIdx];
-  TASK.orderSel = [];
-  TASK.orderRem = shuffle([...q.n]);
-}
-
-function renderOrder(q) {
-  const fb = TASK.feedback;
-  const selHtml = TASK.orderSel.map((n,i) => `<button onclick="${fb?'':'removeChip('+i+')'}" style="padding:8px 14px;border-radius:9px;background:#0ea5e9;color:#fff;font-weight:800;font-size:17px;margin:3px;">${n}</button>`).join('') || '<span style="color:#94a3b8;font-size:14px;">Tap numbers below to order them</span>';
-  const remHtml = TASK.orderRem.map(n => `<button onclick="${fb?'':'pickChip(\''+n+'\')'}" style="padding:9px 16px;border-radius:9px;border:2px solid #bae6fd;background:#fff;color:#0369a1;font-weight:800;font-size:17px;margin:3px;">${n}</button>`).join('');
-  document.getElementById('screen-task').innerHTML = `<div style="max-width:500px;margin:0 auto;">
-    ${starBar(TASK.score, TASK.qIdx)}
-    <div style="text-align:center;color:#0369a1;font-weight:700;font-size:13px;margin-bottom:8px;">Question ${TASK.qIdx+1} of ${TASK.qs.length}</div>
-    <div class="pop" style="background:linear-gradient(135deg,#0ea5e9,#0284c7);border-radius:20px;padding:20px;color:#fff;font-weight:800;font-size:18px;text-align:center;margin-bottom:14px;">${q.q}</div>
-    <div style="background:#f0f9ff;border-radius:14px;padding:14px;min-height:56px;margin-bottom:12px;">
-      <div style="font-size:11px;font-weight:800;color:#0369a1;margin-bottom:6px;">YOUR ORDER (tap to remove):</div>
-      <div>${selHtml}</div>
-    </div>
-    <div style="display:flex;flex-wrap:wrap;justify-content:center;margin-bottom:12px;">${remHtml}</div>
-    ${!fb && TASK.orderSel.length === q.n.length ? `<button onclick="checkOrder()" style="width:100%;padding:13px;font-size:17px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#0ea5e9,#0284c7);color:#fff;">Check my order ✓</button>` : ''}
-    ${fb?`<div class="pop" style="background:${fb.ok?'linear-gradient(135deg,#22c55e,#16a34a)':'linear-gradient(135deg,#ef4444,#dc2626)'};border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:15px;margin-top:4px;">
-      ${fb.ok?'🎉 Perfect order!':'Correct: '+q.a.join(' → ')}
-      <button onclick="nextQ()" style="display:block;margin:8px auto 0;padding:8px 24px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:${fb.ok?'#16a34a':'#dc2626'};">Next →</button>
-    </div>`:''}
-  </div>`;
-}
-
-function pickChip(n) { TASK.orderSel.push(n); TASK.orderRem = TASK.orderRem.filter(x=>x!==n); renderOrder(TASK.qs[TASK.qIdx]); }
-function removeChip(i) { TASK.orderRem.push(TASK.orderSel[i]); TASK.orderSel.splice(i,1); renderOrder(TASK.qs[TASK.qIdx]); }
-function checkOrder() {
-  const q = TASK.qs[TASK.qIdx];
-  const ok = JSON.stringify(TASK.orderSel) === JSON.stringify(q.a);
-  if (ok) { TASK.score++; confetti(); }
-  TASK.feedback = { ok };
-  renderOrder(q);
-}
-
-function renderPhonics(q) {
-  const fb = TASK.feedback;
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  document.getElementById('screen-task').innerHTML = `<div style="max-width:400px;margin:0 auto;text-align:center;">
-    ${starBar(TASK.score, TASK.qIdx)}
-    <div style="color:#059669;font-weight:700;font-size:13px;margin-bottom:6px;">Word ${TASK.qIdx+1} of ${TASK.qs.length}</div>
-    ${!SR?`<div style="background:#fef9c3;border-radius:10px;padding:7px 12px;font-size:12px;color:#854d0e;font-weight:700;margin-bottom:8px;">📱 Use Safari for voice — or type the word below</div>`:''}
-    <div style="background:linear-gradient(135deg,#34d399,#059669);border-radius:28px;padding:28px 20px;margin-bottom:16px;box-shadow:0 6px 24px rgba(52,211,153,0.35);">
-      <div style="font-size:64px;">${q.e}</div>
-      <div style="font-size:52px;font-weight:900;color:#fff;letter-spacing:8px;margin-top:6px;">${q.w}</div>
-    </div>
-    ${!fb && SR ? `<button id="mic-btn" onclick="startListen()" style="padding:16px 32px;font-size:18px;font-weight:800;border-radius:18px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;box-shadow:0 4px 16px rgba(16,185,129,0.4);">🎤 Tap to Read</button>` : ''}
-    ${!fb && !SR ? `<input id="ph-input" type="text" placeholder="Type the word…" onkeydown="if(event.key==='Enter')checkPhType()" style="width:100%;padding:13px;font-size:20px;font-weight:800;border-radius:13px;border:3px solid #6ee7b7;outline:none;text-align:center;background:#f0fdf4;color:#065f46;letter-spacing:4px;">
-      <button onclick="checkPhType()" style="width:100%;margin-top:9px;padding:13px;font-size:17px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#10b981,#059669);color:#fff;">Check ✓</button>` : ''}
-    <div id="heard-div" style="margin-top:8px;font-size:13px;color:#6b7280;"></div>
-    ${fb?`<div class="pop" style="background:${fb.ok?'linear-gradient(135deg,#22c55e,#16a34a)':'linear-gradient(135deg,#f97316,#ea580c)'};border-radius:18px;padding:18px;color:#fff;font-weight:800;font-size:20px;margin-top:10px;">
-      ${fb.ok?'🌟 Amazing!':'Let\'s try again!'}
-      ${fb.ok?`<button onclick="nextQ()" style="display:block;margin:10px auto 0;padding:8px 28px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:#16a34a;">Next word →</button>`:`
-        <div style="font-size:26px;letter-spacing:8px;margin:8px 0;">${q.w}</div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:8px;">
-          ${SR?`<button onclick="startListen()" style="padding:9px 18px;font-size:14px;font-weight:800;border-radius:10px;background:#fff;color:#ea580c;">Try again 🎤</button>`:`<button onclick="retryType()" style="padding:9px 18px;font-size:14px;font-weight:800;border-radius:10px;background:#fff;color:#ea580c;">Try again ✏️</button>`}
-          <button onclick="nextQ()" style="padding:9px 18px;font-size:14px;font-weight:800;border-radius:10px;background:rgba(255,255,255,0.3);color:#fff;">Skip →</button>
-        </div>`}
-    </div>`:''}
-  </div>`;
-  if (!fb && !SR) setTimeout(()=>{const el=document.getElementById('ph-input');if(el)el.focus();},80);
-}
-
-function startListen() {
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR) return;
-  const btn = document.getElementById('mic-btn');
-  if (btn) { btn.textContent='🎤 Listening…'; btn.style.background='#d1fae5'; btn.style.color='#059669'; btn.disabled=true; }
-  const r = new SR();
-  r.lang='en-GB'; r.continuous=false; r.interimResults=false;
-  r.onresult = e => {
-    const said = e.results[0][0].transcript.toLowerCase().trim();
-    const d = document.getElementById('heard-div');
-    if(d) d.innerHTML = `I heard: <strong>${said}</strong>`;
-    const target = TASK.qs[TASK.qIdx].w;
-    const ok = said===target || said.includes(target) || lev(said,target)<=1;
-    if(ok){TASK.score++;confetti();}
-    TASK.feedback = {ok};
-    renderPhonics(TASK.qs[TASK.qIdx]);
-  };
-  r.onerror = r.onend = () => {
-    if (!TASK.feedback) {
-      const btn=document.getElementById('mic-btn');
-      if(btn){btn.textContent='🎤 Tap to Read';btn.style.background='linear-gradient(135deg,#10b981,#059669)';btn.style.color='#fff';btn.disabled=false;}
-    }
-  };
-  r.start();
-}
-
-function checkPhType() {
-  const el = document.getElementById('ph-input');
-  if (!el || !el.value.trim()) return;
-  const target = TASK.qs[TASK.qIdx].w;
-  const ok = el.value.trim().toLowerCase()===target || lev(el.value.trim().toLowerCase(),target)<=1;
-  if(ok){TASK.score++;confetti();}
-  TASK.feedback={ok};
-  renderPhonics(TASK.qs[TASK.qIdx]);
-}
-
-function retryType() { TASK.feedback=null; renderPhonics(TASK.qs[TASK.qIdx]); }
-
-function nextQ() {
-  TASK.qIdx++;
-  TASK.feedback = null;
-  TASK._shuffled = null; // clear cached option order so next MCQ gets a fresh shuffle
-  TASK.orderSel = []; TASK.orderRem = [];
-  // Clear the container before rendering to guarantee no stale HTML carries over
-  const taskEl = document.getElementById('screen-task');
-  if (taskEl) taskEl.innerHTML = '';
-  const nq = TASK.qs[TASK.qIdx];
-  if (nq && nq.t === 'o') initOrder();
-  renderQ();
-}
-
-// ═══════════════════════════════════════════════
-// COMPREHENSION
-// ═══════════════════════════════════════════════
-function renderComp() {
-  const pass = TASK.passages[TASK.passIdx];
-  if (TASK.compPhase === 'read') {
-    document.getElementById('screen-task').innerHTML = `<div style="max-width:540px;margin:0 auto;">
-      <div style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:20px;padding:18px;margin-bottom:14px;color:#fff;text-align:center;">
-        <div style="font-size:32px;">${pass.emoji}</div>
-        <div style="font-size:20px;font-weight:800;">${pass.title}</div>
-        <div style="font-size:13px;opacity:0.9;margin-top:3px;">Passage ${TASK.passIdx+1} of ${TASK.passages.length} — Read carefully, then answer questions!</div>
-      </div>
-      <div style="background:#fdf4ff;border-radius:16px;padding:18px;font-size:15px;line-height:1.85;color:#4a044e;max-height:44vh;overflow-y:auto;border:2px solid #e9d5ff;margin-bottom:14px;white-space:pre-wrap;">${pass.text}</div>
-      <button onclick="startCompQs()" style="width:100%;padding:13px;font-size:17px;font-weight:800;border-radius:14px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">Ready for questions! 📝</button>
-    </div>`;
-  } else {
-    const q = pass.questions[TASK.compQIdx];
-    const fb = TASK.feedback;
-    document.getElementById('screen-task').innerHTML = `<div style="max-width:540px;margin:0 auto;">
-      ${starBar(TASK.compScore, TASK.compQIdx)}
-      <div style="text-align:center;color:#7c3aed;font-weight:700;font-size:13px;margin-bottom:8px;">Q${TASK.compQIdx+1} of ${pass.questions.length} — ${pass.title}</div>
-      <div class="pop" style="background:linear-gradient(135deg,#a855f7,#7c3aed);border-radius:18px;padding:18px;color:#fff;font-weight:800;font-size:16px;line-height:1.5;margin-bottom:14px;">${q.q}</div>
-      <textarea id="comp-ta" rows="4" placeholder="Write your answer in full sentences…" ${fb?'disabled':''} style="width:100%;padding:12px;font-size:14px;border-radius:14px;border:3px solid #e9d5ff;outline:none;resize:vertical;background:#faf5ff;color:#4c1d95;line-height:1.6;"></textarea>
-
-  ${!fb?`<button onclick="checkComp()" style="width:100%;margin-top:9px;padding:13px;font-size:17px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">Submit ✓</button>`:''}
-  ${fb?`<div class="pop" style="background:#f5f3ff;border-radius:14px;padding:14px;margin-top:10px;border:2px solid #c4b5fd;">
-    <div style="font-weight:800;color:#7c3aed;margin-bottom:5px;">📖 A great answer includes:</div>
-    <div style="color:#4c1d95;font-size:14px;line-height:1.6;">${q.model}</div>
-    <button onclick="nextComp()" style="display:block;margin:10px auto 0;padding:8px 24px;font-size:15px;font-weight:800;border-radius:10px;background:linear-gradient(135deg,#a855f7,#7c3aed);color:#fff;">Next →</button>
-  </div>`:''}
-</div>`;
-
-}
-}
-
-function startCompQs() { TASK.compPhase='questions'; TASK.compQIdx=0; renderComp(); }
-
-function checkComp() {
-const el = document.getElementById('comp-ta');
-if (!el || !el.value.trim()) return;
-const pts = el.value.trim().length > 20 ? 1 : 0;
-TASK.compScore += pts;
-TASK.feedback = {ok: pts===1};
-renderComp(); // was missing — screen never updated after Submit
-}
-
-function nextComp() {
-TASK.feedback = null;
-TASK.compQIdx++;
-const pass = TASK.passages[TASK.passIdx];
-if (TASK.compQIdx >= pass.questions.length) {
-TASK.passIdx++;
-if (TASK.passIdx >= TASK.passages.length) {
-// All passages done
-TASK.score = TASK.compScore;
-TASK.qs = { length: TASK.passages.reduce((t,p)=>t+p.questions.length,0) };
-finishLevel();
-return;
-}
-TASK.compPhase = 'read';
-TASK.compQIdx = 0;
-}
-renderComp();
-}
-
-// ═══════════════════════════════════════════════
-// WRITING TASK
-// ═══════════════════════════════════════════════
-let writeCtx = null;
-let writeDrawing = false;
-let writeHasContent = false;
-let writeAssessing = false;
-
-function renderWriting(q) {
-writeAssessing = false;
-writeHasContent = false;
-const isWord = q.char.length > 1;
-const fontSize = isWord ? (q.char.length > 4 ? '44px' : '60px') : '100px';
-document.getElementById('screen-task').innerHTML = `<div style="max-width:420px;margin:0 auto;text-align:center;">
-${starBar(TASK.score, TASK.qIdx)}
-<div style="color:#ec4899;font-weight:700;font-size:13px;margin-bottom:6px;">Writing ${TASK.qIdx+1} of ${TASK.qs.length}</div>
-<div style="background:linear-gradient(135deg,#f472b6,#ec4899);border-radius:20px;padding:14px 20px;margin-bottom:12px;color:#fff;box-shadow:0 6px 20px rgba(244,114,182,0.4);">
-<div style="font-size:13px;font-weight:700;opacity:0.9;margin-bottom:4px;">Write the ${q.label}</div>
-<div style="font-size:${fontSize};font-weight:900;letter-spacing:${isWord?'4px':'0'};line-height:1.1;">${q.char}</div>
-<div style="font-size:12px;opacity:0.8;margin-top:4px;">💡 ${q.hint}</div>
-</div>
-<div style="position:relative;margin:0 auto 10px;width:100%;max-width:320px;">
-<canvas id="write-canvas" width="320" height="200"
-style="border-radius:16px;border:3px solid #f9a8d4;background:#fff;touch-action:none;display:block;width:100%;cursor:crosshair;">
-</canvas>
-</div>
-<div style="display:flex;gap:10px;max-width:320px;margin:0 auto;">
-<button onclick="clearWriteCanvas()" style="flex:1;padding:12px;font-size:16px;font-weight:800;border-radius:13px;background:#fce7f3;color:#be185d;border:2px solid #f9a8d4;">Clear ✕</button>
-<button onclick="submitWriting()" style="flex:2;padding:12px;font-size:16px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#f472b6,#ec4899);color:#fff;">Done ✓</button>
-</div>
-<div id="assess-box" style="margin-top:10px;max-width:320px;margin-left:auto;margin-right:auto;"></div>
-
-  </div>`;
-  setupWriteCanvas(q);
-}
-
-function setupWriteCanvas(q) {
-const canvas = document.getElementById('write-canvas');
-if (!canvas) return;
-writeCtx = canvas.getContext('2d');
-writeDrawing = false;
-writeHasContent = false;
-
-// Draw guide grid
-writeCtx.clearRect(0,0,canvas.width,canvas.height);
-writeCtx.strokeStyle = 'rgba(249,168,212,0.3)';
-writeCtx.lineWidth = 1;
-writeCtx.setLineDash([4,4]);
-// horizontal baseline and midline
-writeCtx.beginPath();
-writeCtx.moveTo(10, canvas.height*0.75); writeCtx.lineTo(canvas.width-10, canvas.height*0.75);
-writeCtx.moveTo(10, canvas.height*0.25); writeCtx.lineTo(canvas.width-10, canvas.height*0.25);
-writeCtx.moveTo(10, canvas.height*0.5);  writeCtx.lineTo(canvas.width-10, canvas.height*0.5);
-writeCtx.stroke();
-writeCtx.setLineDash([]);
-
-// Draw faint guide character
-const isWord = q.char.length > 1;
-const fontSize = isWord ? (q.char.length > 4 ? 52 : 72) : 130;
-writeCtx.fillStyle = 'rgba(244,114,182,0.08)';
-writeCtx.font = 'bold ' + fontSize + 'px Nunito, Arial';
-writeCtx.textAlign = 'center';
-writeCtx.textBaseline = 'middle';
-writeCtx.fillText(q.char, canvas.width/2, canvas.height*0.52);
-
-// Drawing style
-writeCtx.strokeStyle = '#1e1b4b';
-writeCtx.lineWidth = 4;
-writeCtx.lineCap = 'round';
-writeCtx.lineJoin = 'round';
-
-function getPos(e) {
-const rect = canvas.getBoundingClientRect();
-const scaleX = canvas.width / rect.width;
-const scaleY = canvas.height / rect.height;
-return { x:(e.clientX-rect.left)*scaleX, y:(e.clientY-rect.top)*scaleY };
-}
-
-canvas.addEventListener('pointerdown', e => {
-if (writeAssessing) return;
-writeDrawing = true; writeHasContent = true;
-const p = getPos(e);
-// Pressure sensitivity for Apple Pencil
-const pressure = (e.pressure && e.pressure > 0) ? e.pressure : 0.5;
-writeCtx.lineWidth = pressure * 5 + 2;
-writeCtx.beginPath();
-writeCtx.moveTo(p.x, p.y);
-e.preventDefault();
-}, {passive:false});
-
-canvas.addEventListener('pointermove', e => {
-if (!writeDrawing || writeAssessing) return;
-const p = getPos(e);
-const pressure = (e.pressure && e.pressure > 0) ? e.pressure : 0.5;
-writeCtx.lineWidth = pressure * 5 + 2;
-writeCtx.lineTo(p.x, p.y);
-writeCtx.stroke();
-writeCtx.beginPath();
-writeCtx.moveTo(p.x, p.y);
-e.preventDefault();
-}, {passive:false});
-
-canvas.addEventListener('pointerup', e => { writeDrawing = false; e.preventDefault(); }, {passive:false});
-canvas.addEventListener('pointercancel', () => { writeDrawing = false; });
-}
-
-function clearWriteCanvas() {
-const canvas = document.getElementById('write-canvas');
-if (!canvas || !writeCtx) return;
-writeAssessing = false;
-writeHasContent = false;
-const q = TASK.qs[TASK.qIdx];
-setupWriteCanvas(q);
-document.getElementById('assess-box').innerHTML = '';
-}
-
-function submitWriting() {
-if (!writeHasContent) {
-const b = document.getElementById('assess-box');
-if(b) b.innerHTML = '<div style="color:#be185d;font-weight:700;font-size:14px;padding:8px;">Pick up your pencil and write it first! ✏️</div>';
-return;
-}
-writeAssessing = true;
-const q = TASK.qs[TASK.qIdx];
-const ab = document.getElementById('assess-box');
-if (!ab) return;
-ab.innerHTML = `<div class="pop" style="background:#fdf2f8;border-radius:14px;padding:14px;border:2px solid #f9a8d4;">
-<div style="font-size:14px;font-weight:800;color:#be185d;margin-bottom:8px;">Does yours look like this? 👀</div>
-<div style="font-size:72px;font-weight:900;color:#ec4899;letter-spacing:4px;line-height:1;">${q.char}</div>
-<div style="display:flex;gap:10px;margin-top:10px;">
-<button onclick="selfAssessWrite(false)" style="flex:1;padding:11px;font-size:15px;font-weight:800;border-radius:12px;background:#fee2e2;color:#dc2626;">↺ Try again</button>
-<button onclick="selfAssessWrite(true)" style="flex:2;padding:11px;font-size:15px;font-weight:800;border-radius:12px;background:linear-gradient(135deg,#22c55e,#16a34a);color:#fff;">👍 Looks good!</button>
-</div>
-
-  </div>`;
-}
-
-function selfAssessWrite(ok) {
-if (ok) {
-TASK.score++;
-confetti();
-TASK.feedback = { ok: true };
-const ab = document.getElementById('assess-box');
-if(ab) ab.innerHTML = `<div class="pop" style="background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;padding:14px;text-align:center;color:#fff;font-weight:800;font-size:18px;"> 🌟 Amazing writing ${TASK.child}! <button onclick="nextWriteQ()" style="display:block;margin:8px auto 0;padding:8px 28px;font-size:15px;font-weight:800;border-radius:10px;background:#fff;color:#16a34a;">Next →</button> </div>`;
-} else {
-clearWriteCanvas();
-}
-}
-
-function nextWriteQ() {
-TASK.qIdx++;
-TASK.feedback = null;
-writeAssessing = false;
-writeHasContent = false;
-renderQ();
-}
-
-// ═══════════════════════════════════════════════
-// LEVEL COMPLETE
-// ═══════════════════════════════════════════════
-function finishLevel() {
-const total = TASK.qs.length || 8;
-const score = TASK.score;
-const pct = Math.round(score/total*100);
-const stars = pct>=90?3:pct>=80?2:pct>=70?1:0;
-const passed = pct >= 70;
-const child = TASK.child, subj = TASK.subj, idx = TASK.levelIdx;
-const level = CUR[child][subj].levels[idx];
-
-if (passed) {
-// Update stars (only improve, never decrease)
-if (stars > (STATE[child][subj][idx] || 0)) {
-STATE[child][subj][idx] = stars;
-}
-// Unlock next level
-if (idx+1 < CUR[child][subj].levels.length && STATE[child][subj][idx+1] === null) {
-STATE[child][subj][idx+1] = 0;
-}
-// Add XP
-const xpGain = stars * 10;
-STATE[child].xp = (STATE[child].xp || 0) + xpGain;
-document.getElementById('xp-display').textContent = `⭐ ${STATE[child].xp} XP`;
-saveState();
-confetti();
-const grade = pct>=90?'Superstar! 🏆':pct>=80?'Excellent! 🌟':'Well done! 🎉';
-const nextLevel = idx+1 < CUR[child][subj].levels.length ? CUR[child][subj].levels[idx+1] : null;
-document.getElementById('screen-complete').innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:80px;margin-bottom:6px;animation:unlock 0.6s ease-out both;">🏆</div> <h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin:0 0 4px;">Level Complete!</h2> <div style="font-size:28px;margin:6px 0;">${['','⭐','⭐⭐','⭐⭐⭐'][stars]}</div> <div style="font-size:19px;font-weight:800;color:#7c3aed;margin-bottom:4px;">${grade}</div> <div style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">+${stars*10} XP earned!</div> </div> ${nextLevel?`<div style="background:#f0fdf4;border-radius:14px;padding:12px;margin-bottom:12px;border:2px solid #22c55e;">
-<div style="font-size:13px;font-weight:700;color:#16a34a;">🔓 UNLOCKED: ${nextLevel.emoji} ${nextLevel.title}</div>
-</div>`:''} <div style="display:flex;gap:10px;"> <button onclick="startLevel('${child}','${subj}',${idx})" style="flex:1;padding:12px;font-size:15px;font-weight:800;border-radius:13px;background:#f5f3ff;color:#7c3aed;border:2px solid #e9d5ff;">Replay ↺</button> <button onclick="showMap('${child}','${subj}')" style="flex:2;padding:12px;font-size:15px;font-weight:800;border-radius:13px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;">Back to Map 🗺️</button> </div> </div>`;
-notify(`${child} completed ${level.title}! Score: ${score}/${total} (${pct}%) — ${grade}`);
-} else {
-// Failed — must retry
-const grade = pct>=50?'So close! Try again 💪':'Keep practising! 💪';
-document.getElementById('screen-complete').innerHTML = `<div style="text-align:center;padding:16px;max-width:440px;margin:0 auto;"> <div style="font-size:72px;margin-bottom:6px;">💪</div> <h2 style="font-size:24px;font-weight:900;color:#dc2626;margin:0 0 4px;">Not quite there yet!</h2> <div style="font-size:17px;font-weight:700;color:#6b7280;margin-bottom:12px;">You need 70% to unlock the next level</div> <div style="background:linear-gradient(135deg,#ef4444,#dc2626);border-radius:18px;padding:18px;color:#fff;margin:14px 0;"> <div style="font-size:46px;font-weight:900;">${score}/${total}</div> <div style="font-size:14px;opacity:0.9;">${level.title}</div> <div style="font-size:26px;margin-top:2px;">${pct}%</div> <div style="font-size:14px;margin-top:4px;opacity:0.9;">Need ${70-pct}% more to pass</div> </div> <div style="background:#fef9c3;border-radius:14px;padding:12px;margin-bottom:14px;border:2px solid #fbbf24;"> <div style="font-size:14px;font-weight:700;color:#854d0e;">${grade}</div> </div> <button onclick="startLevel('${child}','${subj}',${idx})" style="width:100%;padding:14px;font-size:17px;font-weight:800;border-radius:14px;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;">Try Again! 🔄</button> </div>`;
-notify(`${child} needs to retry ${level.title} — scored ${pct}% (need 70%)`);
-}
-showScreen('complete');
-}
-
-// ═══════════════════════════════════════════════
-// DASHBOARD
-// ═══════════════════════════════════════════════
-function openDashboard() {
-document.getElementById('dash-inner').innerHTML = `<div style="text-align:center;padding:16px 0;">
-<div style="font-size:40px;margin-bottom:8px;">🔒</div>
-<h3 style="font-weight:900;color:#4c1d95;margin:0 0 14px;">Parent Dashboard</h3>
-<input type="password" id="pin-in" placeholder="Enter PIN (default: 1234)" onkeydown="if(event.key==='Enter')unlockDash()"
-style="width:100%;padding:11px;font-size:19px;border-radius:12px;border:2px solid #e9d5ff;text-align:center;outline:none;margin-bottom:10px;">
-<button onclick="unlockDash()" style="width:100%;padding:11px;font-size:15px;font-weight:800;border-radius:12px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;">Unlock</button>
-<button onclick="closeDash()" style="margin-top:8px;background:none;color:#94a3b8;font-size:14px;">Cancel</button>
-
-  </div>`;
-  document.getElementById('modal-dashboard').style.display = 'flex';
-}
-
-function closeDash() { document.getElementById('modal-dashboard').style.display='none'; }
-
-function unlockDash() {
-const pin = document.getElementById('pin-in').value;
-const stored = localStorage.getItem('parentPin') || '1234';
-if (pin !== stored) { alert('Wrong PIN'); document.getElementById('pin-in').value=''; return; }
-
-let html = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-<h2 style="margin:0;font-weight:900;color:#4c1d95;font-size:19px;">📊 Parent Dashboard</h2>
-<button onclick="closeDash()" style="background:none;font-size:22px;">✕</button>
-
-  </div>`;
-
-// Stats cards
-html += `<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;">`;
-for (const [child, emoji, color] of [['Amelia','🦋','#7c3aed'],['Adela','🌸','#059669']]) {
-const xp = STATE[child].xp || 0;
-let totalDone = 0, totalLevels = 0;
-for (const subj of Object.keys(CUR[child])) {
-STATE[child][subj].forEach(s => { totalLevels++; if(s!==null&&s>0) totalDone++; });
-}
-html += `<div style="background:#f8f7ff;border-radius:14px;padding:14px;text-align:center;"> <div style="font-size:26px;">${emoji}</div> <div style="font-weight:800;color:${color};font-size:15px;">${child}</div> <div style="font-size:26px;font-weight:900;color:${color};">${xp} XP</div> <div style="font-size:11px;color:#94a3b8;">total XP</div> <div style="font-size:12px;color:#6b7280;margin-top:3px;">${totalDone}/${totalLevels} levels done</div> </div>`;
-}
-html += `</div>`;
-
-// Progress detail
-for (const [child, emoji] of [['Amelia','🦋'],['Adela','🌸']]) {
-html += `<h3 style="font-weight:800;color:#4c1d95;font-size:14px;margin:0 0 8px;">${emoji} ${child}'s Progress</h3>`;
-for (const [subjKey, subj] of Object.entries(CUR[child])) {
-html += `<div style="font-size:13px;font-weight:700;color:#7c3aed;margin:6px 0 4px;">${subj.emoji} ${subj.title}</div>`;
-html += `<div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:8px;">`;
-STATE[child][subjKey].forEach((stars, i) => {
-const level = CUR[child][subjKey].levels[i];
-const bg = stars===null?'#f1f5f9':stars===0?'#e0e7ff':stars>=1?'#dcfce7':'#f1f5f9';
-const text = stars===null?'🔒':stars===0?'⬜':['','⭐','⭐⭐','⭐⭐⭐'][stars];
-html += `<div style="background:${bg};border-radius:8px;padding:4px 8px;font-size:11px;font-weight:700;color:#374151;" title="${level.title}">${level.emoji} ${text}</div>`;
-});
-html += `</div>`;
-}
-}
-
-// Settings
-html += `<div style="background:#f8f7ff;border-radius:14px;padding:14px;margin-top:14px;">
-<h3 style="font-weight:800;color:#4c1d95;margin:0 0 10px;font-size:14px;">⚙️ Settings</h3>
-<div style="font-size:12px;color:#6b7280;margin-bottom:3px;font-weight:700;">ntfy.sh topic (notifications):</div>
-<input id="ntfy-in" value="${localStorage.getItem('ntfyTopic')||''}" placeholder="e.g. smith-kids-2025"
-style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px solid #e9d5ff;outline:none;margin-bottom:3px;">
-<div style="font-size:10px;color:#94a3b8;margin-bottom:10px;">Free <strong>ntfy</strong> app → Subscribe to topic → get notified when tasks finish</div>
-<div style="font-size:12px;color:#6b7280;margin-bottom:3px;font-weight:700;">New PIN (4+ digits):</div>
-<input type="password" id="newpin-in" placeholder="Leave blank to keep current"
-style="width:100%;padding:9px 11px;font-size:13px;border-radius:9px;border:2px solid #e9d5ff;outline:none;margin-bottom:10px;">
-<button onclick="saveDashSettings()" id="save-dash-btn" style="width:100%;padding:9px;font-size:14px;font-weight:800;border-radius:11px;background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;">Save Settings</button>
-
-  </div>`;
-  document.getElementById('dash-inner').innerHTML = html;
-}
-
-function saveDashSettings() {
-const ntfy = document.getElementById('ntfy-in').value.trim();
-const np = document.getElementById('newpin-in').value.trim();
-localStorage.setItem('ntfyTopic', ntfy);
-if (np.length >= 4) localStorage.setItem('parentPin', np);
-const btn = document.getElementById('save-dash-btn');
-btn.textContent = '✓ Saved!';
-setTimeout(() => btn.textContent = 'Save Settings', 2000);
-}
-
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-loadState();
-// Restore last active child so a page refresh lands back on their home screen
-(function restoreChild() {
-  const last = localStorage.getItem('lastChild');
-  if (last && CUR[last]) selectChild(last);
-})();
-</script>
-
-</body>
-</html>
