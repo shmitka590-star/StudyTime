@@ -4,6 +4,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Study Time">
+<meta name="theme-color" content="#7c3aed">
+<link rel="manifest" href="manifest.json">
 <title>Study Time! 🌟</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -130,6 +135,16 @@ Amelia:{
   english:{
     title:'English', emoji:'📚', color:'linear-gradient(135deg,#ec4899,#a855f7)', bg:'#fdf4ff',
     levels:[
+      {id:'spelling',title:'Spelling Practice',emoji:'✏️',qs:[
+        {t:'i',q:'Spell the word: "beautiful"',a:'beautiful'},
+        {t:'i',q:'Spell the word: "because"',a:'because'},
+        {t:'i',q:'Spell the word: "different"',a:'different'}
+      ]}
+    ]
+  },
+  comprehension:{
+    title:'Comprehension', emoji:'📖', color:'linear-gradient(135deg,#f59e0b,#ef4444)', bg:'#fffbeb',
+    levels:[
       {id:'comprehension',title:'Reading Comprehension',emoji:'📖',qs:[
         {t:'i',q:'Read this passage and answer: "The cat sat on the mat." Where did the cat sit?',a:'mat'},
         {t:'i',q:'Read: "Tom ran to school." Who ran to school?',a:'Tom'},
@@ -221,15 +236,15 @@ function renderTask(){
   const lv=CUR[state.child][state.subject].levels[state.level];
   const q=lv.qs[state.qIdx];
   let html=`<div style="padding-top:16px;"><div style="margin-bottom:16px;"><div style="font-size:14px;font-weight:800;color:#7c3aed;">Question ${state.qIdx+1} of ${lv.qs.length}</div><div style="background:#e0e7ff;border-radius:12px;height:8px;margin-top:6px;overflow:hidden;"><div class="bar-fill" style="background:#7c3aed;height:100%;width:${((state.qIdx+1)/lv.qs.length)*100}%;"></div></div></div>`;
-  
+
   if(q.t==='m'){
     html+=`<div style="background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"><div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:16px;">${q.q}</div>`;
-    q.o.forEach(opt=>{
-      html+=`<button class="mcq-btn" style="background:#f8fafc;color:#1e293b;" onclick="checkAnswer('${opt}','${q.a}')">${opt}</button>`;
+    q.o.forEach((opt,i)=>{
+      html+=`<button class="mcq-btn" data-opt="${i}" style="background:#f8fafc;color:#1e293b;">${opt}</button>`;
     });
     html+=`</div>`;
   }else if(q.t==='i'){
-    html+=`<div style="background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"><div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:16px;">${q.q}</div><input type="text" id="answer-input" style="width:100%;padding:14px;font-size:16px;border:2px solid #e2e8f0;border-radius:12px;margin-bottom:12px;" placeholder="Type your answer"><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;" onclick="checkInputAnswer('${q.a}')">Submit</button></div>`;
+    html+=`<div style="background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"><div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:16px;">${q.q}</div><input type="text" id="answer-input" style="width:100%;padding:14px;font-size:16px;border:2px solid #e2e8f0;border-radius:12px;margin-bottom:12px;" placeholder="Type your answer"><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;" onclick="checkInputAnswer()">Submit</button></div>`;
   }
   html+=`</div>`;
   document.getElementById('screen-task').innerHTML=html;
@@ -239,6 +254,8 @@ function renderTask(){
 // ═══════════════════════════════════════════════
 // CHECK ANSWER
 // ═══════════════════════════════════════════════
+// MCQ answers are handled via delegated listener below — no inline onclick needed.
+
 function checkAnswer(selected,correct){
   if(selected===correct){
     state.xp+=10;
@@ -250,9 +267,11 @@ function checkAnswer(selected,correct){
   }
 }
 
-function checkInputAnswer(correct){
+function checkInputAnswer(){
+  const lv=CUR[state.child][state.subject].levels[state.level];
+  const q=lv.qs[state.qIdx];
   const input=document.getElementById('answer-input').value.trim();
-  if(input.toLowerCase()===correct.toLowerCase()){
+  if(input.toLowerCase()===q.a.toLowerCase()){
     state.xp+=10;
     document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;
     showStarBurst();
@@ -261,6 +280,16 @@ function checkInputAnswer(correct){
     alert('Try again!');
   }
 }
+
+// Delegated MCQ click handler — reads answer from CUR data, no string interpolation.
+document.getElementById('screen-task').addEventListener('click',function(e){
+  const btn=e.target.closest('[data-opt]');
+  if(!btn) return;
+  const lv=CUR[state.child][state.subject].levels[state.level];
+  const q=lv.qs[state.qIdx];
+  const selected=q.o[parseInt(btn.dataset.opt)];
+  checkAnswer(selected,q.a);
+});
 
 function nextQuestion(){
   const lv=CUR[state.child][state.subject].levels[state.level];
@@ -281,22 +310,107 @@ function showStarBurst(){
 }
 
 function showComplete(){
+  const lv=CUR[state.child][state.subject].levels[state.level];
+  sendTelegramNotification(`🎉 <b>${state.child}</b> completed <b>${lv.title}</b> and earned <b>${state.xp} XP</b>!`);
   let html=`<div style="text-align:center;padding-top:40px;"><div class="pop" style="font-size:80px;margin-bottom:16px;">🎉</div><h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin-bottom:8px;">Well Done!</h2><p style="font-size:16px;color:#7c3aed;margin-bottom:24px;">You completed this level!</p><button style="padding:14px 28px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;" onclick="renderMap()">Back to Map</button></div>`;
   document.getElementById('screen-complete').innerHTML=html;
   show('screen-complete');
 }
 
 // ═══════════════════════════════════════════════
+// TELEGRAM NOTIFICATIONS
+// ═══════════════════════════════════════════════
+function sendTelegramNotification(msg){
+  const token=localStorage.getItem('tg_token');
+  const chat=localStorage.getItem('tg_chat');
+  if(!token||!chat) return;
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:chat,text:msg,parse_mode:'HTML'})
+  }).catch(()=>{});
+}
+
+function saveTelegramConfig(){
+  const token=document.getElementById('tg-token').value.trim();
+  const chat=document.getElementById('tg-chat').value.trim();
+  if(!token||!chat){alert('Please fill in both fields.');return;}
+  localStorage.setItem('tg_token',token);
+  localStorage.setItem('tg_chat',chat);
+  alert('Telegram settings saved! You will now receive notifications when a child completes a level.');
+}
+
+function testTelegramNotification(){
+  const token=document.getElementById('tg-token').value.trim()||localStorage.getItem('tg_token');
+  const chat=document.getElementById('tg-chat').value.trim()||localStorage.getItem('tg_chat');
+  if(!token||!chat){alert('Please save your Telegram settings first.');return;}
+  fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:chat,text:'✅ Study Time is connected! You will receive notifications here when your children complete their study tasks.',parse_mode:'HTML'})
+  }).then(r=>r.json()).then(d=>{
+    if(d.ok) alert('Test message sent! Check your Telegram.');
+    else alert('Error: '+d.description+'\n\nPlease check your Bot Token and Chat ID.');
+  }).catch(()=>alert('Network error. Please check your internet connection.'));
+}
+
+// ═══════════════════════════════════════════════
 // DASHBOARD
 // ═══════════════════════════════════════════════
 function openDashboard(){
-  let html=`<h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:16px;">Parent Dashboard</h2><p style="margin-bottom:16px;">Track your children's progress here.</p><button style="padding:12px 24px;background:#7c3aed;color:#fff;border-radius:12px;font-weight:700;" onclick="closeDashboard()">Close</button>`;
+  const savedToken=localStorage.getItem('tg_token')||'';
+  const savedChat=localStorage.getItem('tg_chat')||'';
+  const connected=savedToken&&savedChat;
+  let html=`
+    <h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:20px;">Parent Dashboard</h2>
+
+    <div style="background:#f5f3ff;border-radius:16px;padding:20px;margin-bottom:20px;">
+      <div style="font-size:16px;font-weight:900;color:#4c1d95;margin-bottom:4px;">📱 Telegram Notifications</div>
+      <div style="font-size:13px;color:#6b7280;margin-bottom:16px;">Get notified on Telegram when your child completes a study task.</div>
+
+      <div style="margin-bottom:8px;">
+        <div style="font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;">BOT TOKEN</div>
+        <input id="tg-token" type="text" value="${savedToken}" placeholder="123456789:ABCdef..." style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
+      </div>
+      <div style="margin-bottom:12px;">
+        <div style="font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;">CHAT ID</div>
+        <input id="tg-chat" type="text" value="${savedChat}" placeholder="e.g. 123456789" style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
+      </div>
+
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <button onclick="saveTelegramConfig()" style="flex:1;padding:10px;background:#7c3aed;color:#fff;border-radius:10px;font-weight:800;font-size:14px;">💾 Save</button>
+        <button onclick="testTelegramNotification()" style="flex:1;padding:10px;background:#f0fdf4;color:#059669;border:2px solid #bbf7d0;border-radius:10px;font-weight:800;font-size:14px;">🔔 Test</button>
+      </div>
+
+      ${connected?'<div style="margin-top:12px;font-size:12px;color:#059669;font-weight:800;">✅ Telegram connected</div>':'<div style="margin-top:12px;font-size:12px;color:#9ca3af;font-weight:700;">Not yet configured</div>'}
+
+      <details style="margin-top:16px;">
+        <summary style="font-size:12px;font-weight:800;color:#7c3aed;cursor:pointer;">How to set this up</summary>
+        <div style="font-size:12px;color:#4b5563;margin-top:8px;line-height:1.7;">
+          1. Open Telegram and search for <b>@BotFather</b><br>
+          2. Send <b>/newbot</b> and follow the prompts to create a bot<br>
+          3. Copy the bot token BotFather gives you and paste it above<br>
+          4. Search for <b>@userinfobot</b>, send it any message, and it will show your Chat ID<br>
+          5. Paste your Chat ID above, save, and tap Test
+        </div>
+      </details>
+    </div>
+
+    <button style="width:100%;padding:12px 24px;background:#e9d5ff;color:#4c1d95;border-radius:12px;font-weight:800;" onclick="closeDashboard()">Close</button>
+  `;
   document.getElementById('dash-inner').innerHTML=html;
   document.getElementById('modal-dashboard').style.display='flex';
 }
 
 function closeDashboard(){
   document.getElementById('modal-dashboard').style.display='none';
+}
+
+// ═══════════════════════════════════════════════
+// PWA SERVICE WORKER
+// ═══════════════════════════════════════════════
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 </script>
 </body>
