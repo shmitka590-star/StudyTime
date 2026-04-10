@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,58 +14,27 @@
 *{box-sizing:border-box;font-family:'Nunito',sans-serif;margin:0;padding:0;}
 body{min-height:100vh;background:linear-gradient(160deg,#fdf4ff 0%,#eff6ff 50%,#f0fdf4 100%);}
 button{cursor:pointer;border:none;font-family:'Nunito',sans-serif;}
-#write-canvas{touch-action:none;}
-input,textarea{font-family:'Nunito',sans-serif;}
-
-/* ── Responsive layout ── */
-.screen{display:none;padding:16px;max-width:500px;margin:0 auto;}
+input{font-family:'Nunito',sans-serif;}
+.screen{display:none;padding:16px;max-width:520px;margin:0 auto;}
 .screen.active{display:block;}
-@media(min-width:640px){
-  .screen{padding:24px;max-width:600px;}
-  .mcq-btn{font-size:17px;padding:16px 18px;}
-}
-@media(min-width:1024px){
-  .screen{max-width:720px;}
-  #screen-home .child-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
-  #screen-child .subject-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-}
-
+@media(min-width:640px){.screen{padding:24px;max-width:600px;}}
 #header{padding:12px 20px;display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,0.92);border-bottom:3px solid #bfdbfe;position:sticky;top:0;z-index:100;backdrop-filter:blur(10px);}
-
-/* ── Core animations ── */
 .pop{animation:pop 0.3s cubic-bezier(.36,.07,.19,.97) both;}
 .float{animation:float 3s ease-in-out infinite;}
-.pulse{animation:pulse 1.5s ease-in-out infinite;}
 @keyframes pop{0%{transform:scale(0.6);opacity:0}70%{transform:scale(1.1)}100%{transform:scale(1);opacity:1}}
 @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
-@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(59,130,246,0.45)}50%{box-shadow:0 0 0 14px rgba(59,130,246,0)}}
-@keyframes fall{0%{top:-20px;transform:rotate(0)}100%{top:110vh;transform:rotate(720deg)}}
-@keyframes unlock{0%{transform:scale(0) rotate(-10deg);opacity:0}60%{transform:scale(1.2) rotate(3deg)}100%{transform:scale(1) rotate(0);opacity:1}}
-
-/* ── Bouncing-star success burst ── */
 @keyframes star-rise{0%{transform:translate(-50%,-50%) scale(0.2);opacity:1}60%{transform:translate(-50%,-120%) scale(1.3);opacity:1}100%{transform:translate(-50%,-200%) scale(0.8);opacity:0}}
 .star-burst{position:fixed;left:50%;top:50%;font-size:52px;pointer-events:none;z-index:9998;animation:star-rise 0.85s ease-out forwards;}
-
-.bar-fill{transition:width 0.5s ease;}
-.level-node{border-radius:20px;padding:16px;margin-bottom:12px;display:flex;align-items:center;gap:14px;transition:transform 0.15s;}
-.level-node:active{transform:scale(0.97);}
-.level-locked{background:#f1f5f9;opacity:0.6;}
-.level-unlocked{background:#fff;box-shadow:0 4px 20px rgba(0,0,0,0.12);}
-.level-done{background:#f0fdf4;box-shadow:0 4px 12px rgba(0,0,0,0.08);}
-.mcq-btn{width:100%;padding:14px;font-size:16px;font-weight:700;border-radius:14px;margin-bottom:10px;text-align:left;border:2px solid transparent;transition:all 0.15s;}
-.mcq-btn:active{transform:scale(0.98);}
-.subject-card{border-radius:22px;padding:20px;margin-bottom:16px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(0,0,0,0.15);}
-input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;}
+.bar-fill{transition:width 0.4s ease;}
+.mcq-btn{width:100%;padding:13px 16px;font-size:15px;font-weight:700;border-radius:14px;margin-bottom:9px;text-align:left;border:2px solid #e2e8f0;background:#f8fafc;color:#1e293b;transition:all 0.12s;}
+.mcq-btn:active{transform:scale(0.98);border-color:#7c3aed;background:#f5f3ff;}
+.subject-card{border-radius:22px;padding:18px 20px;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.12s;}
+.subject-card:active{transform:scale(0.98);}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;overflow-y:auto;padding:16px;display:flex;align-items:flex-start;justify-content:center;}
 .modal-box{background:#fff;border-radius:24px;padding:24px;width:100%;max-width:540px;margin-top:20px;}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-th{padding:6px 8px;text-align:left;color:#2563eb;font-weight:800;background:#eff6ff;}
-td{padding:6px 8px;border-bottom:1px solid #f3f4f6;}
-.badge{border-radius:8px;padding:2px 8px;font-weight:800;font-size:12px;}
-/* ── Age-level badges ── */
-.age-badge{display:inline-block;border-radius:20px;padding:3px 10px;font-size:11px;font-weight:800;letter-spacing:0.5px;text-transform:uppercase;}
-.age-badge-foundation{background:#d1fae5;color:#065f46;}
-.age-badge-primary{background:#dbeafe;color:#1e40af;}
+.passage-box{background:#fef3c7;border-radius:16px;padding:16px;margin-bottom:14px;font-size:14px;line-height:1.75;color:#78350f;border-left:4px solid #f59e0b;}
+.q-card{background:#fff;border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.08);}
+.q-text{font-size:17px;font-weight:700;color:#1e293b;margin-bottom:16px;line-height:1.5;}
 </style>
 </head>
 <body>
@@ -87,21 +55,19 @@ td{padding:6px 8px;border-bottom:1px solid #f3f4f6;}
     <div style="display:flex;flex-direction:column;gap:14px;">
       <button onclick="selectChild('Amelia')" style="background:linear-gradient(135deg,#7c3aed,#a855f7);border-radius:22px;padding:20px 22px;color:#fff;text-align:left;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(124,58,237,0.35);">
         <span style="font-size:48px;">🦋</span>
-        <div><div style="font-size:24px;font-weight:900;">Amelia</div><div style="font-size:13px;opacity:0.9;">Year 5 (Age 9-10)</div></div>
+        <div><div style="font-size:24px;font-weight:900;">Amelia</div><div style="font-size:13px;opacity:0.9;">Year 5 · Age 9–10</div></div>
       </button>
       <button onclick="selectChild('Adela')" style="background:linear-gradient(135deg,#34d399,#059669);border-radius:22px;padding:20px 22px;color:#fff;text-align:left;display:flex;align-items:center;gap:14px;box-shadow:0 8px 24px rgba(5,150,105,0.35);">
         <span style="font-size:48px;">🌸</span>
-        <div><div style="font-size:24px;font-weight:900;">Adela</div><div style="font-size:13px;opacity:0.9;">Reception (Age 4-5)</div></div>
+        <div><div style="font-size:24px;font-weight:900;">Adela</div><div style="font-size:13px;opacity:0.9;">Reception · Age 4–5</div></div>
       </button>
     </div>
   </div>
 </div>
 
 <div id="screen-child" class="screen"></div>
-<div id="screen-map" class="screen"></div>
 <div id="screen-task" class="screen"></div>
 <div id="screen-complete" class="screen"></div>
-
 <div id="confetti-wrap"></div>
 
 <div id="modal-dashboard" class="modal" style="display:none;">
@@ -109,192 +75,530 @@ td{padding:6px 8px;border-bottom:1px solid #f3f4f6;}
 </div>
 
 <script>
-// ═══════════════════════════════════════════════
-// CURRICULUM DATA
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
+// CURRICULUM  –  UK KS2 Year 5 (Amelia, 9–10) and EYFS Reception (Adela, 4–5)
+// Each subject has 40+ questions in rising difficulty.
+// Comprehension questions use ctx field on first Q of each passage;
+// state.currentCtx keeps the passage visible for the whole group.
+// ─────────────────────────────────────────────────────────────
 const CUR = {
+
+// ══════════════════════════════════════════════════════════════
+// AMELIA  Year 5
+// ══════════════════════════════════════════════════════════════
 Amelia:{
+
   maths:{
-    title:'Maths', emoji:'🔢', color:'linear-gradient(135deg,#7c3aed,#a855f7)', bg:'#faf5ff',
-    levels:[
-      {id:'rounding',title:'Rounding',emoji:'🎯',qs:[
-        {t:'i',q:'Round 0.98 to the nearest whole number',a:'1'},
-        {t:'i',q:'Round 6.49 to the nearest whole number',a:'6'},
-        {t:'i',q:'Round 13.73 to the nearest whole number',a:'14'},
-        {t:'i',q:'Round 8.74 to one decimal place',a:'8.7'},
-        {t:'i',q:'Round 29.35 to one decimal place',a:'29.4'},
-        {t:'m',q:'27.47 rounded to the nearest whole number is:',o:['27','28','26','30'],a:'27'}
-      ]},
-      {id:'decimals',title:'Ordering Decimals',emoji:'📊',qs:[
-        {t:'m',q:'Which decimal is closest to 1?',o:['0.85','1.2','0.95','1.15'],a:'0.95'},
-        {t:'m',q:'Which is greater: 3.045 or 3.054?',o:['3.045','3.054','they are equal','impossible to say'],a:'3.054'},
-        {t:'m',q:'Which is smallest: 0.3, 0.03, 0.33, 0.303?',o:['0.3','0.03','0.33','0.303'],a:'0.03'}
-      ]}
+    title:'Maths', emoji:'🔢', color:'linear-gradient(135deg,#7c3aed,#a855f7)',
+    qs:[
+      // ── Times tables ──
+      {t:'m',q:'3 × 4 = ?',o:['7','10','12','14'],a:'12'},
+      {t:'m',q:'5 × 6 = ?',o:['25','30','35','36'],a:'30'},
+      {t:'m',q:'7 × 8 = ?',o:['48','54','56','64'],a:'56'},
+      {t:'m',q:'9 × 9 = ?',o:['63','72','81','90'],a:'81'},
+      {t:'m',q:'12 × 7 = ?',o:['72','78','84','96'],a:'84'},
+      {t:'i',q:'48 ÷ 6 = ?',a:'8'},
+      {t:'i',q:'63 ÷ 7 = ?',a:'9'},
+      {t:'i',q:'144 ÷ 12 = ?',a:'12'},
+      {t:'i',q:'What is double 37?',a:'74'},
+      {t:'i',q:'What is half of 84?',a:'42'},
+      // ── Rounding & decimals ──
+      {t:'m',q:'Round 4.3 to the nearest whole number.',o:['3','4','5','6'],a:'4'},
+      {t:'m',q:'Round 6.7 to the nearest whole number.',o:['5','6','7','8'],a:'7'},
+      {t:'i',q:'Round 4.67 to one decimal place.',a:'4.7'},
+      {t:'i',q:'Round 8.35 to one decimal place.',a:'8.4'},
+      {t:'m',q:'Which decimal is the smallest?',o:['0.3','0.03','0.33','0.303'],a:'0.03'},
+      {t:'m',q:'Which is greater: 3.045 or 3.054?',o:['3.045','3.054','they are equal'],a:'3.054'},
+      {t:'i',q:'2.5 + 1.7 = ?',a:'4.2'},
+      {t:'i',q:'5.4 − 2.9 = ?',a:'2.5'},
+      {t:'i',q:'3.6 × 2 = ?',a:'7.2'},
+      {t:'m',q:'What is 0.75 written as a fraction?',o:['3/5','3/4','7/10','7/5'],a:'3/4'},
+      // ── Fractions ──
+      {t:'m',q:'What is 1/2 of 60?',o:['20','25','30','40'],a:'30'},
+      {t:'m',q:'What is 1/4 of 48?',o:['8','10','12','16'],a:'12'},
+      {t:'m',q:'What is 3/4 of 48?',o:['24','30','36','40'],a:'36'},
+      {t:'m',q:'Which fraction is larger: 3/4 or 2/3?',o:['3/4','2/3','they are equal'],a:'3/4'},
+      {t:'m',q:'3/5 + 1/5 = ?',o:['2/5','3/5','4/5','1'],a:'4/5'},
+      {t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'},
+      {t:'m',q:'What is 1/2 as a decimal?',o:['0.2','0.5','1.5','2.0'],a:'0.5'},
+      {t:'m',q:'What is 1/4 as a decimal?',o:['0.14','0.20','0.25','0.40'],a:'0.25'},
+      {t:'m',q:'Which is equivalent to 50%?',o:['1/3','1/4','1/2','2/3'],a:'1/2'},
+      {t:'m',q:'Convert 3/4 to a percentage.',o:['34%','60%','70%','75%'],a:'75%'},
+      // ── Percentages ──
+      {t:'m',q:'What is 10% of 80?',o:['4','8','10','16'],a:'8'},
+      {t:'m',q:'What is 25% of 80?',o:['15','20','25','40'],a:'20'},
+      {t:'m',q:'What is 50% of 130?',o:['50','60','65','70'],a:'65'},
+      {t:'m',q:'What is 20% of 150?',o:['20','25','30','35'],a:'30'},
+      {t:'i',q:'What is 15% of 60?',a:'9'},
+      // ── Geometry & measurement ──
+      {t:'m',q:'Perimeter of a rectangle 5 cm × 3 cm?',o:['8 cm','15 cm','16 cm','18 cm'],a:'16 cm'},
+      {t:'m',q:'Area of a rectangle 5 cm × 3 cm?',o:['8 cm²','15 cm²','16 cm²','18 cm²'],a:'15 cm²'},
+      {t:'m',q:'How many degrees in a right angle?',o:['45','90','180','360'],a:'90'},
+      {t:'m',q:'How many degrees in a straight line?',o:['90','120','180','360'],a:'180'},
+      {t:'m',q:'What type of triangle has all three sides equal?',o:['scalene','isosceles','equilateral','right-angled'],a:'equilateral'},
+      // ── Number properties ──
+      {t:'m',q:'Which of these is a prime number?',o:['9','15','17','21'],a:'17'},
+      {t:'m',q:'What are the factors of 12?',o:['1,2,3,4','2,4,6,12','1,2,3,4,6,12','1,3,6,12'],a:'1,2,3,4,6,12'},
+      {t:'m',q:'What is 2³?',o:['6','8','9','12'],a:'8'},
+      {t:'i',q:'What is the square root of 49?',a:'7'},
+      {t:'m',q:'What is the LCM of 4 and 6?',o:['2','8','12','24'],a:'12'},
+      {t:'m',q:'What is the HCF of 12 and 18?',o:['3','6','9','12'],a:'6'},
+      // ── Multi-step problems ──
+      {t:'m',q:'A book costs £4.50. How much do 3 books cost?',o:['£12.00','£13.00','£13.50','£14.50'],a:'£13.50'},
+      {t:'i',q:'456 + 389 = ?',a:'845'},
+      {t:'i',q:'1000 − 347 = ?',a:'653'},
+      {t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},
+      {t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'},
+      {t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},
+      {t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},
+      {t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},
+      {t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'},
+      {t:'m',q:'Which number is a square number?',o:['18','24','36','50'],a:'36'}
     ]
   },
+
   english:{
-    title:'English', emoji:'📚', color:'linear-gradient(135deg,#ec4899,#a855f7)', bg:'#fdf4ff',
-    levels:[
-      {id:'spelling',title:'Spelling Practice',emoji:'✏️',qs:[
-        {t:'i',q:'Spell the word: "beautiful"',a:'beautiful'},
-        {t:'i',q:'Spell the word: "because"',a:'because'},
-        {t:'i',q:'Spell the word: "different"',a:'different'}
-      ]}
+    title:'English', emoji:'📚', color:'linear-gradient(135deg,#ec4899,#a855f7)',
+    qs:[
+      // ── Spelling ──
+      {t:'m',q:'Which word is spelled correctly?',o:['recieve','believe','freind','beleive'],a:'believe'},
+      {t:'m',q:'Which word is spelled correctly?',o:['neccesary','necesary','necessary','necessery'],a:'necessary'},
+      {t:'m',q:'Which word is spelled correctly?',o:['enviroment','environment','enviornment','environmant'],a:'environment'},
+      {t:'m',q:'Which word is spelled correctly?',o:['recomend','reccomend','recommend','recommand'],a:'recommend'},
+      {t:'m',q:'Which word is spelled correctly?',o:['seperate','sepperate','separrate','separate'],a:'separate'},
+      {t:'m',q:'Which word is spelled correctly?',o:['definately','definitly','definitely','definatly'],a:'definitely'},
+      {t:'m',q:'Which word is spelled correctly?',o:['immediatly','immediately','imediately','immedietly'],a:'immediately'},
+      {t:'m',q:'Which word is spelled correctly?',o:['parliment','parliament','parliamant','parliamont'],a:'parliament'},
+      // ── Word types ──
+      {t:'m',q:'What word type is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},
+      {t:'m',q:'What word type is "enormous"?',o:['noun','verb','adjective','adverb'],a:'adjective'},
+      {t:'m',q:'What word type is "happiness"?',o:['noun','verb','adjective','adverb'],a:'noun'},
+      {t:'m',q:'What word type is "sprinted"?',o:['noun','verb','adjective','adverb'],a:'verb'},
+      {t:'m',q:'What word type is "beneath"?',o:['adjective','adverb','preposition','conjunction'],a:'preposition'},
+      {t:'m',q:'What word type is "and"?',o:['preposition','conjunction','pronoun','adverb'],a:'conjunction'},
+      {t:'m',q:'What word type is "she"?',o:['noun','verb','adjective','pronoun'],a:'pronoun'},
+      {t:'m',q:'In "She ran quickly," what is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},
+      // ── Plurals ──
+      {t:'i',q:'What is the plural of "leaf"?',a:'leaves'},
+      {t:'m',q:'What is the plural of "child"?',o:['childs','children','childrens','childer'],a:'children'},
+      {t:'m',q:'What is the plural of "mouse"?',o:['mouses','mousies','mices','mice'],a:'mice'},
+      {t:'m',q:'What is the plural of "tooth"?',o:['tooths','teeths','teeth','toothes'],a:'teeth'},
+      // ── Tenses ──
+      {t:'m',q:'What is the past tense of "run"?',o:['runned','runs','ran','ranned'],a:'ran'},
+      {t:'m',q:'What is the past tense of "swim"?',o:['swimmed','swam','swum','swims'],a:'swam'},
+      {t:'m',q:'What is the past tense of "write"?',o:['writed','written','wrote','writes'],a:'wrote'},
+      {t:'m',q:'What is the past tense of "think"?',o:['thinked','thunk','thought','thinks'],a:'thought'},
+      // ── Homophones & punctuation ──
+      {t:'m',q:'Choose the correct word: "I can\'t ___ you – speak louder!"',o:['here','hear','heer','her'],a:'hear'},
+      {t:'m',q:'Choose the correct word: "There are ___ cats on the roof."',o:['to','too','two','tow'],a:'two'},
+      {t:'m',q:'Which sentence uses an apostrophe correctly?',o:['The dogs bone','The dog\'s bone','The Dog\'s Bone is theirs','The dogs\' bone are here'],a:'The dog\'s bone'},
+      {t:'m',q:'Which sentence uses a comma correctly?',o:['I bought apples oranges and bananas.','I bought apples, oranges and bananas.','I bought, apples oranges and bananas.','I bought apples oranges, and bananas'],a:'I bought apples, oranges and bananas.'},
+      // ── Clauses & grammar ──
+      {t:'m',q:'Which sentence contains a relative clause?',o:['She ran fast.','The dog barked.','The boy who scored the goal celebrated.','It rained all day.'],a:'The boy who scored the goal celebrated.'},
+      {t:'m',q:'What is the subject of the sentence: "The cat chased the mouse."?',o:['chased','the mouse','The cat','the sentence'],a:'The cat'},
+      {t:'m',q:'What is the object of the sentence: "She kicked the ball."?',o:['She','kicked','the ball','hard'],a:'the ball'},
+      {t:'m',q:'Identify the subordinating conjunction: "Although it was raining, they played outside."',o:['it','raining','they','Although'],a:'Although'},
+      {t:'m',q:'Identify the modal verb: "She might go to the party."',o:['She','might','go','party'],a:'might'},
+      {t:'m',q:'"The cat was chased by the dog." This sentence is in which voice?',o:['active','passive','present','future'],a:'passive'},
+      // ── Vocabulary ──
+      {t:'m',q:'What does "benevolent" mean?',o:['cruel and mean','kind and generous','loud and proud','shy and quiet'],a:'kind and generous'},
+      {t:'m',q:'What does "tenacious" mean?',o:['frightened','lazy','persistent and determined','generous'],a:'persistent and determined'},
+      {t:'m',q:'What is a synonym for "enormous"?',o:['tiny','average','huge','narrow'],a:'huge'},
+      {t:'m',q:'What is an antonym for "ancient"?',o:['old','modern','large','dark'],a:'modern'},
+      // ── Language features ──
+      {t:'m',q:'Which sentence is a simile?',o:['The sun shone.','Her eyes were like stars.','The world is a stage.','It was very bright.'],a:'Her eyes were like stars.'},
+      {t:'m',q:'Which sentence is a metaphor?',o:['He ran like the wind.','She smiled happily.','Time is a thief.','The dog barked loudly.'],a:'Time is a thief.'},
+      {t:'m',q:'Which word is an example of onomatopoeia?',o:['run','blue','buzz','happy'],a:'buzz'},
+      {t:'m',q:'What is alliteration?',o:['rhyming words at line ends','repeating the same starting sound in close words','a comparison using "like" or "as"','a word that sounds like what it means'],a:'repeating the same starting sound in close words'},
+      {t:'m',q:'What does the prefix "un-" mean?',o:['again','before','not or opposite','after'],a:'not or opposite'},
+      {t:'m',q:'What does the prefix "mis-" mean?',o:['very much','again','wrongly or badly','not'],a:'wrongly or badly'},
+      {t:'m',q:'What does "plausible" mean?',o:['impossible to believe','possible or believable','very strange','completely false'],a:'possible or believable'},
+      {t:'m',q:'Which sentence is punctuated correctly as direct speech?',o:['"come here" said the teacher.','Come here, said the teacher.','"Come here," said the teacher.','Come here," said the teacher.'],a:'"Come here," said the teacher.'}
     ]
   },
+
   comprehension:{
-    title:'Comprehension', emoji:'📖', color:'linear-gradient(135deg,#f59e0b,#ef4444)', bg:'#fffbeb',
-    levels:[
-      {id:'comprehension',title:'Reading Comprehension',emoji:'📖',qs:[
-        {t:'i',q:'Read this passage and answer: "The cat sat on the mat." Where did the cat sit?',a:'mat'},
-        {t:'i',q:'Read: "Tom ran to school." Who ran to school?',a:'Tom'},
-        {t:'m',q:'Read: "The sun was shining brightly." What was the sun doing?',o:['raining','shining','sleeping','hiding'],a:'shining'}
-      ]}
+    title:'Comprehension', emoji:'📖', color:'linear-gradient(135deg,#f59e0b,#ef4444)',
+    qs:[
+      // ── Passage 1: Maya at the Nature Reserve ──
+      {t:'m',
+       ctx:'Maya visited a nature reserve with her family one sunny afternoon. They spotted three types of bird: a robin, a blue tit and a sparrow. Near the river, Maya noticed fox footprints pressed into the soft mud. She carefully recorded everything in her nature journal, sketching each footprint and noting the birds she had seen. Later that evening, she planned to share her findings with her class.',
+       q:'Who visited the nature reserve?',
+       o:['Only Maya','Maya and her family','Maya\'s class','Maya and a friend'],a:'Maya and her family'},
+      {t:'m',q:'How many types of bird did they spot?',o:['two','three','four','five'],a:'three'},
+      {t:'m',q:'Where were the fox footprints found?',o:['in the trees','on the path','near the river','by the gate'],a:'near the river'},
+      {t:'m',q:'What does the word "journal" most likely mean?',o:['a newspaper','a notebook for recording things','a school textbook','a letter'],a:'a notebook for recording things'},
+      {t:'m',q:'Why did Maya sketch the footprints?',o:['She was bored','To show off to her family','To record them accurately','Her teacher told her to'],a:'To record them accurately'},
+      {t:'m',q:'What does "recorded" mean in this passage?',o:['forgot','drew pictures of','wrote down and noted','photographed'],a:'wrote down and noted'},
+      {t:'m',q:'Which word best describes Maya in this passage?',o:['careless','lazy','observant','frightened'],a:'observant'},
+      {t:'m',q:'What does "hoping to share her findings" tell us about Maya?',o:['She was nervous about her class','She wanted to impress her parents','She was excited to tell others what she learned','She did not enjoy the visit'],a:'She was excited to tell others what she learned'},
+      // ── Passage 2: The Water Cycle ──
+      {t:'m',
+       ctx:'Water is constantly moving around our planet in a process called the water cycle. The sun heats water in oceans, lakes and rivers, causing it to evaporate and turn into water vapour. As the vapour rises, it cools and forms clouds through a process called condensation. When clouds become heavy with water droplets, precipitation occurs – water falls back to Earth as rain, snow or hail. This water then flows into rivers and oceans, where the cycle begins again.',
+       q:'What is the overall process described in this passage?',
+       o:['evaporation','weather forecasting','the water cycle','cloud formation'],a:'the water cycle'},
+      {t:'m',q:'What causes water to evaporate?',o:['the moon','the wind','the sun','the clouds'],a:'the sun'},
+      {t:'m',q:'What happens to water vapour as it rises higher?',o:['it heats up','it cools and forms clouds','it falls back as rain','it disappears'],a:'it cools and forms clouds'},
+      {t:'m',q:'What does "condensation" mean in this passage?',o:['water evaporating','vapour cooling to form clouds','rain falling','water flowing into rivers'],a:'vapour cooling to form clouds'},
+      {t:'m',q:'What does "precipitation" refer to in this passage?',o:['water evaporating','clouds forming','water falling as rain, snow or hail','water flowing into the sea'],a:'water falling as rain, snow or hail'},
+      {t:'m',q:'What does the word "evaporate" mean?',o:['to freeze','to fall as rain','to turn from liquid into vapour','to form clouds'],a:'to turn from liquid into vapour'},
+      {t:'m',q:'Where does water flow after it falls to Earth?',o:['straight back into clouds','into rivers and oceans','into the ground only','it stays where it lands'],a:'into rivers and oceans'},
+      {t:'m',q:'If there were no sun, what would happen to the water cycle?',o:['It would speed up','Evaporation would stop and the cycle would break down','It would only produce snow','Nothing would change'],a:'Evaporation would stop and the cycle would break down'},
+      // ── Passage 3: Ancient Egypt ──
+      {t:'m',
+       ctx:'The ancient Egyptians built pyramids as tombs for their pharaohs. The largest, the Great Pyramid of Giza, was built around 2560 BC and contains over two million stone blocks. Archaeologists believe thousands of skilled workers, not slaves, constructed these enormous structures. Hieroglyphics – a form of picture writing – were carved onto walls inside the pyramids to tell stories and honour the dead.',
+       q:'What were pyramids used for?',
+       o:['homes for Egyptian families','temples for worship','tombs for pharaohs','schools for children'],a:'tombs for pharaohs'},
+      {t:'m',q:'When was the Great Pyramid of Giza built?',o:['around 560 BC','around 2560 BC','around 1500 BC','around 500 AD'],a:'around 2560 BC'},
+      {t:'m',q:'Who built the pyramids, according to archaeologists?',o:['slaves','pharaohs themselves','skilled workers','soldiers'],a:'skilled workers'},
+      {t:'m',q:'What are hieroglyphics?',o:['a type of pyramid','a form of picture writing','ancient Egyptian coins','a style of building'],a:'a form of picture writing'},
+      {t:'m',q:'What does the word "pharaoh" refer to?',o:['a type of pyramid','an ancient Egyptian ruler','a skilled worker','a type of writing'],a:'an ancient Egyptian ruler'},
+      {t:'m',q:'What does the word "tomb" mean?',o:['a palace','a temple','a burial place','a school'],a:'a burial place'},
+      {t:'m',q:'Approximately how many stone blocks does the Great Pyramid contain?',o:['over 200,000','over 2 million','over 20 million','exactly 1,000,000'],a:'over 2 million'},
+      {t:'m',q:'Why were hieroglyphics carved inside pyramids?',o:['to decorate the walls','to show workers were paid','to tell stories and honour the dead','to scare away thieves'],a:'to tell stories and honour the dead'},
+      // ── Passage 4: Poem – The Wind ──
+      {t:'m',
+       ctx:'The Wind<br><br>The wind comes rushing through the trees,<br>It rattles doors and bends the leaves,<br>It whispers secrets, wild and free,<br>And carries seeds from tree to tree.<br>It does not care what lies in its way,<br>It blows through night and blows through day,<br>A restless traveller, never still,<br>Racing down each valley and hill.',
+       q:'What does the wind do to doors in this poem?',
+       o:['opens them','slams them shut','rattles them','breaks them'],a:'rattles them'},
+      {t:'m',q:'What does the wind "whisper" in the poem?',o:['songs','names','secrets','warnings'],a:'secrets'},
+      {t:'m',q:'What does the wind carry from tree to tree?',o:['leaves','rain','birds','seeds'],a:'seeds'},
+      {t:'m',q:'What does the phrase "restless traveller" suggest about the wind?',o:['the wind is tired','the wind never stops moving','the wind travels slowly','the wind is weak'],a:'the wind never stops moving'},
+      {t:'m',q:'Which word in the poem means "not moving"?',o:['restless','racing','free','still'],a:'still'},
+      {t:'m',q:'What is the overall mood or tone of this poem?',o:['calm and peaceful','wild and powerful','sad and gloomy','funny and cheerful'],a:'wild and powerful'},
+      {t:'m',q:'"It does not care what lies in its way" – what does this line mean?',o:['the wind is angry','nothing can stop the wind','the wind is kind','the wind is tired'],a:'nothing can stop the wind'},
+      {t:'m',q:'Which literary device is used in "A restless traveller, never still"?',o:['simile','rhyme','personification','alliteration'],a:'personification'},
+      // ── Passage 5: Priya on Stage ──
+      {t:'m',
+       ctx:'Despite her nerves, Priya stepped onto the stage. The auditorium fell silent as a thousand faces looked up at her. She had rehearsed this speech countless times, but now every word seemed to have vanished from her memory. Then, in the front row, she spotted her little brother waving enthusiastically. She smiled, took a deep breath, and began. When she finished, the applause was thunderous.',
+       q:'Where did Priya step onto?',
+       o:['a podium','the stage','the balcony','the classroom'],a:'the stage'},
+      {t:'m',q:'What problem did Priya face once she was on stage?',o:['she could not see the audience','the microphone stopped working','she forgot her speech','she was too cold'],a:'she forgot her speech'},
+      {t:'m',q:'What helped Priya overcome her nerves?',o:['a teacher helped her','she read from notes','she spotted her brother waving','she left the stage'],a:'she spotted her brother waving'},
+      {t:'m',q:'What does "thunderous" describe in the passage?',o:['a storm outside','the loud applause','Priya\'s voice','the stage collapsing'],a:'the loud applause'},
+      {t:'m',q:'What does "rehearsed" mean?',o:['performed in public','written from scratch','practised many times','forgotten'],a:'practised many times'},
+      {t:'m',q:'What does "despite her nerves" tell us about Priya?',o:['she was not nervous at all','she was nervous but went on stage anyway','she refused to go on stage','she was excited'],a:'she was nervous but went on stage anyway'},
+      {t:'m',q:'Which word best describes how Priya felt before she began speaking?',o:['angry','bored','nervous','proud'],a:'nervous'},
+      {t:'m',q:'What does "every word seemed to have vanished from her memory" suggest?',o:['Priya had not practised','Priya had a sudden blank due to nerves','Priya chose not to speak','Priya was daydreaming'],a:'Priya had a sudden blank due to nerves'}
     ]
   }
 },
+
+// ══════════════════════════════════════════════════════════════
+// ADELA  Reception / EYFS (age 4–5)
+// All MCQ – no typing required. Rising difficulty within each subject.
+// ══════════════════════════════════════════════════════════════
 Adela:{
+
   phonics:{
-    title:'Phonics', emoji:'🔤', color:'linear-gradient(135deg,#34d399,#059669)', bg:'#f0fdf4',
-    levels:[
-      {id:'phase2',title:'Phase 2 Sounds',emoji:'🔡',qs:[
-        {t:'i',q:'What sound does "s" make?',a:'s'},
-        {t:'i',q:'What sound does "a" make?',a:'a'},
-        {t:'i',q:'What sound does "t" make?',a:'t'},
-        {t:'m',q:'Which word starts with "c"?',o:['dog','cat','bat','sun'],a:'cat'}
-      ]}
+    title:'Phonics', emoji:'🔤', color:'linear-gradient(135deg,#34d399,#059669)',
+    qs:[
+      // ── Phase 2 letter sounds ──
+      {t:'m',q:'Which letter makes the "s" sound?',o:['a','s','t','p'],a:'s'},
+      {t:'m',q:'Which letter makes the "a" sound?',o:['a','e','i','o'],a:'a'},
+      {t:'m',q:'Which letter makes the "t" sound?',o:['p','d','t','n'],a:'t'},
+      {t:'m',q:'Which letter makes the "p" sound?',o:['b','p','d','q'],a:'p'},
+      {t:'m',q:'Which letter makes the "i" sound (as in "it")?',o:['a','e','i','u'],a:'i'},
+      {t:'m',q:'Which letter makes the "n" sound?',o:['m','n','h','r'],a:'n'},
+      {t:'m',q:'Which letter makes the "m" sound?',o:['n','m','w','h'],a:'m'},
+      {t:'m',q:'Which letter makes the "d" sound?',o:['b','p','d','q'],a:'d'},
+      {t:'m',q:'Which letter makes the "g" sound (as in "go")?',o:['j','g','c','q'],a:'g'},
+      {t:'m',q:'Which letter makes the "o" sound (as in "on")?',o:['a','e','o','u'],a:'o'},
+      // ── Initial and final sounds ──
+      {t:'m',q:'What sound does "sun" start with?',o:['a','m','s','t'],a:'s'},
+      {t:'m',q:'What sound does "pin" start with?',o:['b','p','d','n'],a:'p'},
+      {t:'m',q:'What sound does "net" start with?',o:['m','n','h','t'],a:'n'},
+      {t:'m',q:'Which word ends with the "t" sound?',o:['dog','pig','hat','hen'],a:'hat'},
+      {t:'m',q:'Which word ends with the "n" sound?',o:['cat','dog','run','pig'],a:'run'},
+      {t:'m',q:'Which word ends with the "g" sound?',o:['cat','mop','hat','dog'],a:'dog'},
+      // ── CVC word blending ──
+      {t:'m',q:'Sound it out: s – a – t. What word is it?',o:['sit','sat','set','sun'],a:'sat'},
+      {t:'m',q:'Sound it out: p – i – n. What word is it?',o:['pan','pen','pin','pig'],a:'pin'},
+      {t:'m',q:'Sound it out: d – o – g. What word is it?',o:['dig','dug','dog','dag'],a:'dog'},
+      {t:'m',q:'Sound it out: c – a – t. What word is it?',o:['cut','cot','cat','cap'],a:'cat'},
+      {t:'m',q:'Sound it out: m – u – d. What word is it?',o:['mad','mud','mid','mod'],a:'mud'},
+      {t:'m',q:'Sound it out: h – e – n. What word is it?',o:['hen','hun','han','hin'],a:'hen'},
+      {t:'m',q:'Sound it out: t – o – p. What word is it?',o:['tap','tip','top','tup'],a:'top'},
+      {t:'m',q:'Sound it out: r – e – d. What word is it?',o:['rod','rid','rad','red'],a:'red'},
+      // ── Rhyming ──
+      {t:'m',q:'Which word rhymes with "cat"?',o:['dog','sun','hat','pig'],a:'hat'},
+      {t:'m',q:'Which word rhymes with "dog"?',o:['cat','log','sun','hat'],a:'log'},
+      {t:'m',q:'Which word rhymes with "pin"?',o:['dog','cat','tin','sun'],a:'tin'},
+      {t:'m',q:'Which word rhymes with "red"?',o:['top','sit','bed','dog'],a:'bed'},
+      {t:'m',q:'Which word rhymes with "hop"?',o:['hat','dog','red','top'],a:'top'},
+      {t:'m',q:'Which word rhymes with "sun"?',o:['pin','fun','dog','hat'],a:'fun'},
+      // ── Digraphs (Phase 3) ──
+      {t:'m',q:'What two letters make the "sh" sound?',o:['ch','th','sh','wh'],a:'sh'},
+      {t:'m',q:'Which word has the "sh" sound?',o:['cat','ship','top','run'],a:'ship'},
+      {t:'m',q:'What two letters make the "ch" sound?',o:['sh','th','ch','wh'],a:'ch'},
+      {t:'m',q:'Which word has the "ch" sound?',o:['ship','chip','thin','when'],a:'chip'},
+      {t:'m',q:'What two letters make the "th" sound?',o:['sh','ch','wh','th'],a:'th'},
+      {t:'m',q:'Which word has the "th" sound?',o:['ship','chip','thin','run'],a:'thin'},
+      {t:'m',q:'What two letters make the "wh" sound?',o:['sh','ch','th','wh'],a:'wh'},
+      {t:'m',q:'Which word starts with "wh"?',o:['ship','chip','thin','when'],a:'when'},
+      {t:'m',q:'What sound do the letters "ck" make?',o:['ss','ll','ff','k'],a:'k'},
+      {t:'m',q:'Which word has the "ck" sound?',o:['sat','hen','duck','top'],a:'duck'},
+      {t:'m',q:'Which word has the "ll" sound?',o:['cat','bell','sun','top'],a:'bell'},
+      {t:'m',q:'Which of these is a real word?',o:['bft','qkm','shop','xzp'],a:'shop'}
     ]
   },
+
   numbers:{
-    title:'Numbers', emoji:'🔢', color:'linear-gradient(135deg,#fbbf24,#f59e0b)', bg:'#fffbeb',
-    levels:[
-      {id:'count5',title:'Counting to 5',emoji:'✋',qs:[
-        {t:'i',q:'How many? 🍎🍎🍎',a:'3'},
-        {t:'i',q:'How many? ⭐⭐',a:'2'},
-        {t:'m',q:'Which number comes after 3?',o:['1','2','4','5'],a:'4'},
-        {t:'m',q:'Which is the biggest number?',o:['1','3','5','2'],a:'5'}
-      ]}
+    title:'Numbers', emoji:'🔢', color:'linear-gradient(135deg,#fbbf24,#f59e0b)',
+    qs:[
+      // ── Counting to 5 ──
+      {t:'m',q:'How many stars? ⭐⭐',o:['1','2','3','4'],a:'2'},
+      {t:'m',q:'How many apples? 🍎🍎🍎',o:['2','3','4','5'],a:'3'},
+      {t:'m',q:'How many hearts? ❤️❤️❤️❤️',o:['3','4','5','6'],a:'4'},
+      {t:'m',q:'How many suns? ☀️☀️☀️☀️☀️',o:['4','5','6','7'],a:'5'},
+      {t:'m',q:'What number comes after 3?',o:['2','3','4','5'],a:'4'},
+      {t:'m',q:'What number comes after 4?',o:['3','4','5','6'],a:'5'},
+      {t:'m',q:'What number comes before 3?',o:['1','2','4','5'],a:'2'},
+      {t:'m',q:'Which is the biggest number?',o:['1','3','5','2'],a:'5'},
+      // ── Counting to 10 ──
+      {t:'m',q:'How many flowers? 🌸🌸🌸🌸🌸🌸',o:['5','6','7','8'],a:'6'},
+      {t:'m',q:'What number comes after 7?',o:['6','8','9','10'],a:'8'},
+      {t:'m',q:'What number comes before 10?',o:['7','8','9','11'],a:'9'},
+      {t:'m',q:'Which is the smallest number?',o:['9','5','7','3'],a:'3'},
+      {t:'m',q:'Count back: 10, 9, 8 … what comes next?',o:['6','7','5','4'],a:'7'},
+      {t:'m',q:'Put these in order, biggest first: 4, 9, 2, 7. Which is biggest?',o:['4','9','2','7'],a:'9'},
+      {t:'m',q:'Put these in order, smallest first: 6, 1, 8, 3. Which is smallest?',o:['6','1','8','3'],a:'1'},
+      // ── Addition to 10 ──
+      {t:'m',q:'1 + 1 = ?',o:['1','2','3','4'],a:'2'},
+      {t:'m',q:'2 + 3 = ?',o:['4','5','6','7'],a:'5'},
+      {t:'m',q:'4 + 4 = ?',o:['6','7','8','9'],a:'8'},
+      {t:'m',q:'3 + 5 = ?',o:['6','7','8','9'],a:'8'},
+      {t:'m',q:'1 + 9 = ?',o:['8','9','10','11'],a:'10'},
+      {t:'m',q:'5 + 5 = ?',o:['8','9','10','11'],a:'10'},
+      {t:'m',q:'I have 3 🍎 and get 4 more. How many now?',o:['5','6','7','8'],a:'7'},
+      {t:'m',q:'There are 2 🐶 and 6 🐱. How many animals altogether?',o:['6','7','8','9'],a:'8'},
+      // ── Subtraction ──
+      {t:'m',q:'5 − 2 = ?',o:['1','2','3','4'],a:'3'},
+      {t:'m',q:'6 − 3 = ?',o:['2','3','4','5'],a:'3'},
+      {t:'m',q:'10 − 4 = ?',o:['4','5','6','7'],a:'6'},
+      {t:'m',q:'10 − 3 = ?',o:['6','7','8','9'],a:'7'},
+      {t:'m',q:'I have 5 🍪 and eat 2. How many are left?',o:['2','3','4','5'],a:'3'},
+      {t:'m',q:'There are 8 birds. 3 fly away. How many stay?',o:['3','4','5','6'],a:'5'},
+      // ── Counting to 20 ──
+      {t:'m',q:'What number comes after 12?',o:['11','13','14','15'],a:'13'},
+      {t:'m',q:'What number comes before 20?',o:['17','18','19','21'],a:'19'},
+      {t:'m',q:'What is 10 + 5?',o:['14','15','16','17'],a:'15'},
+      {t:'m',q:'What is 10 + 8?',o:['16','17','18','19'],a:'18'},
+      {t:'m',q:'Which is bigger: 14 or 17?',o:['14','17','they are the same'],a:'17'},
+      // ── Number bonds to 10 ──
+      {t:'m',q:'3 + ___ = 10. What is the missing number?',o:['5','6','7','8'],a:'7'},
+      {t:'m',q:'6 + ___ = 10. What is the missing number?',o:['2','3','4','5'],a:'4'},
+      {t:'m',q:'___ + 8 = 10. What is the missing number?',o:['1','2','3','4'],a:'2'},
+      {t:'m',q:'How many tens are in 20?',o:['1','2','3','4'],a:'2'},
+      {t:'m',q:'Which number is between 15 and 17?',o:['14','15','16','18'],a:'16'},
+      {t:'m',q:'10 + 10 = ?',o:['15','18','20','22'],a:'20'},
+      {t:'m',q:'I have 12p and spend 5p. How much do I have left?',o:['5p','6p','7p','8p'],a:'7p'}
     ]
   },
+
   writing:{
-    title:'Writing', emoji:'✏️', color:'linear-gradient(135deg,#f472b6,#ec4899)', bg:'#fdf2f8',
-    levels:[
-      {id:'wnum',title:'Write Numbers 0-5',emoji:'🔢',qs:[
-        {t:'i',q:'Practice writing the number 1',a:'1'},
-        {t:'i',q:'Practice writing the number 2',a:'2'},
-        {t:'i',q:'Practice writing the number 3',a:'3'}
-      ]}
+    title:'Writing', emoji:'✏️', color:'linear-gradient(135deg,#f472b6,#ec4899)',
+    qs:[
+      // ── Letter recognition ──
+      {t:'m',q:'Which letter is this? "A"',o:['A','B','C','D'],a:'A'},
+      {t:'m',q:'Which letter is this? "M"',o:['N','M','W','H'],a:'M'},
+      {t:'m',q:'Which letter is this? "S"',o:['Z','N','S','G'],a:'S'},
+      {t:'m',q:'Which is the letter "b"?',o:['d','p','q','b'],a:'b'},
+      {t:'m',q:'Which is the letter "d"?',o:['b','p','q','d'],a:'d'},
+      {t:'m',q:'Which is the letter "p"?',o:['b','d','p','q'],a:'p'},
+      {t:'m',q:'What letter does "elephant" start with?',o:['a','e','i','o'],a:'e'},
+      {t:'m',q:'What letter does "umbrella" start with?',o:['a','e','i','u'],a:'u'},
+      {t:'m',q:'What letter does "orange" start with?',o:['a','e','o','u'],a:'o'},
+      {t:'m',q:'What letter does "igloo" start with?',o:['a','e','i','u'],a:'i'},
+      // ── Alphabet order ──
+      {t:'m',q:'What letter comes after "A" in the alphabet?',o:['B','C','D','E'],a:'B'},
+      {t:'m',q:'What letter comes after "F"?',o:['D','E','G','H'],a:'G'},
+      {t:'m',q:'What letter comes after "M"?',o:['K','L','N','O'],a:'N'},
+      {t:'m',q:'What letter comes before "D"?',o:['A','B','C','E'],a:'C'},
+      {t:'m',q:'What letter comes before "P"?',o:['M','N','O','Q'],a:'O'},
+      {t:'m',q:'Which comes first in the alphabet: "cat" or "bat"?',o:['cat','bat','they are the same'],a:'bat'},
+      {t:'m',q:'Which comes first in the alphabet: "dog" or "fox"?',o:['dog','fox','they are the same'],a:'dog'},
+      {t:'m',q:'Which comes first in the alphabet: "sun" or "moon"?',o:['sun','moon','they are the same'],a:'moon'},
+      // ── Word knowledge ──
+      {t:'m',q:'How many letters are in the word "CAT"?',o:['2','3','4','5'],a:'3'},
+      {t:'m',q:'How many letters are in the word "DOG"?',o:['2','3','4','5'],a:'3'},
+      {t:'m',q:'How many letters are in "FISH"?',o:['3','4','5','6'],a:'4'},
+      {t:'m',q:'Which of these is a real word?',o:['zfk','sat','bxm','qwp'],a:'sat'},
+      {t:'m',q:'Which word is the name of an animal?',o:['jump','cat','run','big'],a:'cat'},
+      {t:'m',q:'Which word is a colour?',o:['cat','run','blue','jump'],a:'blue'},
+      {t:'m',q:'Which word is a number?',o:['cat','big','run','three'],a:'three'},
+      {t:'m',q:'Which word means something you eat?',o:['run','apple','big','jump'],a:'apple'},
+      // ── Spelling (simple CVC and common words) ──
+      {t:'m',q:'Which is the correct spelling?',o:['smil','smille','smile','smyle'],a:'smile'},
+      {t:'m',q:'Which is the correct spelling?',o:['thuh','the','teh','dhe'],a:'the'},
+      {t:'m',q:'Which is the correct spelling?',o:['wos','woz','was','waz'],a:'was'},
+      {t:'m',q:'Which is the correct spelling?',o:['sed','seid','sayd','said'],a:'said'},
+      {t:'m',q:'Which is the correct spelling?',o:['com','cum','came','caim'],a:'came'},
+      {t:'m',q:'Which is the correct spelling?',o:['liek','lyke','like','lik'],a:'like'},
+      // ── Sentences ──
+      {t:'m',q:'Which of these is a sentence?',o:['big red','The cat sat.','cat mat','run fast jump'],a:'The cat sat.'},
+      {t:'m',q:'What does a sentence always start with?',o:['a full stop','a capital letter','a comma','a small letter'],a:'a capital letter'},
+      {t:'m',q:'What does a sentence usually end with?',o:['a comma','a capital letter','a full stop','a space'],a:'a full stop'},
+      {t:'m',q:'Which sentence makes sense?',o:['Dog the ran.','The dog ran.','Ran dog the.','The ran dog.'],a:'The dog ran.'},
+      {t:'m',q:'Which word can complete: "The ___ is hot."',o:['run','big','sun','jump'],a:'sun'},
+      {t:'m',q:'Which word can complete: "I like to ___ my bike."',o:['eat','ride','sleep','blue'],a:'ride'},
+      {t:'m',q:'Which word can complete: "The bird can ___."',o:['heavy','big','fly','loud'],a:'fly'},
+      {t:'m',q:'Which word can complete: "She has a red ___."',o:['run','tall','ball','jump'],a:'ball'}
     ]
   }
 }
-};
 
-// ═══════════════════════════════════════════════
+}; // end CUR
+
+// ─────────────────────────────────────────────────────────────
 // STATE & NAVIGATION
-// ═══════════════════════════════════════════════
-let state={child:null,subject:null,level:null,qIdx:0,xp:0};
-function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
-function goHome(){state={child:null,subject:null,level:null,qIdx:0,xp:state.xp};show('screen-home');document.getElementById('xp-display').style.display='none';}
-function selectChild(c){state.child=c;state.xp=0;document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;document.getElementById('xp-display').style.display='inline';renderChildScreen();}
-function selectSubject(s){state.subject=s;renderMap();}
-function selectLevel(l){state.level=l;state.qIdx=0;renderTask();}
+// ─────────────────────────────────────────────────────────────
+let state={child:null,subject:null,qIdx:0,xp:0,currentCtx:null};
 
-// ═══════════════════════════════════════════════
+function show(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+
+function goHome(){
+  state={child:null,subject:null,qIdx:0,xp:state.xp,currentCtx:null};
+  show('screen-home');
+  document.getElementById('xp-display').style.display='none';
+}
+
+function selectChild(c){
+  state.child=c;
+  state.xp=0;
+  document.getElementById('xp-display').textContent='⭐ 0 XP';
+  document.getElementById('xp-display').style.display='inline';
+  renderChildScreen();
+}
+
+function selectSubject(s){
+  state.subject=s;
+  state.qIdx=0;
+  state.currentCtx=null;
+  renderTask();
+}
+
+// ─────────────────────────────────────────────────────────────
 // RENDER CHILD SCREEN
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
 function renderChildScreen(){
   const data=CUR[state.child];
-  let html=`<div style="text-align:center;padding-top:16px;"><h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:20px;">Choose a subject</h2><div class="subject-grid">`;
+  let html=`<div style="padding-top:16px;">
+    <h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:6px;text-align:center;">Choose a subject</h2>
+    <p style="color:#7c3aed;font-size:14px;font-weight:700;margin-bottom:20px;text-align:center;">Complete all subjects to earn screen time! 🎮</p>`;
   for(let k in data){
     const sub=data[k];
-    html+=`<div class="subject-card pop" style="background:${sub.color};cursor:pointer;" onclick="selectSubject('${k}')"><span style="font-size:40px;">${sub.emoji}</span><div style="flex:1;"><div style="font-size:20px;font-weight:900;">${sub.title}</div></div></div>`;
+    html+=`<div class="subject-card pop" style="background:${sub.color};" onclick="selectSubject('${k}')">
+      <span style="font-size:38px;">${sub.emoji}</span>
+      <div style="flex:1;">
+        <div style="font-size:20px;font-weight:900;">${sub.title}</div>
+        <div style="font-size:13px;opacity:0.85;">${sub.qs.length} questions · rising difficulty</div>
+      </div>
+      <span style="font-size:20px;opacity:0.8;">▶</span>
+    </div>`;
   }
-  html+=`</div></div>`;
+  html+=`</div>`;
   document.getElementById('screen-child').innerHTML=html;
   show('screen-child');
 }
 
-// ═══════════════════════════════════════════════
-// RENDER MAP
-// ═══════════════════════════════════════════════
-function renderMap(){
-  const levels=CUR[state.child][state.subject].levels;
-  let html=`<div style="padding-top:16px;"><h2 style="font-size:20px;font-weight:900;color:#4c1d95;margin-bottom:16px;">${CUR[state.child][state.subject].title} Levels</h2>`;
-  levels.forEach((lv,i)=>{
-    const cls=i===0?'level-unlocked':'level-locked';
-    html+=`<div class="level-node ${cls}" onclick="${i===0?`selectLevel(${i})`:''}"><span style="font-size:32px;">${lv.emoji}</span><div style="flex:1;"><div style="font-weight:800;font-size:16px;">${lv.title}</div><div style="font-size:13px;opacity:0.7;">${lv.qs.length} questions</div></div></div>`;
-  });
-  html+=`</div>`;
-  document.getElementById('screen-map').innerHTML=html;
-  show('screen-map');
-}
-
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
 // RENDER TASK
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
 function renderTask(){
-  const lv=CUR[state.child][state.subject].levels[state.level];
-  const q=lv.qs[state.qIdx];
-  let html=`<div style="padding-top:16px;"><div style="margin-bottom:16px;"><div style="font-size:14px;font-weight:800;color:#7c3aed;">Question ${state.qIdx+1} of ${lv.qs.length}</div><div style="background:#e0e7ff;border-radius:12px;height:8px;margin-top:6px;overflow:hidden;"><div class="bar-fill" style="background:#7c3aed;height:100%;width:${((state.qIdx+1)/lv.qs.length)*100}%;"></div></div></div>`;
+  const sub=CUR[state.child][state.subject];
+  const q=sub.qs[state.qIdx];
+  const total=sub.qs.length;
+  const pct=Math.round((state.qIdx/total)*100);
+
+  // Update current passage if this question introduces a new one
+  if(q.ctx) state.currentCtx=q.ctx;
+
+  let html=`<div style="padding-top:8px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+      <button onclick="renderChildScreen()" style="background:#f5f3ff;border:2px solid #e9d5ff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:800;color:#7c3aed;white-space:nowrap;">← Back</button>
+      <div style="flex:1;">
+        <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;">
+          <span>${sub.title}</span>
+          <span>${state.qIdx+1} / ${total}</span>
+        </div>
+        <div style="background:#e0e7ff;border-radius:12px;height:8px;overflow:hidden;">
+          <div class="bar-fill" style="background:#7c3aed;height:100%;width:${pct}%;"></div>
+        </div>
+      </div>
+    </div>`;
+
+  if(state.currentCtx){
+    html+=`<div class="passage-box">📖 <b>Read this:</b><br><br>${state.currentCtx}</div>`;
+  }
 
   if(q.t==='m'){
-    html+=`<div style="background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"><div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:16px;">${q.q}</div>`;
+    html+=`<div class="q-card"><div class="q-text">${q.q}</div>`;
     q.o.forEach((opt,i)=>{
-      html+=`<button class="mcq-btn" data-opt="${i}" style="background:#f8fafc;color:#1e293b;">${opt}</button>`;
+      html+=`<button class="mcq-btn" data-opt="${i}">${opt}</button>`;
     });
     html+=`</div>`;
-  }else if(q.t==='i'){
-    html+=`<div style="background:#fff;border-radius:20px;padding:20px;margin-bottom:16px;box-shadow:0 4px 12px rgba(0,0,0,0.08);"><div style="font-size:18px;font-weight:700;color:#1e293b;margin-bottom:16px;">${q.q}</div><input type="text" id="answer-input" style="width:100%;padding:14px;font-size:16px;border:2px solid #e2e8f0;border-radius:12px;margin-bottom:12px;" placeholder="Type your answer"><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;" onclick="checkInputAnswer()">Submit</button></div>`;
+  }else{
+    html+=`<div class="q-card"><div class="q-text">${q.q}</div>
+      <input type="text" id="answer-input" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"
+        style="width:100%;padding:14px;font-size:16px;border:2px solid #e2e8f0;border-radius:12px;margin-bottom:12px;"
+        placeholder="Type your answer">
+      <button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;"
+        onclick="checkInputAnswer()">Submit ✓</button>
+    </div>`;
   }
+
   html+=`</div>`;
   document.getElementById('screen-task').innerHTML=html;
   show('screen-task');
+  const inp=document.getElementById('answer-input');
+  if(inp) setTimeout(()=>inp.focus(),80);
 }
 
-// ═══════════════════════════════════════════════
-// CHECK ANSWER
-// ═══════════════════════════════════════════════
-// MCQ answers are handled via delegated listener below — no inline onclick needed.
+// ─────────────────────────────────────────────────────────────
+// ANSWER CHECKING
+// ─────────────────────────────────────────────────────────────
 
-function checkAnswer(selected,correct){
-  if(selected===correct){
-    state.xp+=10;
-    document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;
-    showStarBurst();
-    setTimeout(nextQuestion,800);
-  }else{
-    alert('Try again!');
-  }
-}
-
-function checkInputAnswer(){
-  const lv=CUR[state.child][state.subject].levels[state.level];
-  const q=lv.qs[state.qIdx];
-  const input=document.getElementById('answer-input').value.trim();
-  if(input.toLowerCase()===q.a.toLowerCase()){
-    state.xp+=10;
-    document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;
-    showStarBurst();
-    setTimeout(nextQuestion,800);
-  }else{
-    alert('Try again!');
-  }
-}
-
-// Delegated MCQ click handler — reads answer from CUR data, no string interpolation.
+// Safe delegated MCQ handler – answer looked up from CUR data, never from DOM strings
 document.getElementById('screen-task').addEventListener('click',function(e){
   const btn=e.target.closest('[data-opt]');
   if(!btn) return;
-  const lv=CUR[state.child][state.subject].levels[state.level];
-  const q=lv.qs[state.qIdx];
+  const q=CUR[state.child][state.subject].qs[state.qIdx];
   const selected=q.o[parseInt(btn.dataset.opt)];
-  checkAnswer(selected,q.a);
+  if(selected===q.a){
+    markCorrect();
+  }else{
+    btn.style.borderColor='#ef4444';
+    btn.style.background='#fef2f2';
+    setTimeout(()=>{btn.style.borderColor='#e2e8f0';btn.style.background='#f8fafc';},800);
+    alert('Not quite – try again! 💪');
+  }
 });
 
+function checkInputAnswer(){
+  const q=CUR[state.child][state.subject].qs[state.qIdx];
+  const input=document.getElementById('answer-input').value.trim();
+  if(input.toLowerCase()===q.a.toLowerCase()){
+    markCorrect();
+  }else{
+    alert('Not quite – try again! 💪');
+  }
+}
+
+function markCorrect(){
+  state.xp+=10;
+  document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;
+  showStarBurst();
+  setTimeout(nextQuestion,800);
+}
+
 function nextQuestion(){
-  const lv=CUR[state.child][state.subject].levels[state.level];
+  const sub=CUR[state.child][state.subject];
   state.qIdx++;
-  if(state.qIdx<lv.qs.length){
+  if(state.qIdx<sub.qs.length){
     renderTask();
   }else{
     showComplete();
@@ -310,23 +614,32 @@ function showStarBurst(){
 }
 
 function showComplete(){
-  const lv=CUR[state.child][state.subject].levels[state.level];
-  sendTelegramNotification(`🎉 <b>${state.child}</b> completed <b>${lv.title}</b> and earned <b>${state.xp} XP</b>!`);
-  let html=`<div style="text-align:center;padding-top:40px;"><div class="pop" style="font-size:80px;margin-bottom:16px;">🎉</div><h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin-bottom:8px;">Well Done!</h2><p style="font-size:16px;color:#7c3aed;margin-bottom:24px;">You completed this level!</p><button style="padding:14px 28px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;" onclick="renderMap()">Back to Map</button></div>`;
+  const sub=CUR[state.child][state.subject];
+  const earned=sub.qs.length*10;
+  sendTelegramNotification(`🎉 <b>${state.child}</b> finished <b>${sub.title}</b>! Earned <b>${earned} XP</b>. Session total: ${state.xp} XP`);
+  let html=`<div style="text-align:center;padding-top:40px;">
+    <div class="pop" style="font-size:80px;margin-bottom:16px;">🎉</div>
+    <h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin-bottom:8px;">Amazing work!</h2>
+    <p style="font-size:16px;color:#7c3aed;margin-bottom:8px;">You finished <b>${sub.title}</b>!</p>
+    <p style="font-size:14px;color:#9ca3af;margin-bottom:28px;">+${earned} XP earned this session</p>
+    <button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;margin-bottom:12px;"
+      onclick="renderChildScreen()">Next Subject →</button>
+    <button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:2px solid #e9d5ff;border-radius:12px;"
+      onclick="goHome()">Change Child</button>
+  </div>`;
   document.getElementById('screen-complete').innerHTML=html;
   show('screen-complete');
 }
 
-// ═══════════════════════════════════════════════
-// TELEGRAM NOTIFICATIONS
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
+// TELEGRAM
+// ─────────────────────────────────────────────────────────────
 function sendTelegramNotification(msg){
   const token=localStorage.getItem('tg_token');
   const chat=localStorage.getItem('tg_chat');
   if(!token||!chat) return;
   fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
+    method:'POST',headers:{'Content-Type':'application/json'},
     body:JSON.stringify({chat_id:chat,text:msg,parse_mode:'HTML'})
   }).catch(()=>{});
 }
@@ -337,68 +650,60 @@ function saveTelegramConfig(){
   if(!token||!chat){alert('Please fill in both fields.');return;}
   localStorage.setItem('tg_token',token);
   localStorage.setItem('tg_chat',chat);
-  alert('Telegram settings saved! You will now receive notifications when a child completes a level.');
+  alert('Saved! Tap Test to confirm.');
 }
 
 function testTelegramNotification(){
   const token=document.getElementById('tg-token').value.trim()||localStorage.getItem('tg_token');
   const chat=document.getElementById('tg-chat').value.trim()||localStorage.getItem('tg_chat');
-  if(!token||!chat){alert('Please save your Telegram settings first.');return;}
+  if(!token||!chat){alert('Save your settings first.');return;}
   fetch(`https://api.telegram.org/bot${token}/sendMessage`,{
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({chat_id:chat,text:'✅ Study Time is connected! You will receive notifications here when your children complete their study tasks.',parse_mode:'HTML'})
+    method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({chat_id:chat,text:'✅ Study Time connected! You will be notified when your children complete their study subjects.',parse_mode:'HTML'})
   }).then(r=>r.json()).then(d=>{
-    if(d.ok) alert('Test message sent! Check your Telegram.');
-    else alert('Error: '+d.description+'\n\nPlease check your Bot Token and Chat ID.');
-  }).catch(()=>alert('Network error. Please check your internet connection.'));
+    if(d.ok) alert('Test sent! Check your Telegram.');
+    else alert('Error: '+d.description+'\n\nCheck your Bot Token and Chat ID.');
+  }).catch(()=>alert('Network error.'));
 }
 
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
 // DASHBOARD
-// ═══════════════════════════════════════════════
+// ─────────────────────────────────────────────────────────────
 function openDashboard(){
-  const savedToken=localStorage.getItem('tg_token')||'';
-  const savedChat=localStorage.getItem('tg_chat')||'';
-  const connected=savedToken&&savedChat;
-  let html=`
+  const t=localStorage.getItem('tg_token')||'';
+  const c=localStorage.getItem('tg_chat')||'';
+  document.getElementById('dash-inner').innerHTML=`
     <h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:20px;">Parent Dashboard</h2>
-
     <div style="background:#f5f3ff;border-radius:16px;padding:20px;margin-bottom:20px;">
       <div style="font-size:16px;font-weight:900;color:#4c1d95;margin-bottom:4px;">📱 Telegram Notifications</div>
-      <div style="font-size:13px;color:#6b7280;margin-bottom:16px;">Get notified on Telegram when your child completes a study task.</div>
-
+      <div style="font-size:13px;color:#6b7280;margin-bottom:14px;">Get notified when your child completes a subject.</div>
       <div style="margin-bottom:8px;">
         <div style="font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;">BOT TOKEN</div>
-        <input id="tg-token" type="text" value="${savedToken}" placeholder="123456789:ABCdef..." style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
+        <input id="tg-token" type="text" value="${t}" placeholder="123456789:ABCdef..."
+          style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
       </div>
       <div style="margin-bottom:12px;">
         <div style="font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;">CHAT ID</div>
-        <input id="tg-chat" type="text" value="${savedChat}" placeholder="e.g. 123456789" style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
+        <input id="tg-chat" type="text" value="${c}" placeholder="e.g. 123456789"
+          style="width:100%;padding:10px 12px;border:2px solid #e9d5ff;border-radius:10px;font-size:14px;">
       </div>
-
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+      <div style="display:flex;gap:8px;">
         <button onclick="saveTelegramConfig()" style="flex:1;padding:10px;background:#7c3aed;color:#fff;border-radius:10px;font-weight:800;font-size:14px;">💾 Save</button>
         <button onclick="testTelegramNotification()" style="flex:1;padding:10px;background:#f0fdf4;color:#059669;border:2px solid #bbf7d0;border-radius:10px;font-weight:800;font-size:14px;">🔔 Test</button>
       </div>
-
-      ${connected?'<div style="margin-top:12px;font-size:12px;color:#059669;font-weight:800;">✅ Telegram connected</div>':'<div style="margin-top:12px;font-size:12px;color:#9ca3af;font-weight:700;">Not yet configured</div>'}
-
-      <details style="margin-top:16px;">
-        <summary style="font-size:12px;font-weight:800;color:#7c3aed;cursor:pointer;">How to set this up</summary>
+      ${(t&&c)?'<div style="margin-top:10px;font-size:12px;color:#059669;font-weight:800;">✅ Telegram connected</div>':'<div style="margin-top:10px;font-size:12px;color:#9ca3af;font-weight:700;">Not yet configured</div>'}
+      <details style="margin-top:14px;">
+        <summary style="font-size:12px;font-weight:800;color:#7c3aed;cursor:pointer;">How to set this up ▼</summary>
         <div style="font-size:12px;color:#4b5563;margin-top:8px;line-height:1.7;">
-          1. Open Telegram and search for <b>@BotFather</b><br>
-          2. Send <b>/newbot</b> and follow the prompts to create a bot<br>
-          3. Copy the bot token BotFather gives you and paste it above<br>
-          4. Search for <b>@userinfobot</b>, send it any message, and it will show your Chat ID<br>
-          5. Paste your Chat ID above, save, and tap Test
+          1. Open Telegram → search <b>@BotFather</b><br>
+          2. Send <b>/newbot</b> → follow prompts → copy the token<br>
+          3. Search <b>@userinfobot</b> → send any message → copy your Chat ID<br>
+          4. Paste both above → Save → Test
         </div>
       </details>
     </div>
-
-    <button style="width:100%;padding:12px 24px;background:#e9d5ff;color:#4c1d95;border-radius:12px;font-weight:800;" onclick="closeDashboard()">Close</button>
-  `;
-  document.getElementById('dash-inner').innerHTML=html;
+    <button style="width:100%;padding:12px;background:#e9d5ff;color:#4c1d95;border-radius:12px;font-weight:800;"
+      onclick="closeDashboard()">Close</button>`;
   document.getElementById('modal-dashboard').style.display='flex';
 }
 
@@ -406,9 +711,6 @@ function closeDashboard(){
   document.getElementById('modal-dashboard').style.display='none';
 }
 
-// ═══════════════════════════════════════════════
-// PWA SERVICE WORKER
-// ═══════════════════════════════════════════════
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
