@@ -465,14 +465,17 @@ document.addEventListener('DOMContentLoaded',function(){
   });
 });
 
+function normalizeAnswer(str){
+  return str.toString().toLowerCase().trim().replace(/\s+/g,' ').replace(/[,£$%]/g,'').replace(/\.0+$/,'');
+}
 function checkInputAnswer(){
   const q=CUR[state.child][state.subject].qs[state.qIdx];
   const input=document.getElementById('answer-input').value.trim();
-  if(input.toLowerCase()===q.a.toLowerCase()){
-    markCorrect();
-  }else{
-    alert('Not quite – try again! 💪');
-  }
+  const userAns=normalizeAnswer(input);
+  const correctAns=normalizeAnswer(q.a);
+  if(userAns===correctAns){markCorrect();}
+  else if(!isNaN(userAns)&&!isNaN(correctAns)&&parseFloat(userAns)===parseFloat(correctAns)){markCorrect();}
+  else{alert('Not quite – try again! 💪');}
 }
 
 function markCorrect(){
