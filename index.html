@@ -30,11 +30,18 @@ input{font-family:'Nunito',sans-serif;}
 .mcq-btn:active{transform:scale(0.98);border-color:#7c3aed;background:#f5f3ff;}
 .subject-card{border-radius:22px;padding:18px 20px;margin-bottom:14px;color:#fff;display:flex;align-items:center;gap:14px;box-shadow:0 6px 20px rgba(0,0,0,0.15);cursor:pointer;transition:transform 0.12s;}
 .subject-card:active{transform:scale(0.98);}
+.task-card{border-radius:16px;padding:16px;margin-bottom:10px;color:#fff;display:flex;align-items:center;gap:12px;box-shadow:0 4px 12px rgba(0,0,0,0.1);cursor:pointer;transition:transform 0.12s;border:2px solid transparent;}
+.task-card:active{transform:scale(0.98);}
+.task-card.locked{opacity:0.6;cursor:not-allowed;}
+.task-card.completed{border-color:#10b981;}
 .modal{position:fixed;inset:0;background:rgba(0,0,0,0.75);z-index:1000;overflow-y:auto;padding:16px;display:flex;align-items:flex-start;justify-content:center;}
 .modal-box{background:#fff;border-radius:24px;padding:24px;width:100%;max-width:540px;margin-top:20px;}
 .passage-box{background:#fef3c7;border-radius:16px;padding:16px;margin-bottom:14px;font-size:14px;line-height:1.75;color:#78350f;border-left:4px solid #f59e0b;}
 .q-card{background:#fff;border-radius:20px;padding:20px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.08);}
 .q-text{font-size:17px;font-weight:700;color:#1e293b;margin-bottom:16px;line-height:1.5;}
+.result-screen{text-align:center;padding:20px;}
+.result-item{background:#f5f3ff;border-radius:12px;padding:12px;margin-bottom:8px;text-align:left;border-left:4px solid #ef4444;}
+.result-item.correct{border-left-color:#10b981;background:#f0fdf4;}
 </style>
 </head>
 <body>
@@ -66,8 +73,9 @@ input{font-family:'Nunito',sans-serif;}
 </div>
 
 <div id="screen-child" class="screen"></div>
+<div id="screen-subject" class="screen"></div>
 <div id="screen-task" class="screen"></div>
-<div id="screen-complete" class="screen"></div>
+<div id="screen-result" class="screen"></div>
 <div id="confetti-wrap"></div>
 
 <div id="modal-dashboard" class="modal" style="display:none;">
@@ -99,337 +107,81 @@ Amelia:{
       {id:17,title:'Percentage Calculations',difficulty:'hard',locked:true,questions:[{t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'},{t:'m',q:'What is 1/2 as a decimal?',o:['0.2','0.5','1.5','2.0'],a:'0.5'},{t:'m',q:'What is 1/4 as a decimal?',o:['0.14','0.20','0.25','0.40'],a:'0.25'},{t:'m',q:'Which is equivalent to 50%?',o:['1/3','1/4','1/2','2/3'],a:'1/2'},{t:'m',q:'Convert 3/4 to a percentage.',o:['34%','60%','70%','75%'],a:'75%'},{t:'m',q:'What is 10% of 80?',o:['4','8','10','16'],a:'8'},{t:'m',q:'What is 25% of 80?',o:['15','20','25','40'],a:'20'},{t:'m',q:'What is 50% of 130?',o:['50','60','65','70'],a:'65'}]},
       {id:18,title:'Perimeter & Area',difficulty:'hard',locked:true,questions:[{t:'m',q:'What is 20% of 150?',o:['20','25','30','35'],a:'30'},{t:'i',q:'What is 15% of 60?',a:'9'},{t:'m',q:'Perimeter of a rectangle 5 cm × 3 cm?',o:['8 cm','15 cm','16 cm','18 cm'],a:'16 cm'},{t:'m',q:'Area of a rectangle 5 cm × 3 cm?',o:['8 cm²','15 cm²','16 cm²','18 cm²'],a:'15 cm²'},{t:'m',q:'How many degrees in a right angle?',o:['45','90','180','360'],a:'90'},{t:'m',q:'How many degrees in a straight line?',o:['90','120','180','360'],a:'180'},{t:'m',q:'What type of triangle has all three sides equal?',o:['scalene','isosceles','equilateral','right-angled'],a:'equilateral'},{t:'m',q:'Which of these is a prime number?',o:['9','15','17','21'],a:'17'}]},
       {id:19,title:'Angles & Shapes',difficulty:'hard',locked:true,questions:[{t:'m',q:'What are the factors of 12?',o:['1,2,3,4','2,4,6,12','1,2,3,4,6,12','1,3,6,12'],a:'1,2,3,4,6,12'},{t:'m',q:'What is 2³?',o:['6','8','9','12'],a:'8'},{t:'i',q:'What is the square root of 49?',a:'7'},{t:'m',q:'What is the LCM of 4 and 6?',o:['2','8','12','24'],a:'12'},{t:'m',q:'What is the HCF of 12 and 18?',o:['3','6','9','12'],a:'6'},{t:'m',q:'A book costs £4.50. How much do 3 books cost?',o:['£12.00','£13.00','£13.50','£14.50'],a:'£13.50'},{t:'i',q:'456 + 389 = ?',a:'845'}]},
-      {id:20,title:'Prime Numbers & Factors',difficulty:'hard',locked:true,questions:[{t:'i',q:'1000 − 347 = ?',a:'653'},{t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},{t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'},{t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},{t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},{t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},{t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'}]},
-      {id:21,title:'Square & Cube Numbers',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which number is a square number?',o:['18','24','36','50'],a:'36'},{t:'m',q:'3 × 4 = ?',o:['7','10','12','14'],a:'12'},{t:'m',q:'5 × 6 = ?',o:['25','30','35','36'],a:'30'},{t:'m',q:'10 × 7 = ?',o:['60','70','80','90'],a:'70'},{t:'i',q:'2 × 8 = ?',a:'16'},{t:'i',q:'5 × 9 = ?',a:'45'}]},
-      {id:22,title:'LCM & HCF',difficulty:'hard',locked:true,questions:[{t:'i',q:'10 × 6 = ?',a:'60'},{t:'m',q:'12 ÷ 2 = ?',o:['4','6','8','10'],a:'6'},{t:'m',q:'20 ÷ 5 = ?',o:['3','4','5','6'],a:'4'},{t:'i',q:'48 ÷ 6 = ?',a:'8'},{t:'i',q:'63 ÷ 7 = ?',a:'9'},{t:'i',q:'144 ÷ 12 = ?',a:'12'}]},
-      {id:23,title:'Money Problems',difficulty:'hard',locked:true,questions:[{t:'i',q:'What is double 37?',a:'74'},{t:'i',q:'What is half of 84?',a:'42'},{t:'m',q:'3 × 7 = ?',o:['18','21','24','27'],a:'21'},{t:'m',q:'4 × 6 = ?',o:['20','24','28','32'],a:'24'},{t:'m',q:'6 × 8 = ?',o:['42','48','54','60'],a:'48'},{t:'i',q:'7 × 9 = ?',a:'63'},{t:'i',q:'8 × 7 = ?',a:'56'}]},
-      {id:24,title:'Time Calculations',difficulty:'hard',locked:true,questions:[{t:'m',q:'7 × 8 = ?',o:['48','54','56','64'],a:'56'},{t:'m',q:'9 × 9 = ?',o:['63','72','81','90'],a:'81'},{t:'m',q:'12 × 7 = ?',o:['72','78','84','96'],a:'84'},{t:'m',q:'What is 1/2 of 60?',o:['20','25','30','40'],a:'30'},{t:'m',q:'What is 1/4 of 48?',o:['8','10','12','16'],a:'12'},{t:'m',q:'What is 3/4 of 48?',o:['24','30','36','40'],a:'36'},{t:'m',q:'Which fraction is larger: 3/4 or 2/3?',o:['3/4','2/3','they are equal'],a:'3/4'},{t:'m',q:'3/5 + 1/5 = ?',o:['2/5','3/5','4/5','1'],a:'4/5'}]},
-      {id:25,title:'Word Problems (Mixed)',difficulty:'hard',locked:true,questions:[{t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'},{t:'m',q:'What is 1/2 as a decimal?',o:['0.2','0.5','1.5','2.0'],a:'0.5'},{t:'m',q:'What is 1/4 as a decimal?',o:['0.14','0.20','0.25','0.40'],a:'0.25'},{t:'m',q:'Which is equivalent to 50%?',o:['1/3','1/4','1/2','2/3'],a:'1/2'},{t:'m',q:'Convert 3/4 to a percentage.',o:['34%','60%','70%','75%'],a:'75%'},{t:'m',q:'What is 10% of 80?',o:['4','8','10','16'],a:'8'},{t:'m',q:'What is 25% of 80?',o:['15','20','25','40'],a:'20'},{t:'m',q:'What is 50% of 130?',o:['50','60','65','70'],a:'65'}]},
-      {id:26,title:'Algebra Basics',difficulty:'hard',locked:true,questions:[{t:'m',q:'What is 20% of 150?',o:['20','25','30','35'],a:'30'},{t:'i',q:'What is 15% of 60?',a:'9'},{t:'m',q:'Round 4.3 to the nearest whole number.',o:['3','4','5','6'],a:'4'},{t:'m',q:'Round 6.7 to the nearest whole number.',o:['5','6','7','8'],a:'7'},{t:'i',q:'Round 4.67 to one decimal place.',a:'4.7'},{t:'i',q:'Round 8.35 to one decimal place.',a:'8.4'}]},
-      {id:27,title:'Ratio & Proportion',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which decimal is the smallest?',o:['0.3','0.03','0.33','0.303'],a:'0.03'},{t:'m',q:'Which is greater: 3.045 or 3.054?',o:['3.045','3.054','they are equal'],a:'3.054'},{t:'i',q:'2.5 + 1.7 = ?',a:'4.2'},{t:'i',q:'5.4 − 2.9 = ?',a:'2.5'},{t:'i',q:'3.6 × 2 = ?',a:'7.2'},{t:'m',q:'What is 0.75 written as a fraction?',o:['3/5','3/4','7/10','7/5'],a:'3/4'},{t:'m',q:'Perimeter of a rectangle 5 cm × 3 cm?',o:['8 cm','15 cm','16 cm','18 cm'],a:'16 cm'}]},
-      {id:28,title:'Statistics & Data',difficulty:'hard',locked:true,questions:[{t:'m',q:'Area of a rectangle 5 cm × 3 cm?',o:['8 cm²','15 cm²','16 cm²','18 cm²'],a:'15 cm²'},{t:'m',q:'How many degrees in a right angle?',o:['45','90','180','360'],a:'90'},{t:'m',q:'How many degrees in a straight line?',o:['90','120','180','360'],a:'180'},{t:'m',q:'What type of triangle has all three sides equal?',o:['scalene','isosceles','equilateral','right-angled'],a:'equilateral'},{t:'m',q:'Which of these is a prime number?',o:['9','15','17','21'],a:'17'},{t:'m',q:'What are the factors of 12?',o:['1,2,3,4','2,4,6,12','1,2,3,4,6,12','1,3,6,12'],a:'1,2,3,4,6,12'},{t:'m',q:'What is 2³?',o:['6','8','9','12'],a:'8'}]},
-      {id:29,title:'Measurement Conversions',difficulty:'hard',locked:true,questions:[{t:'i',q:'What is the square root of 49?',a:'7'},{t:'m',q:'What is the LCM of 4 and 6?',o:['2','8','12','24'],a:'12'},{t:'m',q:'What is the HCF of 12 and 18?',o:['3','6','9','12'],a:'6'},{t:'m',q:'A book costs £4.50. How much do 3 books cost?',o:['£12.00','£13.00','£13.50','£14.50'],a:'£13.50'},{t:'i',q:'456 + 389 = ?',a:'845'},{t:'i',q:'1000 − 347 = ?',a:'653'}]},
-      {id:30,title:'Geometry Properties',difficulty:'hard',locked:true,questions:[{t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},{t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'},{t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},{t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},{t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},{t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'},{t:'m',q:'Which number is a square number?',o:['18','24','36','50'],a:'36'}]},
-      {id:31,title:'Ordering Decimals',difficulty:'hard',locked:true,questions:[{t:'m',q:'2 × 5 = ?',o:['7','10','12','15'],a:'10'},{t:'m',q:'3 × 4 = ?',o:['7','10','12','14'],a:'12'},{t:'m',q:'5 × 6 = ?',o:['25','30','35','36'],a:'30'},{t:'m',q:'10 × 7 = ?',o:['60','70','80','90'],a:'70'},{t:'i',q:'2 × 8 = ?',a:'16'},{t:'i',q:'5 × 9 = ?',a:'45'}]},
-      {id:32,title:'Fraction Comparison',difficulty:'hard',locked:true,questions:[{t:'i',q:'10 × 6 = ?',a:'60'},{t:'m',q:'12 ÷ 2 = ?',o:['4','6','8','10'],a:'6'},{t:'m',q:'20 ÷ 5 = ?',o:['3','4','5','6'],a:'4'},{t:'i',q:'48 ÷ 6 = ?',a:'8'},{t:'i',q:'63 ÷ 7 = ?',a:'9'},{t:'i',q:'144 ÷ 12 = ?',a:'12'}]},
-      {id:33,title:'Percentage of Amounts',difficulty:'hard',locked:true,questions:[{t:'i',q:'What is double 37?',a:'74'},{t:'i',q:'What is half of 84?',a:'42'},{t:'m',q:'3 × 7 = ?',o:['18','21','24','27'],a:'21'},{t:'m',q:'4 × 6 = ?',o:['20','24','28','32'],a:'24'},{t:'m',q:'6 × 8 = ?',o:['42','48','54','60'],a:'48'},{t:'i',q:'7 × 9 = ?',a:'63'},{t:'i',q:'8 × 7 = ?',a:'56'}]},
-      {id:34,title:'Compound Shapes',difficulty:'hard',locked:true,questions:[{t:'m',q:'7 × 8 = ?',o:['48','54','56','64'],a:'56'},{t:'m',q:'9 × 9 = ?',o:['63','72','81','90'],a:'81'},{t:'m',q:'12 × 7 = ?',o:['72','78','84','96'],a:'84'},{t:'m',q:'What is 1/2 of 60?',o:['20','25','30','40'],a:'30'},{t:'m',q:'What is 1/4 of 48?',o:['8','10','12','16'],a:'12'},{t:'m',q:'What is 3/4 of 48?',o:['24','30','36','40'],a:'36'}]},
-      {id:35,title:'Angles in Triangles',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which fraction is larger: 3/4 or 2/3?',o:['3/4','2/3','they are equal'],a:'3/4'},{t:'m',q:'3/5 + 1/5 = ?',o:['2/5','3/5','4/5','1'],a:'4/5'},{t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'},{t:'m',q:'What is 1/2 as a decimal?',o:['0.2','0.5','1.5','2.0'],a:'0.5'},{t:'m',q:'What is 1/4 as a decimal?',o:['0.14','0.20','0.25','0.40'],a:'0.25'},{t:'m',q:'Which is equivalent to 50%?',o:['1/3','1/4','1/2','2/3'],a:'1/2'},{t:'m',q:'Convert 3/4 to a percentage.',o:['34%','60%','70%','75%'],a:'75%'}]},
-      {id:36,title:'Coordinates & Grids',difficulty:'hard',locked:true,questions:[{t:'m',q:'What is 10% of 80?',o:['4','8','10','16'],a:'8'},{t:'m',q:'What is 25% of 80?',o:['15','20','25','40'],a:'20'},{t:'m',q:'What is 50% of 130?',o:['50','60','65','70'],a:'65'},{t:'m',q:'What is 20% of 150?',o:['20','25','30','35'],a:'30'},{t:'i',q:'What is 15% of 60?',a:'9'},{t:'m',q:'Round 4.3 to the nearest whole number.',o:['3','4','5','6'],a:'4'}]},
-      {id:37,title:'Symmetry & Reflection',difficulty:'hard',locked:true,questions:[{t:'m',q:'Round 6.7 to the nearest whole number.',o:['5','6','7','8'],a:'7'},{t:'i',q:'Round 4.67 to one decimal place.',a:'4.7'},{t:'i',q:'Round 8.35 to one decimal place.',a:'8.4'},{t:'m',q:'Which decimal is the smallest?',o:['0.3','0.03','0.33','0.303'],a:'0.03'},{t:'m',q:'Which is greater: 3.045 or 3.054?',o:['3.045','3.054','they are equal'],a:'3.054'},{t:'i',q:'2.5 + 1.7 = ?',a:'4.2'}]},
-      {id:38,title:'Rotation & Translation',difficulty:'hard',locked:true,questions:[{t:'i',q:'5.4 − 2.9 = ?',a:'2.5'},{t:'i',q:'3.6 × 2 = ?',a:'7.2'},{t:'m',q:'What is 0.75 written as a fraction?',o:['3/5','3/4','7/10','7/5'],a:'3/4'},{t:'m',q:'Perimeter of a rectangle 5 cm × 3 cm?',o:['8 cm','15 cm','16 cm','18 cm'],a:'16 cm'},{t:'m',q:'Area of a rectangle 5 cm × 3 cm?',o:['8 cm²','15 cm²','16 cm²','18 cm²'],a:'15 cm²'},{t:'m',q:'How many degrees in a right angle?',o:['45','90','180','360'],a:'90'}]},
-      {id:39,title:'3D Shape Properties',difficulty:'hard',locked:true,questions:[{t:'m',q:'How many degrees in a straight line?',o:['90','120','180','360'],a:'180'},{t:'m',q:'What type of triangle has all three sides equal?',o:['scalene','isosceles','equilateral','right-angled'],a:'equilateral'},{t:'m',q:'Which of these is a prime number?',o:['9','15','17','21'],a:'17'},{t:'m',q:'What are the factors of 12?',o:['1,2,3,4','2,4,6,12','1,2,3,4,6,12','1,3,6,12'],a:'1,2,3,4,6,12'},{t:'m',q:'What is 2³?',o:['6','8','9','12'],a:'8'},{t:'i',q:'What is the square root of 49?',a:'7'},{t:'m',q:'What is the LCM of 4 and 6?',o:['2','8','12','24'],a:'12'}]},
-      {id:40,title:'Volume & Capacity',difficulty:'hard',locked:true,questions:[{t:'m',q:'What is the HCF of 12 and 18?',o:['3','6','9','12'],a:'6'},{t:'m',q:'A book costs £4.50. How much do 3 books cost?',o:['£12.00','£13.00','£13.50','£14.50'],a:'£13.50'},{t:'i',q:'456 + 389 = ?',a:'845'},{t:'i',q:'1000 − 347 = ?',a:'653'},{t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},{t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'}]},
-      {id:41,title:'Negative Numbers',difficulty:'hard',locked:true,questions:[{t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},{t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},{t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},{t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'},{t:'m',q:'Which number is a square number?',o:['18','24','36','50'],a:'36'},{t:'m',q:'2 × 5 = ?',o:['7','10','12','15'],a:'10'}]},
-      {id:42,title:'Sequences & Patterns',difficulty:'hard',locked:true,questions:[{t:'m',q:'3 × 4 = ?',o:['7','10','12','14'],a:'12'},{t:'m',q:'5 × 6 = ?',o:['25','30','35','36'],a:'30'},{t:'m',q:'10 × 7 = ?',o:['60','70','80','90'],a:'70'},{t:'i',q:'2 × 8 = ?',a:'16'},{t:'i',q:'5 × 9 = ?',a:'45'},{t:'i',q:'10 × 6 = ?',a:'60'},{t:'m',q:'12 ÷ 2 = ?',o:['4','6','8','10'],a:'6'}]},
-      {id:43,title:'Estimation & Approximation',difficulty:'hard',locked:true,questions:[{t:'m',q:'20 ÷ 5 = ?',o:['3','4','5','6'],a:'4'},{t:'i',q:'48 ÷ 6 = ?',a:'8'},{t:'i',q:'63 ÷ 7 = ?',a:'9'},{t:'i',q:'144 ÷ 12 = ?',a:'12'},{t:'i',q:'What is double 37?',a:'74'},{t:'i',q:'What is half of 84?',a:'42'}]},
-      {id:44,title:'Problem Solving (Challenge)',difficulty:'hard',locked:true,questions:[{t:'m',q:'3 × 7 = ?',o:['18','21','24','27'],a:'21'},{t:'m',q:'4 × 6 = ?',o:['20','24','28','32'],a:'24'},{t:'m',q:'6 × 8 = ?',o:['42','48','54','60'],a:'48'},{t:'i',q:'7 × 9 = ?',a:'63'},{t:'i',q:'8 × 7 = ?',a:'56'},{t:'m',q:'7 × 8 = ?',o:['48','54','56','64'],a:'56'},{t:'m',q:'9 × 9 = ?',o:['63','72','81','90'],a:'81'},{t:'m',q:'12 × 7 = ?',o:['72','78','84','96'],a:'84'}]},
-      {id:45,title:'Mental Maths Strategies',difficulty:'hard',locked:true,questions:[{t:'m',q:'What is 1/2 of 60?',o:['20','25','30','40'],a:'30'},{t:'m',q:'What is 1/4 of 48?',o:['8','10','12','16'],a:'12'},{t:'m',q:'What is 3/4 of 48?',o:['24','30','36','40'],a:'36'},{t:'m',q:'Which fraction is larger: 3/4 or 2/3?',o:['3/4','2/3','they are equal'],a:'3/4'},{t:'m',q:'3/5 + 1/5 = ?',o:['2/5','3/5','4/5','1'],a:'4/5'},{t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'}]}
-    ],
-    qs:[
-      {t:'m',q:'3 × 4 = ?',o:['7','10','12','14'],a:'12'},
-      {t:'m',q:'5 × 6 = ?',o:['25','30','35','36'],a:'30'},
-      {t:'m',q:'7 × 8 = ?',o:['48','54','56','64'],a:'56'},
-      {t:'m',q:'9 × 9 = ?',o:['63','72','81','90'],a:'81'},
-      {t:'m',q:'12 × 7 = ?',o:['72','78','84','96'],a:'84'},
-      {t:'i',q:'48 ÷ 6 = ?',a:'8'},
-      {t:'i',q:'63 ÷ 7 = ?',a:'9'},
-      {t:'i',q:'144 ÷ 12 = ?',a:'12'},
-      {t:'i',q:'What is double 37?',a:'74'},
-      {t:'i',q:'What is half of 84?',a:'42'},
-      {t:'m',q:'Round 4.3 to the nearest whole number.',o:['3','4','5','6'],a:'4'},
-      {t:'m',q:'Round 6.7 to the nearest whole number.',o:['5','6','7','8'],a:'7'},
-      {t:'i',q:'Round 4.67 to one decimal place.',a:'4.7'},
-      {t:'i',q:'Round 8.35 to one decimal place.',a:'8.4'},
-      {t:'m',q:'Which decimal is the smallest?',o:['0.3','0.03','0.33','0.303'],a:'0.03'},
-      {t:'m',q:'Which is greater: 3.045 or 3.054?',o:['3.045','3.054','they are equal'],a:'3.054'},
-      {t:'i',q:'2.5 + 1.7 = ?',a:'4.2'},
-      {t:'i',q:'5.4 − 2.9 = ?',a:'2.5'},
-      {t:'i',q:'3.6 × 2 = ?',a:'7.2'},
-      {t:'m',q:'What is 0.75 written as a fraction?',o:['3/5','3/4','7/10','7/5'],a:'3/4'},
-      {t:'m',q:'What is 1/2 of 60?',o:['20','25','30','40'],a:'30'},
-      {t:'m',q:'What is 1/4 of 48?',o:['8','10','12','16'],a:'12'},
-      {t:'m',q:'What is 3/4 of 48?',o:['24','30','36','40'],a:'36'},
-      {t:'m',q:'Which fraction is larger: 3/4 or 2/3?',o:['3/4','2/3','they are equal'],a:'3/4'},
-      {t:'m',q:'3/5 + 1/5 = ?',o:['2/5','3/5','4/5','1'],a:'4/5'},
-      {t:'m',q:'7/10 − 3/10 = ?',o:['2/10','4/10','5/10','1/10'],a:'4/10'},
-      {t:'m',q:'What is 1/2 as a decimal?',o:['0.2','0.5','1.5','2.0'],a:'0.5'},
-      {t:'m',q:'What is 1/4 as a decimal?',o:['0.14','0.20','0.25','0.40'],a:'0.25'},
-      {t:'m',q:'Which is equivalent to 50%?',o:['1/3','1/4','1/2','2/3'],a:'1/2'},
-      {t:'m',q:'Convert 3/4 to a percentage.',o:['34%','60%','70%','75%'],a:'75%'},
-      {t:'m',q:'What is 10% of 80?',o:['4','8','10','16'],a:'8'},
-      {t:'m',q:'What is 25% of 80?',o:['15','20','25','40'],a:'20'},
-      {t:'m',q:'What is 50% of 130?',o:['50','60','65','70'],a:'65'},
-      {t:'m',q:'What is 20% of 150?',o:['20','25','30','35'],a:'30'},
-      {t:'i',q:'What is 15% of 60?',a:'9'},
-      {t:'m',q:'Perimeter of a rectangle 5 cm × 3 cm?',o:['8 cm','15 cm','16 cm','18 cm'],a:'16 cm'},
-      {t:'m',q:'Area of a rectangle 5 cm × 3 cm?',o:['8 cm²','15 cm²','16 cm²','18 cm²'],a:'15 cm²'},
-      {t:'m',q:'How many degrees in a right angle?',o:['45','90','180','360'],a:'90'},
-      {t:'m',q:'How many degrees in a straight line?',o:['90','120','180','360'],a:'180'},
-      {t:'m',q:'What type of triangle has all three sides equal?',o:['scalene','isosceles','equilateral','right-angled'],a:'equilateral'},
-      {t:'m',q:'Which of these is a prime number?',o:['9','15','17','21'],a:'17'},
-      {t:'m',q:'What are the factors of 12?',o:['1,2,3,4','2,4,6,12','1,2,3,4,6,12','1,3,6,12'],a:'1,2,3,4,6,12'},
-      {t:'m',q:'What is 2³?',o:['6','8','9','12'],a:'8'},
-      {t:'i',q:'What is the square root of 49?',a:'7'},
-      {t:'m',q:'What is the LCM of 4 and 6?',o:['2','8','12','24'],a:'12'},
-      {t:'m',q:'What is the HCF of 12 and 18?',o:['3','6','9','12'],a:'6'},
-      {t:'m',q:'A book costs £4.50. How much do 3 books cost?',o:['£12.00','£13.00','£13.50','£14.50'],a:'£13.50'},
-      {t:'i',q:'456 + 389 = ?',a:'845'},
-      {t:'i',q:'1000 − 347 = ?',a:'653'},
-      {t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},
-      {t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'},
-      {t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},
-      {t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},
-      {t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},
-      {t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'},
-      {t:'m',q:'Which number is a square number?',o:['18','24','36','50'],a:'36'}
+      {id:20,title:'Prime Numbers & Factors',difficulty:'hard',locked:true,questions:[{t:'i',q:'1000 − 347 = ?',a:'653'},{t:'m',q:'A train leaves at 09:15 and takes 2 hours 40 minutes. When does it arrive?',o:['11:45','11:55','12:05','12:15'],a:'11:55'},{t:'m',q:'A bag of apples weighs 1.5 kg. How much do 4 bags weigh?',o:['4.5 kg','5 kg','5.5 kg','6 kg'],a:'6 kg'},{t:'m',q:'Tom has £20. He spends £7.65. How much does he have left?',o:['£11.35','£12.35','£12.65','£13.35'],a:'£12.35'},{t:'m',q:'What is 35% of 200?',o:['35','60','70','80'],a:'70'},{t:'m',q:'If n + 15 = 40, what is n?',o:['15','20','25','55'],a:'25'},{t:'m',q:'A rectangle has area 36 cm². Its width is 4 cm. What is its length?',o:['6 cm','8 cm','9 cm','12 cm'],a:'9 cm'}]}
     ]
   },
   english:{
     title:'English', emoji:'📚', color:'linear-gradient(135deg,#ec4899,#a855f7)',
-    qs:[
-      {t:'m',q:'Which word is spelled correctly?',o:['recieve','believe','freind','beleive'],a:'believe'},
-      {t:'m',q:'Which word is spelled correctly?',o:['neccesary','necesary','necessary','necessery'],a:'necessary'},
-      {t:'m',q:'Which word is spelled correctly?',o:['enviroment','environment','enviornment','environmant'],a:'environment'},
-      {t:'m',q:'Which word is spelled correctly?',o:['recomend','reccomend','recommend','recommand'],a:'recommend'},
-      {t:'m',q:'Which word is spelled correctly?',o:['seperate','sepperate','separrate','separate'],a:'separate'},
-      {t:'m',q:'Which word is spelled correctly?',o:['definately','definitly','definitely','definatly'],a:'definitely'},
-      {t:'m',q:'Which word is spelled correctly?',o:['immediatly','immediately','imediately','immedietly'],a:'immediately'},
-      {t:'m',q:'Which word is spelled correctly?',o:['parliment','parliament','parliamant','parliamont'],a:'parliament'},
-      {t:'m',q:'What word type is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},
-      {t:'m',q:'What word type is "enormous"?',o:['noun','verb','adjective','adverb'],a:'adjective'},
-      {t:'m',q:'What word type is "happiness"?',o:['noun','verb','adjective','adverb'],a:'noun'},
-      {t:'m',q:'What word type is "sprinted"?',o:['noun','verb','adjective','adverb'],a:'verb'},
-      {t:'m',q:'What word type is "beneath"?',o:['adjective','adverb','preposition','conjunction'],a:'preposition'},
-      {t:'m',q:'What word type is "and"?',o:['preposition','conjunction','pronoun','adverb'],a:'conjunction'},
-      {t:'m',q:'What word type is "she"?',o:['noun','verb','adjective','pronoun'],a:'pronoun'},
-      {t:'m',q:'In "She ran quickly," what is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},
-      {t:'m',q:'What is the plural of "child"?',o:['childs','children','childrens','childer'],a:'children'},
-      {t:'m',q:'What is the plural of "mouse"?',o:['mouses','mousies','mices','mice'],a:'mice'},
-      {t:'m',q:'What is the plural of "tooth"?',o:['tooths','teeths','teeth','toothes'],a:'teeth'},
-      {t:'m',q:'What is the plural of "foot"?',o:['foots','feets','feet','footes'],a:'feet'},
-      {t:'m',q:'What is the past tense of "run"?',o:['runned','runs','ran','ranned'],a:'ran'},
-      {t:'m',q:'What is the past tense of "swim"?',o:['swimmed','swam','swum','swims'],a:'swam'},
-      {t:'m',q:'What is the past tense of "write"?',o:['writed','written','wrote','writes'],a:'wrote'},
-      {t:'m',q:'What is the past tense of "think"?',o:['thinked','thunk','thought','thinks'],a:'thought'},
-      {t:'m',q:'Choose the correct word: "I can\'t ___ you – speak louder!"',o:['here','hear','heer','her'],a:'hear'},
-      {t:'m',q:'Choose the correct word: "There are ___ cats on the roof."',o:['to','too','two','tow'],a:'two'},
-      {t:'m',q:'Which sentence uses an apostrophe correctly?',o:['The dogs bone','The dog\'s bone','The Dog\'s Bone is theirs','The dogs\' bone are here'],a:'The dog\'s bone'},
-      {t:'m',q:'Which sentence uses a comma correctly?',o:['I bought apples oranges and bananas.','I bought apples, oranges and bananas.','I bought, apples oranges and bananas.','I bought apples oranges, and bananas'],a:'I bought apples, oranges and bananas.'},
-      {t:'m',q:'Which sentence contains a relative clause?',o:['She ran fast.','The dog barked.','The boy who scored the goal celebrated.','It rained all day.'],a:'The boy who scored the goal celebrated.'},
-      {t:'m',q:'What is the subject of the sentence: "The cat chased the mouse."?',o:['chased','the mouse','The cat','the sentence'],a:'The cat'},
-      {t:'m',q:'What is the object of the sentence: "She kicked the ball."?',o:['She','kicked','the ball','hard'],a:'the ball'},
-      {t:'m',q:'Identify the subordinating conjunction: "Although it was raining, they played outside."',o:['it','raining','they','Although'],a:'Although'},
-      {t:'m',q:'Identify the modal verb: "She might go to the party."',o:['She','might','go','party'],a:'might'},
-      {t:'m',q:'"The cat was chased by the dog." This sentence is in which voice?',o:['active','passive','present','future'],a:'passive'},
-      {t:'m',q:'What does "benevolent" mean?',o:['cruel and mean','kind and generous','loud and proud','shy and quiet'],a:'kind and generous'},
-      {t:'m',q:'What does "tenacious" mean?',o:['frightened','lazy','persistent and determined','generous'],a:'persistent and determined'},
-      {t:'m',q:'What is a synonym for "enormous"?',o:['tiny','average','huge','narrow'],a:'huge'},
-      {t:'m',q:'What is an antonym for "ancient"?',o:['old','modern','large','dark'],a:'modern'},
-      {t:'m',q:'Which sentence is a simile?',o:['The sun shone.','Her eyes were like stars.','The world is a stage.','It was very bright.'],a:'Her eyes were like stars.'},
-      {t:'m',q:'Which sentence is a metaphor?',o:['He ran like the wind.','She smiled happily.','Time is a thief.','The dog barked loudly.'],a:'Time is a thief.'},
-      {t:'m',q:'Which word is an example of onomatopoeia?',o:['run','blue','buzz','happy'],a:'buzz'},
-      {t:'m',q:'What is alliteration?',o:['rhyming words at line ends','repeating the same starting sound in close words','a comparison using "like" or "as"','a word that sounds like what it means'],a:'repeating the same starting sound in close words'},
-      {t:'m',q:'What does the prefix "un-" mean?',o:['again','before','not or opposite','after'],a:'not or opposite'},
-      {t:'m',q:'What does the prefix "mis-" mean?',o:['very much','again','wrongly or badly','not'],a:'wrongly or badly'},
-      {t:'m',q:'What does "plausible" mean?',o:['impossible to believe','possible or believable','very strange','completely false'],a:'possible or believable'},
-      {t:'m',q:'Which sentence is punctuated correctly as direct speech?',o:['"come here" said the teacher.','Come here, said the teacher.','"Come here," said the teacher.','Come here," said the teacher.'],a:'"Come here," said the teacher.'},
-      {t:'m',q:'What does the prefix "re-" mean?',o:['before','again','not','after'],a:'again'},
-      {t:'m',q:'What does the suffix "-ful" mean?',o:['without','with','full of','not'],a:'full of'},
-      {t:'m',q:'What does the suffix "-less" mean?',o:['with','full of','without','very'],a:'without'},
-      {t:'m',q:'What does the suffix "-tion" mean?',o:['a person','an action or state','a place','a thing'],a:'an action or state'},
-      {t:'m',q:'What does "invisible" mean?',o:['very visible','cannot be seen','very small','bright'],a:'cannot be seen'}
+    tasks:[
+      {id:1,title:'🌟 Spell Like a Star!',difficulty:'easy',locked:false,questions:[{t:'m',q:'Which word is spelled correctly?',o:['recieve','believe','freind','beleive'],a:'believe'},{t:'m',q:'Which word is spelled correctly?',o:['neccesary','necesary','necessary','necessery'],a:'necessary'},{t:'m',q:'Which word is spelled correctly?',o:['enviroment','environment','enviornment','environmant'],a:'environment'},{t:'m',q:'Which word is spelled correctly?',o:['recomend','reccomend','recommend','recommand'],a:'recommend'},{t:'m',q:'Which word is spelled correctly?',o:['seperate','sepperate','separrate','separate'],a:'separate'}]},
+      {id:2,title:'📝 Word Detective',difficulty:'easy',locked:true,questions:[{t:'m',q:'What word type is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},{t:'m',q:'What word type is "enormous"?',o:['noun','verb','adjective','adverb'],a:'adjective'},{t:'m',q:'What word type is "happiness"?',o:['noun','verb','adjective','adverb'],a:'noun'},{t:'m',q:'What word type is "sprinted"?',o:['noun','verb','adjective','adverb'],a:'verb'},{t:'m',q:'What word type is "beneath"?',o:['adjective','adverb','preposition','conjunction'],a:'preposition'}]},
+      {id:3,title:'🔄 Change It Up!',difficulty:'easy',locked:true,questions:[{t:'m',q:'What is the plural of "child"?',o:['childs','children','childrens','childer'],a:'children'},{t:'m',q:'What is the plural of "mouse"?',o:['mouses','mousies','mices','mice'],a:'mice'},{t:'m',q:'What is the plural of "tooth"?',o:['tooths','teeths','teeth','toothes'],a:'teeth'},{t:'m',q:'What is the plural of "foot"?',o:['foots','feets','feet','footes'],a:'feet'},{t:'m',q:'What is the past tense of "run"?',o:['runned','runs','ran','ranned'],a:'ran'}]},
+      {id:4,title:'🎯 More Spelling Fun!',difficulty:'easy',locked:true,questions:[{t:'m',q:'Which word is spelled correctly?',o:['definately','definitly','definitely','definatly'],a:'definitely'},{t:'m',q:'Which word is spelled correctly?',o:['immediatly','immediately','imediately','immedietly'],a:'immediately'},{t:'m',q:'Which word is spelled correctly?',o:['parliment','parliament','parliamant','parliamont'],a:'parliament'},{t:'m',q:'What is the past tense of "swim"?',o:['swimmed','swam','swum','swims'],a:'swam'},{t:'m',q:'What is the past tense of "write"?',o:['writed','written','wrote','writes'],a:'wrote'}]},
+      {id:5,title:'🏆 Word Master',difficulty:'easy',locked:true,questions:[{t:'m',q:'What word type is "and"?',o:['preposition','conjunction','pronoun','adverb'],a:'conjunction'},{t:'m',q:'What word type is "she"?',o:['noun','verb','adjective','pronoun'],a:'pronoun'},{t:'m',q:'In "She ran quickly," what is "quickly"?',o:['noun','verb','adjective','adverb'],a:'adverb'},{t:'m',q:'What is the past tense of "think"?',o:['thinked','thunk','thought','thinks'],a:'thought'},{t:'m',q:'Choose the correct word: "I can\'t ___ you – speak louder!"',o:['here','hear','heer','her'],a:'hear'}]},
+      {id:6,title:'🎨 Punctuation Party',difficulty:'medium',locked:true,questions:[{t:'m',q:'Choose the correct word: "There are ___ cats on the roof."',o:['to','too','two','tow'],a:'two'},{t:'m',q:'Which sentence uses an apostrophe correctly?',o:['The dogs bone','The dog\'s bone','The Dog\'s Bone is theirs','The dogs\' bone are here'],a:'The dog\'s bone'},{t:'m',q:'Which sentence uses a comma correctly?',o:['I bought apples oranges and bananas.','I bought apples, oranges and bananas.','I bought, apples oranges and bananas.','I bought apples oranges, and bananas'],a:'I bought apples, oranges and bananas.'},{t:'m',q:'Which sentence is punctuated correctly as direct speech?',o:['"come here" said the teacher.','Come here, said the teacher.','"Come here," said the teacher.','Come here," said the teacher.'],a:'"Come here," said the teacher.'}]},
+      {id:7,title:'🧩 Grammar Games',difficulty:'medium',locked:true,questions:[{t:'m',q:'Which sentence contains a relative clause?',o:['She ran fast.','The dog barked.','The boy who scored the goal celebrated.','It rained all day.'],a:'The boy who scored the goal celebrated.'},{t:'m',q:'What is the subject of the sentence: "The cat chased the mouse."?',o:['chased','the mouse','The cat','the sentence'],a:'The cat'},{t:'m',q:'What is the object of the sentence: "She kicked the ball."?',o:['She','kicked','the ball','hard'],a:'the ball'},{t:'m',q:'Identify the subordinating conjunction: "Although it was raining, they played outside."',o:['it','raining','they','Although'],a:'Although'},{t:'m',q:'Identify the modal verb: "She might go to the party."',o:['She','might','go','party'],a:'might'}]},
+      {id:8,title:'💬 Sentence Superstar',difficulty:'medium',locked:true,questions:[{t:'m',q:'"The cat was chased by the dog." This sentence is in which voice?',o:['active','passive','present','future'],a:'passive'},{t:'m',q:'What does the prefix "un-" mean?',o:['again','before','not or opposite','after'],a:'not or opposite'},{t:'m',q:'What does the prefix "mis-" mean?',o:['very much','again','wrongly or badly','not'],a:'wrongly or badly'},{t:'m',q:'What does the prefix "re-" mean?',o:['before','again','not','after'],a:'again'},{t:'m',q:'What does the suffix "-ful" mean?',o:['without','with','full of','not'],a:'full of'},{t:'m',q:'What does the suffix "-less" mean?',o:['with','full of','without','very'],a:'without'}]},
+      {id:9,title:'🚀 Vocabulary Voyage',difficulty:'hard',locked:true,questions:[{t:'m',q:'What does "benevolent" mean?',o:['cruel and mean','kind and generous','loud and proud','shy and quiet'],a:'kind and generous'},{t:'m',q:'What does "tenacious" mean?',o:['frightened','lazy','persistent and determined','generous'],a:'persistent and determined'},{t:'m',q:'What is a synonym for "enormous"?',o:['tiny','average','huge','narrow'],a:'huge'},{t:'m',q:'What is an antonym for "ancient"?',o:['old','modern','large','dark'],a:'modern'},{t:'m',q:'What does "plausible" mean?',o:['impossible to believe','possible or believable','very strange','completely false'],a:'possible or believable'}]},
+      {id:10,title:'✨ Literary Legend',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which sentence is a simile?',o:['The sun shone.','Her eyes were like stars.','The world is a stage.','It was very bright.'],a:'Her eyes were like stars.'},{t:'m',q:'Which sentence is a metaphor?',o:['He ran like the wind.','She smiled happily.','Time is a thief.','The dog barked loudly.'],a:'Time is a thief.'},{t:'m',q:'Which word is an example of onomatopoeia?',o:['run','blue','buzz','happy'],a:'buzz'},{t:'m',q:'What is alliteration?',o:['rhyming words at line ends','repeating the same starting sound in close words','a comparison using "like" or "as"','a word that sounds like what it means'],a:'repeating the same starting sound in close words'},{t:'m',q:'What does the suffix "-tion" mean?',o:['a person','an action or state','a place','a thing'],a:'an action or state'},{t:'m',q:'What does "invisible" mean?',o:['very visible','cannot be seen','very small','bright'],a:'cannot be seen'}]}
     ]
   },
   comprehension:{
     title:'Comprehension', emoji:'📖', color:'linear-gradient(135deg,#f59e0b,#ef4444)',
-    qs:[
-      {t:'m',ctx:'Maya visited a nature reserve with her family one sunny afternoon. They spotted three types of bird: a robin, a blue tit and a sparrow. Near the river, Maya noticed fox footprints pressed into the soft mud. She carefully recorded everything in her nature journal, sketching each footprint and noting the birds she had seen. Later that evening, she planned to share her findings with her class.',q:'Who visited the nature reserve?',o:['Only Maya','Maya and her family','Maya\'s class','Maya and a friend'],a:'Maya and her family'},
-      {t:'m',q:'How many types of bird did they spot?',o:['two','three','four','five'],a:'three'},
-      {t:'m',q:'Where were the fox footprints found?',o:['in the trees','on the path','near the river','by the gate'],a:'near the river'},
-      {t:'m',q:'What does the word "journal" most likely mean?',o:['a newspaper','a notebook for recording things','a school textbook','a letter'],a:'a notebook for recording things'},
-      {t:'m',q:'Why did Maya sketch the footprints?',o:['She was bored','To show off to her family','To record them accurately','Her teacher told her to'],a:'To record them accurately'},
-      {t:'m',q:'What does "recorded" mean in this passage?',o:['forgot','drew pictures of','wrote down and noted','photographed'],a:'wrote down and noted'},
-      {t:'m',q:'Which word best describes Maya in this passage?',o:['careless','lazy','observant','frightened'],a:'observant'},
-      {t:'m',q:'What does "hoping to share her findings" tell us about Maya?',o:['She was nervous about her class','She wanted to impress her parents','She was excited to tell others what she learned','She did not enjoy the visit'],a:'She was excited to tell others what she learned'},
-      {t:'m',ctx:'Water is constantly moving around our planet in a process called the water cycle. The sun heats water in oceans, lakes and rivers, causing it to evaporate and turn into water vapour. As the vapour rises, it cools and forms clouds through a process called condensation. When clouds become heavy with water droplets, precipitation occurs – water falls back to Earth as rain, snow or hail. This water then flows into rivers and oceans, where the cycle begins again.',q:'What is the overall process described in this passage?',o:['evaporation','weather forecasting','the water cycle','cloud formation'],a:'the water cycle'},
-      {t:'m',q:'What causes water to evaporate?',o:['the moon','the wind','the sun','the clouds'],a:'the sun'},
-      {t:'m',q:'What happens to water vapour as it rises higher?',o:['it heats up','it cools and forms clouds','it falls back as rain','it disappears'],a:'it cools and forms clouds'},
-      {t:'m',q:'What does "condensation" mean in this passage?',o:['water evaporating','vapour cooling to form clouds','rain falling','water flowing into rivers'],a:'vapour cooling to form clouds'},
-      {t:'m',q:'What does "precipitation" refer to in this passage?',o:['water evaporating','clouds forming','water falling as rain, snow or hail','water flowing into the sea'],a:'water falling as rain, snow or hail'},
-      {t:'m',q:'What does the word "evaporate" mean?',o:['to freeze','to fall as rain','to turn from liquid into vapour','to form clouds'],a:'to turn from liquid into vapour'},
-      {t:'m',q:'Where does water flow after it falls to Earth?',o:['straight back into clouds','into rivers and oceans','into the ground only','it stays where it lands'],a:'into rivers and oceans'},
-      {t:'m',q:'If there were no sun, what would happen to the water cycle?',o:['It would speed up','Evaporation would stop and the cycle would break down','It would only produce snow','Nothing would change'],a:'Evaporation would stop and the cycle would break down'},
-      {t:'m',ctx:'The ancient Egyptians built pyramids as tombs for their pharaohs. The largest, the Great Pyramid of Giza, was built around 2560 BC and contains over two million stone blocks. Archaeologists believe thousands of skilled workers, not slaves, constructed these enormous structures. Hieroglyphics – a form of picture writing – were carved onto walls inside the pyramids to tell stories and honour the dead.',q:'What were pyramids used for?',o:['homes for Egyptian families','temples for worship','tombs for pharaohs','schools for children'],a:'tombs for pharaohs'},
-      {t:'m',q:'When was the Great Pyramid of Giza built?',o:['around 560 BC','around 2560 BC','around 1500 BC','around 500 AD'],a:'around 2560 BC'},
-      {t:'m',q:'Who built the pyramids, according to archaeologists?',o:['slaves','pharaohs themselves','skilled workers','soldiers'],a:'skilled workers'},
-      {t:'m',q:'What are hieroglyphics?',o:['a type of pyramid','a form of picture writing','ancient Egyptian coins','a style of building'],a:'a form of picture writing'},
-      {t:'m',q:'What does the word "pharaoh" refer to?',o:['a type of pyramid','an ancient Egyptian ruler','a skilled worker','a type of writing'],a:'an ancient Egyptian ruler'},
-      {t:'m',q:'What does the word "tomb" mean?',o:['a palace','a temple','a burial place','a school'],a:'a burial place'},
-      {t:'m',q:'Approximately how many stone blocks does the Great Pyramid contain?',o:['over 200,000','over 2 million','over 20 million','exactly 1,000,000'],a:'over 2 million'},
-      {t:'m',q:'Why were hieroglyphics carved inside pyramids?',o:['to decorate the walls','to show workers were paid','to tell stories and honour the dead','to scare away thieves'],a:'to tell stories and honour the dead'},
-      {t:'m',ctx:'The Wind<br><br>The wind comes rushing through the trees,<br>It rattles doors and bends the leaves,<br>It whispers secrets, wild and free,<br>And carries seeds from tree to tree.<br>It does not care what lies in its way,<br>It blows through night and blows through day,<br>A restless traveller, never still,<br>Racing down each valley and hill.',q:'What does the wind do to doors in this poem?',o:['opens them','slams them shut','rattles them','breaks them'],a:'rattles them'},
-      {t:'m',q:'What does the wind "whisper" in the poem?',o:['songs','names','secrets','warnings'],a:'secrets'},
-      {t:'m',q:'What does the wind carry from tree to tree?',o:['leaves','rain','birds','seeds'],a:'seeds'},
-      {t:'m',q:'What does the phrase "restless traveller" suggest about the wind?',o:['the wind is tired','the wind never stops moving','the wind travels slowly','the wind is weak'],a:'the wind never stops moving'},
-      {t:'m',q:'Which word in the poem means "not moving"?',o:['restless','racing','free','still'],a:'still'},
-      {t:'m',q:'What is the overall mood or tone of this poem?',o:['calm and peaceful','wild and powerful','sad and gloomy','funny and cheerful'],a:'wild and powerful'},
-      {t:'m',q:'"It does not care what lies in its way" – what does this line mean?',o:['the wind is angry','nothing can stop the wind','the wind is kind','the wind is tired'],a:'nothing can stop the wind'},
-      {t:'m',q:'Which literary device is used in "A restless traveller, never still"?',o:['simile','rhyme','personification','alliteration'],a:'personification'},
-      {t:'m',ctx:'Despite her nerves, Priya stepped onto the stage. The auditorium fell silent as a thousand faces looked up at her. She had rehearsed this speech countless times, but now every word seemed to have vanished from her memory. Then, in the front row, she spotted her little brother waving enthusiastically. She smiled, took a deep breath, and began. When she finished, the applause was thunderous.',q:'Where did Priya step onto?',o:['a podium','the stage','the balcony','the classroom'],a:'the stage'},
-      {t:'m',q:'What problem did Priya face once she was on stage?',o:['she could not see the audience','the microphone stopped working','she forgot her speech','she was too cold'],a:'she forgot her speech'},
-      {t:'m',q:'What helped Priya overcome her nerves?',o:['a teacher helped her','she read from notes','she spotted her brother waving','she left the stage'],a:'she spotted her brother waving'},
-      {t:'m',q:'What does "thunderous" describe in the passage?',o:['a storm outside','the loud applause','Priya\'s voice','the stage collapsing'],a:'the loud applause'},
-      {t:'m',q:'What does "rehearsed" mean?',o:['performed in public','written from scratch','practised many times','forgotten'],a:'practised many times'},
-      {t:'m',q:'What does "despite her nerves" tell us about Priya?',o:['she was not nervous at all','she was nervous but went on stage anyway','she refused to go on stage','she was excited'],a:'she was nervous but went on stage anyway'},
-      {t:'m',q:'Which word best describes how Priya felt before she began speaking?',o:['angry','bored','nervous','proud'],a:'nervous'},
-      {t:'m',q:'What does "every word seemed to have vanished from her memory" suggest?',o:['Priya had not practised','Priya had a sudden blank due to nerves','Priya chose not to speak','Priya was daydreaming'],a:'Priya had a sudden blank due to nerves'}
+    tasks:[
+      {id:1,title:'🦊 Nature Adventure',difficulty:'easy',locked:false,questions:[{t:'m',ctx:'Maya visited a nature reserve with her family one sunny afternoon. They spotted three types of bird: a robin, a blue tit and a sparrow. Near the river, Maya noticed fox footprints pressed into the soft mud. She carefully recorded everything in her nature journal, sketching each footprint and noting the birds she had seen. Later that evening, she planned to share her findings with her class.',q:'Who visited the nature reserve?',o:['Only Maya','Maya and her family','Maya\'s class','Maya and a friend'],a:'Maya and her family'},{t:'m',q:'How many types of bird did they spot?',o:['two','three','four','five'],a:'three'},{t:'m',q:'Where were the fox footprints found?',o:['in the trees','on the path','near the river','by the gate'],a:'near the river'},{t:'m',q:'What does the word "journal" most likely mean?',o:['a newspaper','a notebook for recording things','a school textbook','a letter'],a:'a notebook for recording things'},{t:'m',q:'Why did Maya sketch the footprints?',o:['She was bored','To show off to her family','To record them accurately','Her teacher told her to'],a:'To record them accurately'},{t:'m',q:'What does "recorded" mean in this passage?',o:['forgot','drew pictures of','wrote down and noted','photographed'],a:'wrote down and noted'},{t:'m',q:'Which word best describes Maya in this passage?',o:['careless','lazy','observant','frightened'],a:'observant'},{t:'m',q:'What does "hoping to share her findings" tell us about Maya?',o:['She was nervous about her class','She wanted to impress her parents','She was excited to tell others what she learned','She did not enjoy the visit'],a:'She was excited to tell others what she learned'}]},
+      {id:2,title:'💧 Water Wonders',difficulty:'easy',locked:true,questions:[{t:'m',ctx:'Water is constantly moving around our planet in a process called the water cycle. The sun heats water in oceans, lakes and rivers, causing it to evaporate and turn into water vapour. As the vapour rises, it cools and forms clouds through a process called condensation. When clouds become heavy with water droplets, precipitation occurs – water falls back to Earth as rain, snow or hail. This water then flows into rivers and oceans, where the cycle begins again.',q:'What is the overall process described in this passage?',o:['evaporation','weather forecasting','the water cycle','cloud formation'],a:'the water cycle'},{t:'m',q:'What causes water to evaporate?',o:['the moon','the wind','the sun','the clouds'],a:'the sun'},{t:'m',q:'What happens to water vapour as it rises higher?',o:['it heats up','it cools and forms clouds','it falls back as rain','it disappears'],a:'it cools and forms clouds'},{t:'m',q:'What does "condensation" mean in this passage?',o:['water evaporating','vapour cooling to form clouds','rain falling','water flowing into rivers'],a:'vapour cooling to form clouds'},{t:'m',q:'What does "precipitation" refer to in this passage?',o:['water evaporating','clouds forming','water falling as rain, snow or hail','water flowing into the sea'],a:'water falling as rain, snow or hail'},{t:'m',q:'What does the word "evaporate" mean?',o:['to freeze','to fall as rain','to turn from liquid into vapour','to form clouds'],a:'to turn from liquid into vapour'},{t:'m',q:'Where does water flow after it falls to Earth?',o:['straight back into clouds','into rivers and oceans','into the ground only','it stays where it lands'],a:'into rivers and oceans'},{t:'m',q:'If there were no sun, what would happen to the water cycle?',o:['It would speed up','Evaporation would stop and the cycle would break down','It would only produce snow','Nothing would change'],a:'Evaporation would stop and the cycle would break down'}]},
+      {id:3,title:'🏺 Ancient Mysteries',difficulty:'medium',locked:true,questions:[{t:'m',ctx:'The ancient Egyptians built pyramids as tombs for their pharaohs. The largest, the Great Pyramid of Giza, was built around 2560 BC and contains over two million stone blocks. Archaeologists believe thousands of skilled workers, not slaves, constructed these enormous structures. Hieroglyphics – a form of picture writing – were carved onto walls inside the pyramids to tell stories and honour the dead.',q:'What were pyramids used for?',o:['homes for Egyptian families','temples for worship','tombs for pharaohs','schools for children'],a:'tombs for pharaohs'},{t:'m',q:'When was the Great Pyramid of Giza built?',o:['around 560 BC','around 2560 BC','around 1500 BC','around 500 AD'],a:'around 2560 BC'},{t:'m',q:'Who built the pyramids, according to archaeologists?',o:['slaves','pharaohs themselves','skilled workers','soldiers'],a:'skilled workers'},{t:'m',q:'What are hieroglyphics?',o:['a type of pyramid','a form of picture writing','ancient Egyptian coins','a style of building'],a:'a form of picture writing'},{t:'m',q:'What does the word "pharaoh" refer to?',o:['a type of pyramid','an ancient Egyptian ruler','a skilled worker','a type of writing'],a:'an ancient Egyptian ruler'},{t:'m',q:'What does the word "tomb" mean?',o:['a palace','a temple','a burial place','a school'],a:'a burial place'},{t:'m',q:'Approximately how many stone blocks does the Great Pyramid contain?',o:['over 200,000','over 2 million','over 20 million','exactly 1,000,000'],a:'over 2 million'},{t:'m',q:'Why were hieroglyphics carved inside pyramids?',o:['to decorate the walls','to show workers were paid','to tell stories and honour the dead','to scare away thieves'],a:'to tell stories and honour the dead'}]},
+      {id:4,title:'🌬️ Poetry Power',difficulty:'medium',locked:true,questions:[{t:'m',ctx:'The Wind<br><br>The wind comes rushing through the trees,<br>It rattles doors and bends the leaves,<br>It whispers secrets, wild and free,<br>And carries seeds from tree to tree.<br>It does not care what lies in its way,<br>It blows through night and blows through day,<br>A restless traveller, never still,<br>Racing down each valley and hill.',q:'What does the wind do to doors in this poem?',o:['opens them','slams them shut','rattles them','breaks them'],a:'rattles them'},{t:'m',q:'What does the wind "whisper" in the poem?',o:['songs','names','secrets','warnings'],a:'secrets'},{t:'m',q:'What does the wind carry from tree to tree?',o:['leaves','rain','birds','seeds'],a:'seeds'},{t:'m',q:'What does the phrase "restless traveller" suggest about the wind?',o:['the wind is tired','the wind never stops moving','the wind travels slowly','the wind is weak'],a:'the wind never stops moving'},{t:'m',q:'Which word in the poem means "not moving"?',o:['restless','racing','free','still'],a:'still'},{t:'m',q:'What is the overall mood or tone of this poem?',o:['calm and peaceful','wild and powerful','sad and gloomy','funny and cheerful'],a:'wild and powerful'},{t:'m',q:'"It does not care what lies in its way" – what does this line mean?',o:['the wind is angry','nothing can stop the wind','the wind is kind','the wind is tired'],a:'nothing can stop the wind'},{t:'m',q:'Which literary device is used in "A restless traveller, never still"?',o:['simile','rhyme','personification','alliteration'],a:'personification'}]},
+      {id:5,title:'🎤 Speech Success',difficulty:'hard',locked:true,questions:[{t:'m',ctx:'Despite her nerves, Priya stepped onto the stage. The auditorium fell silent as a thousand faces looked up at her. She had rehearsed this speech countless times, but now every word seemed to have vanished from her memory. Then, in the front row, she spotted her little brother waving enthusiastically. She smiled, took a deep breath, and began. When she finished, the applause was thunderous.',q:'Where did Priya step onto?',o:['a podium','the stage','the balcony','the classroom'],a:'the stage'},{t:'m',q:'What problem did Priya face once she was on stage?',o:['she could not see the audience','the microphone stopped working','she forgot her speech','she was too cold'],a:'she forgot her speech'},{t:'m',q:'What helped Priya overcome her nerves?',o:['a teacher helped her','she read from notes','she spotted her brother waving','she left the stage'],a:'she spotted her brother waving'},{t:'m',q:'What does "thunderous" describe in the passage?',o:['a storm outside','the loud applause','Priya\'s voice','the stage collapsing'],a:'the loud applause'},{t:'m',q:'What does "rehearsed" mean?',o:['performed in public','written from scratch','practised many times','forgotten'],a:'practised many times'},{t:'m',q:'What does "despite her nerves" tell us about Priya?',o:['she was not nervous at all','she was nervous but went on stage anyway','she refused to go on stage','she was excited'],a:'she was nervous but went on stage anyway'},{t:'m',q:'Which word best describes how Priya felt before she began speaking?',o:['angry','bored','nervous','proud'],a:'nervous'},{t:'m',q:'What does "every word seemed to have vanished from her memory" suggest?',o:['Priya had not practised','Priya had a sudden blank due to nerves','Priya chose not to speak','Priya was daydreaming'],a:'Priya had a sudden blank due to nerves'}]}
     ]
   }
 },
 Adela:{
   phonics:{
     title:'Phonics', emoji:'🔤', color:'linear-gradient(135deg,#34d399,#059669)',
-    qs:[
-      {t:'m',q:'Which letter makes the "s" sound?',o:['a','s','t','p'],a:'s'},
-      {t:'m',q:'Which letter makes the "a" sound?',o:['a','e','i','o'],a:'a'},
-      {t:'m',q:'Which letter makes the "t" sound?',o:['p','d','t','n'],a:'t'},
-      {t:'m',q:'Which letter makes the "p" sound?',o:['b','p','d','q'],a:'p'},
-      {t:'m',q:'Which letter makes the "i" sound (as in "it")?',o:['a','e','i','u'],a:'i'},
-      {t:'m',q:'Which letter makes the "n" sound?',o:['m','n','h','r'],a:'n'},
-      {t:'m',q:'Which letter makes the "m" sound?',o:['n','m','w','h'],a:'m'},
-      {t:'m',q:'Which letter makes the "d" sound?',o:['b','p','d','q'],a:'d'},
-      {t:'m',q:'Which letter makes the "g" sound (as in "go")?',o:['j','g','c','q'],a:'g'},
-      {t:'m',q:'Which letter makes the "o" sound (as in "on")?',o:['a','e','o','u'],a:'o'},
-      {t:'m',q:'What sound does "sun" start with?',o:['a','m','s','t'],a:'s'},
-      {t:'m',q:'What sound does "pin" start with?',o:['b','p','d','n'],a:'p'},
-      {t:'m',q:'What sound does "net" start with?',o:['m','n','h','t'],a:'n'},
-      {t:'m',q:'Which word ends with the "t" sound?',o:['dog','pig','hat','hen'],a:'hat'},
-      {t:'m',q:'Which word ends with the "n" sound?',o:['cat','dog','run','pig'],a:'run'},
-      {t:'m',q:'Which word ends with the "g" sound?',o:['cat','mop','hat','dog'],a:'dog'},
-      {t:'m',q:'Sound it out: s – a – t. What word is it?',o:['sit','sat','set','sun'],a:'sat'},
-      {t:'m',q:'Sound it out: p – i – n. What word is it?',o:['pan','pen','pin','pig'],a:'pin'},
-      {t:'m',q:'Sound it out: d – o – g. What word is it?',o:['dig','dug','dog','dag'],a:'dog'},
-      {t:'m',q:'Sound it out: c – a – t. What word is it?',o:['cut','cot','cat','cap'],a:'cat'},
-      {t:'m',q:'Sound it out: m – u – d. What word is it?',o:['mad','mud','mid','mod'],a:'mud'},
-      {t:'m',q:'Sound it out: h – e – n. What word is it?',o:['hen','hun','han','hin'],a:'hen'},
-      {t:'m',q:'Sound it out: t – o – p. What word is it?',o:['tap','tip','top','tup'],a:'top'},
-      {t:'m',q:'Sound it out: r – e – d. What word is it?',o:['rod','rid','rad','red'],a:'red'},
-      {t:'m',q:'Which word rhymes with "cat"?',o:['dog','sun','hat','pig'],a:'hat'},
-      {t:'m',q:'Which word rhymes with "dog"?',o:['cat','log','sun','hat'],a:'log'},
-      {t:'m',q:'Which word rhymes with "pin"?',o:['dog','cat','tin','sun'],a:'tin'},
-      {t:'m',q:'Which word rhymes with "red"?',o:['top','sit','bed','dog'],a:'bed'},
-      {t:'m',q:'Which word rhymes with "hop"?',o:['hat','dog','red','top'],a:'top'},
-      {t:'m',q:'Which word rhymes with "sun"?',o:['pin','fun','dog','hat'],a:'fun'},
-      {t:'m',q:'What two letters make the "sh" sound?',o:['ch','th','sh','wh'],a:'sh'},
-      {t:'m',q:'Which word has the "sh" sound?',o:['cat','ship','top','run'],a:'ship'},
-      {t:'m',q:'What two letters make the "ch" sound?',o:['sh','th','ch','wh'],a:'ch'},
-      {t:'m',q:'Which word has the "ch" sound?',o:['ship','chip','thin','when'],a:'chip'},
-      {t:'m',q:'What two letters make the "th" sound?',o:['sh','ch','wh','th'],a:'th'},
-      {t:'m',q:'Which word has the "th" sound?',o:['ship','chip','thin','run'],a:'thin'},
-      {t:'m',q:'What two letters make the "wh" sound?',o:['sh','ch','th','wh'],a:'wh'},
-      {t:'m',q:'Which word starts with "wh"?',o:['ship','chip','thin','when'],a:'when'},
-      {t:'m',q:'What sound do the letters "ck" make?',o:['ss','ll','ff','k'],a:'k'},
-      {t:'m',q:'Which word has the "ck" sound?',o:['sat','hen','duck','top'],a:'duck'},
-      {t:'m',q:'Which word has the "ll" sound?',o:['cat','bell','sun','top'],a:'bell'},
-      {t:'m',q:'Which of these is a real word?',o:['bft','qkm','shop','xzp'],a:'shop'}
+    tasks:[
+      {id:1,title:'🎵 Letter Sounds Fun!',difficulty:'easy',locked:false,questions:[{t:'m',q:'Which letter makes the "s" sound?',o:['a','s','t','p'],a:'s'},{t:'m',q:'Which letter makes the "a" sound?',o:['a','e','i','o'],a:'a'},{t:'m',q:'Which letter makes the "t" sound?',o:['p','d','t','n'],a:'t'},{t:'m',q:'Which letter makes the "p" sound?',o:['b','p','d','q'],a:'p'},{t:'m',q:'Which letter makes the "i" sound (as in "it")?',o:['a','e','i','u'],a:'i'},{t:'m',q:'Which letter makes the "n" sound?',o:['m','n','h','r'],a:'n'}]},
+      {id:2,title:'🌟 Sound Starters',difficulty:'easy',locked:true,questions:[{t:'m',q:'What sound does "sun" start with?',o:['a','m','s','t'],a:'s'},{t:'m',q:'What sound does "pin" start with?',o:['b','p','d','n'],a:'p'},{t:'m',q:'What sound does "net" start with?',o:['m','n','h','t'],a:'n'},{t:'m',q:'Which letter makes the "m" sound?',o:['n','m','w','h'],a:'m'},{t:'m',q:'Which letter makes the "d" sound?',o:['b','p','d','q'],a:'d'}]},
+      {id:3,title:'🎯 Sound Endings',difficulty:'easy',locked:true,questions:[{t:'m',q:'Which word ends with the "t" sound?',o:['dog','pig','hat','hen'],a:'hat'},{t:'m',q:'Which word ends with the "n" sound?',o:['cat','dog','run','pig'],a:'run'},{t:'m',q:'Which word ends with the "g" sound?',o:['cat','mop','hat','dog'],a:'dog'},{t:'m',q:'Which letter makes the "g" sound (as in "go")?',o:['j','g','c','q'],a:'g'},{t:'m',q:'Which letter makes the "o" sound (as in "on")?',o:['a','e','o','u'],a:'o'}]},
+      {id:4,title:'🏆 Sound Master',difficulty:'easy',locked:true,questions:[{t:'m',q:'Sound it out: s – a – t. What word is it?',o:['sit','sat','set','sun'],a:'sat'},{t:'m',q:'Sound it out: p – i – n. What word is it?',o:['pan','pen','pin','pig'],a:'pin'},{t:'m',q:'Sound it out: d – o – g. What word is it?',o:['dig','dug','dog','dag'],a:'dog'},{t:'m',q:'Sound it out: c – a – t. What word is it?',o:['cut','cot','cat','cap'],a:'cat'},{t:'m',q:'Sound it out: m – u – d. What word is it?',o:['mad','mud','mid','mod'],a:'mud'},{t:'m',q:'Sound it out: h – e – n. What word is it?',o:['hen','hun','han','hin'],a:'hen'}]},
+      {id:5,title:'🔤 Blend It Together!',difficulty:'medium',locked:true,questions:[{t:'m',q:'Sound it out: t – o – p. What word is it?',o:['tap','tip','top','tup'],a:'top'},{t:'m',q:'Sound it out: r – e – d. What word is it?',o:['rod','rid','rad','red'],a:'red'},{t:'m',q:'Which word rhymes with "cat"?',o:['dog','sun','hat','pig'],a:'hat'},{t:'m',q:'Which word rhymes with "dog"?',o:['cat','log','sun','hat'],a:'log'},{t:'m',q:'Which word rhymes with "pin"?',o:['dog','cat','tin','sun'],a:'tin'},{t:'m',q:'Which word rhymes with "red"?',o:['top','sit','bed','dog'],a:'bed'}]},
+      {id:6,title:'🎶 Rhyme Time',difficulty:'medium',locked:true,questions:[{t:'m',q:'Which word rhymes with "hop"?',o:['hat','dog','red','top'],a:'top'},{t:'m',q:'Which word rhymes with "sun"?',o:['pin','fun','dog','hat'],a:'fun'},{t:'m',q:'What two letters make the "sh" sound?',o:['ch','th','sh','wh'],a:'sh'},{t:'m',q:'Which word has the "sh" sound?',o:['cat','ship','top','run'],a:'ship'},{t:'m',q:'What two letters make the "ch" sound?',o:['sh','th','ch','wh'],a:'ch'},{t:'m',q:'Which word has the "ch" sound?',o:['ship','chip','thin','when'],a:'chip'}]},
+      {id:7,title:'🌈 Special Sounds',difficulty:'medium',locked:true,questions:[{t:'m',q:'What two letters make the "th" sound?',o:['sh','ch','wh','th'],a:'th'},{t:'m',q:'Which word has the "th" sound?',o:['ship','chip','thin','run'],a:'thin'},{t:'m',q:'What two letters make the "wh" sound?',o:['sh','ch','th','wh'],a:'wh'},{t:'m',q:'Which word starts with "wh"?',o:['ship','chip','thin','when'],a:'when'},{t:'m',q:'What sound do the letters "ck" make?',o:['ss','ll','ff','k'],a:'k'},{t:'m',q:'Which word has the "ck" sound?',o:['sat','hen','duck','top'],a:'duck'},{t:'m',q:'Which word has the "ll" sound?',o:['cat','bell','sun','top'],a:'bell'},{t:'m',q:'Which of these is a real word?',o:['bft','qkm','shop','xzp'],a:'shop'}]},
+      {id:8,title:'⭐ Phonics Champion!',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which letter makes the "m" sound?',o:['n','m','w','h'],a:'m'},{t:'m',q:'Which letter makes the "d" sound?',o:['b','p','d','q'],a:'d'},{t:'m',q:'Which letter makes the "g" sound (as in "go")?',o:['j','g','c','q'],a:'g'},{t:'m',q:'Which letter makes the "o" sound (as in "on")?',o:['a','e','o','u'],a:'o'},{t:'m',q:'What sound does "sun" start with?',o:['a','m','s','t'],a:'s'},{t:'m',q:'What sound does "pin" start with?',o:['b','p','d','n'],a:'p'}]}
     ]
   },
   numbers:{
     title:'Numbers', emoji:'🔢', color:'linear-gradient(135deg,#fbbf24,#f59e0b)',
-    qs:[
-      {t:'m',q:'How many stars? ⭐⭐',o:['1','2','3','4'],a:'2'},
-      {t:'m',q:'How many apples? 🍎🍎🍎',o:['2','3','4','5'],a:'3'},
-      {t:'m',q:'How many hearts? ❤️❤️❤️❤️',o:['3','4','5','6'],a:'4'},
-      {t:'m',q:'How many suns? ☀️☀️☀️☀️☀️',o:['4','5','6','7'],a:'5'},
-      {t:'m',q:'What number comes after 3?',o:['2','3','4','5'],a:'4'},
-      {t:'m',q:'What number comes after 4?',o:['3','4','5','6'],a:'5'},
-      {t:'m',q:'What number comes before 3?',o:['1','2','4','5'],a:'2'},
-      {t:'m',q:'Which is the biggest number?',o:['1','3','5','2'],a:'5'},
-      {t:'m',q:'How many flowers? 🌸🌸🌸🌸🌸🌸',o:['5','6','7','8'],a:'6'},
-      {t:'m',q:'What number comes after 7?',o:['6','8','9','10'],a:'8'},
-      {t:'m',q:'What number comes before 10?',o:['7','8','9','11'],a:'9'},
-      {t:'m',q:'Which is the smallest number?',o:['9','5','7','3'],a:'3'},
-      {t:'m',q:'Count back: 10, 9, 8 … what comes next?',o:['6','7','5','4'],a:'7'},
-      {t:'m',q:'Put these in order, biggest first: 4, 9, 2, 7. Which is biggest?',o:['4','9','2','7'],a:'9'},
-      {t:'m',q:'Put these in order, smallest first: 6, 1, 8, 3. Which is smallest?',o:['6','1','8','3'],a:'1'},
-      {t:'m',q:'1 + 1 = ?',o:['1','2','3','4'],a:'2'},
-      {t:'m',q:'2 + 3 = ?',o:['4','5','6','7'],a:'5'},
-      {t:'m',q:'4 + 4 = ?',o:['6','7','8','9'],a:'8'},
-      {t:'m',q:'3 + 5 = ?',o:['6','7','8','9'],a:'8'},
-      {t:'m',q:'1 + 9 = ?',o:['8','9','10','11'],a:'10'},
-      {t:'m',q:'5 + 5 = ?',o:['8','9','10','11'],a:'10'},
-      {t:'m',q:'I have 3 🍎 and get 4 more. How many now?',o:['5','6','7','8'],a:'7'},
-      {t:'m',q:'There are 2 🐶 and 6 🐱. How many animals altogether?',o:['6','7','8','9'],a:'8'},
-      {t:'m',q:'5 − 2 = ?',o:['1','2','3','4'],a:'3'},
-      {t:'m',q:'6 − 3 = ?',o:['2','3','4','5'],a:'3'},
-      {t:'m',q:'10 − 4 = ?',o:['4','5','6','7'],a:'6'},
-      {t:'m',q:'10 − 3 = ?',o:['6','7','8','9'],a:'7'},
-      {t:'m',q:'I have 5 🍪 and eat 2. How many are left?',o:['2','3','4','5'],a:'3'},
-      {t:'m',q:'There are 8 birds. 3 fly away. How many stay?',o:['3','4','5','6'],a:'5'},
-      {t:'m',q:'What number comes after 12?',o:['11','13','14','15'],a:'13'},
-      {t:'m',q:'What number comes before 20?',o:['17','18','19','21'],a:'19'},
-      {t:'m',q:'What is 10 + 5?',o:['14','15','16','17'],a:'15'},
-      {t:'m',q:'What is 10 + 8?',o:['16','17','18','19'],a:'18'},
-      {t:'m',q:'Which is bigger: 14 or 17?',o:['14','17','they are the same'],a:'17'},
-      {t:'m',q:'3 + ___ = 10. What is the missing number?',o:['5','6','7','8'],a:'7'},
-      {t:'m',q:'6 + ___ = 10. What is the missing number?',o:['2','3','4','5'],a:'4'},
-      {t:'m',q:'___ + 8 = 10. What is the missing number?',o:['1','2','3','4'],a:'2'},
-      {t:'m',q:'How many tens are in 20?',o:['1','2','3','4'],a:'2'},
-      {t:'m',q:'Which number is between 15 and 17?',o:['14','15','16','18'],a:'16'},
-      {t:'m',q:'10 + 10 = ?',o:['15','18','20','22'],a:'20'},
-      {t:'m',q:'I have 12p and spend 5p. How much do I have left?',o:['5p','6p','7p','8p'],a:'7p'}
+    tasks:[
+      {id:1,title:'⭐ Count the Stars!',difficulty:'easy',locked:false,questions:[{t:'m',q:'How many stars? ⭐⭐',o:['1','2','3','4'],a:'2'},{t:'m',q:'How many apples? 🍎🍎🍎',o:['2','3','4','5'],a:'3'},{t:'m',q:'How many hearts? ❤️❤️❤️❤️',o:['3','4','5','6'],a:'4'},{t:'m',q:'How many suns? ☀️☀️☀️☀️☀️',o:['4','5','6','7'],a:'5'},{t:'m',q:'How many flowers? 🌸🌸🌸🌸🌸🌸',o:['5','6','7','8'],a:'6'}]},
+      {id:2,title:'🔢 Number Line Fun',difficulty:'easy',locked:true,questions:[{t:'m',q:'What number comes after 3?',o:['2','3','4','5'],a:'4'},{t:'m',q:'What number comes after 4?',o:['3','4','5','6'],a:'5'},{t:'m',q:'What number comes before 3?',o:['1','2','4','5'],a:'2'},{t:'m',q:'Which is the biggest number?',o:['1','3','5','2'],a:'5'},{t:'m',q:'What number comes after 7?',o:['6','8','9','10'],a:'8'}]},
+      {id:3,title:'🌈 Count Higher!',difficulty:'easy',locked:true,questions:[{t:'m',q:'What number comes before 10?',o:['7','8','9','11'],a:'9'},{t:'m',q:'Which is the smallest number?',o:['9','5','7','3'],a:'3'},{t:'m',q:'Count back: 10, 9, 8 … what comes next?',o:['6','7','5','4'],a:'7'},{t:'m',q:'Put these in order, biggest first: 4, 9, 2, 7. Which is biggest?',o:['4','9','2','7'],a:'9'},{t:'m',q:'Put these in order, smallest first: 6, 1, 8, 3. Which is smallest?',o:['6','1','8','3'],a:'1'}]},
+      {id:4,title:'🎯 Number Detective',difficulty:'easy',locked:true,questions:[{t:'m',q:'1 + 1 = ?',o:['1','2','3','4'],a:'2'},{t:'m',q:'2 + 3 = ?',o:['4','5','6','7'],a:'5'},{t:'m',q:'4 + 4 = ?',o:['6','7','8','9'],a:'8'},{t:'m',q:'3 + 5 = ?',o:['6','7','8','9'],a:'8'},{t:'m',q:'1 + 9 = ?',o:['8','9','10','11'],a:'10'}]},
+      {id:5,title:'🏆 Counting Champion',difficulty:'easy',locked:true,questions:[{t:'m',q:'5 + 5 = ?',o:['8','9','10','11'],a:'10'},{t:'m',q:'I have 3 🍎 and get 4 more. How many now?',o:['5','6','7','8'],a:'7'},{t:'m',q:'There are 2 🐶 and 6 🐱. How many animals altogether?',o:['6','7','8','9'],a:'8'},{t:'m',q:'5 − 2 = ?',o:['1','2','3','4'],a:'3'},{t:'m',q:'6 − 3 = ?',o:['2','3','4','5'],a:'3'}]},
+      {id:6,title:'➕ Adding Adventure',difficulty:'medium',locked:true,questions:[{t:'m',q:'10 − 4 = ?',o:['4','5','6','7'],a:'6'},{t:'m',q:'10 − 3 = ?',o:['6','7','8','9'],a:'7'},{t:'m',q:'I have 5 🍪 and eat 2. How many are left?',o:['2','3','4','5'],a:'3'},{t:'m',q:'There are 8 birds. 3 fly away. How many stay?',o:['3','4','5','6'],a:'5'},{t:'m',q:'What number comes after 12?',o:['11','13','14','15'],a:'13'}]},
+      {id:7,title:'➖ Taking Away',difficulty:'medium',locked:true,questions:[{t:'m',q:'What number comes before 20?',o:['17','18','19','21'],a:'19'},{t:'m',q:'What is 10 + 5?',o:['14','15','16','17'],a:'15'},{t:'m',q:'What is 10 + 8?',o:['16','17','18','19'],a:'18'},{t:'m',q:'Which is bigger: 14 or 17?',o:['14','17','they are the same'],a:'17'},{t:'m',q:'3 + ___ = 10. What is the missing number?',o:['5','6','7','8'],a:'7'}]},
+      {id:8,title:'🔟 Big Numbers!',difficulty:'medium',locked:true,questions:[{t:'m',q:'6 + ___ = 10. What is the missing number?',o:['2','3','4','5'],a:'4'},{t:'m',q:'___ + 8 = 10. What is the missing number?',o:['1','2','3','4'],a:'2'},{t:'m',q:'How many tens are in 20?',o:['1','2','3','4'],a:'2'},{t:'m',q:'Which number is between 15 and 17?',o:['14','15','16','18'],a:'16'},{t:'m',q:'10 + 10 = ?',o:['15','18','20','22'],a:'20'},{t:'m',q:'I have 12p and spend 5p. How much do I have left?',o:['5p','6p','7p','8p'],a:'7p'}]},
+      {id:9,title:'💰 Number Master!',difficulty:'hard',locked:true,questions:[{t:'m',q:'How many stars? ⭐⭐',o:['1','2','3','4'],a:'2'},{t:'m',q:'How many apples? 🍎🍎🍎',o:['2','3','4','5'],a:'3'},{t:'m',q:'How many hearts? ❤️❤️❤️❤️',o:['3','4','5','6'],a:'4'},{t:'m',q:'How many suns? ☀️☀️☀️☀️☀️',o:['4','5','6','7'],a:'5'},{t:'m',q:'What number comes after 3?',o:['2','3','4','5'],a:'4'}]}
     ]
   },
   writing:{
     title:'Writing', emoji:'✏️', color:'linear-gradient(135deg,#f472b6,#ec4899)',
-    qs:[
-      {t:'m',q:'Which letter is this? "A"',o:['A','B','C','D'],a:'A'},
-      {t:'m',q:'Which letter is this? "M"',o:['N','M','W','H'],a:'M'},
-      {t:'m',q:'Which letter is this? "S"',o:['Z','N','S','G'],a:'S'},
-      {t:'m',q:'Which is the letter "b"?',o:['d','p','q','b'],a:'b'},
-      {t:'m',q:'Which is the letter "d"?',o:['b','p','q','d'],a:'d'},
-      {t:'m',q:'Which is the letter "p"?',o:['b','d','p','q'],a:'p'},
-      {t:'m',q:'What letter does "elephant" start with?',o:['a','e','i','o'],a:'e'},
-      {t:'m',q:'What letter does "umbrella" start with?',o:['a','e','i','u'],a:'u'},
-      {t:'m',q:'What letter does "orange" start with?',o:['a','e','o','u'],a:'o'},
-      {t:'m',q:'What letter does "igloo" start with?',o:['a','e','i','u'],a:'i'},
-      {t:'m',q:'What letter comes after "A" in the alphabet?',o:['B','C','D','E'],a:'B'},
-      {t:'m',q:'What letter comes after "F"?',o:['D','E','G','H'],a:'G'},
-      {t:'m',q:'What letter comes after "M"?',o:['K','L','N','O'],a:'N'},
-      {t:'m',q:'What letter comes before "D"?',o:['A','B','C','E'],a:'C'},
-      {t:'m',q:'What letter comes before "P"?',o:['M','N','O','Q'],a:'O'},
-      {t:'m',q:'Which comes first in the alphabet: "cat" or "bat"?',o:['cat','bat','they are the same'],a:'bat'},
-      {t:'m',q:'Which comes first in the alphabet: "dog" or "fox"?',o:['dog','fox','they are the same'],a:'dog'},
-      {t:'m',q:'Which comes first in the alphabet: "sun" or "moon"?',o:['sun','moon','they are the same'],a:'moon'},
-      {t:'m',q:'How many letters are in the word "CAT"?',o:['2','3','4','5'],a:'3'},
-      {t:'m',q:'How many letters are in the word "DOG"?',o:['2','3','4','5'],a:'3'},
-      {t:'m',q:'How many letters are in "FISH"?',o:['3','4','5','6'],a:'4'},
-      {t:'m',q:'Which of these is a real word?',o:['zfk','sat','bxm','qwp'],a:'sat'},
-      {t:'m',q:'Which word is the name of an animal?',o:['jump','cat','run','big'],a:'cat'},
-      {t:'m',q:'Which word is a colour?',o:['cat','run','blue','jump'],a:'blue'},
-      {t:'m',q:'Which word is a number?',o:['cat','big','run','three'],a:'three'},
-      {t:'m',q:'Which word means something you eat?',o:['run','apple','big','jump'],a:'apple'},
-      {t:'m',q:'Which is the correct spelling?',o:['smil','smille','smile','smyle'],a:'smile'},
-      {t:'m',q:'Which is the correct spelling?',o:['thuh','the','teh','dhe'],a:'the'},
-      {t:'m',q:'Which is the correct spelling?',o:['wos','woz','was','waz'],a:'was'},
-      {t:'m',q:'Which is the correct spelling?',o:['sed','seid','sayd','said'],a:'said'},
-      {t:'m',q:'Which is the correct spelling?',o:['com','cum','came','caim'],a:'came'},
-      {t:'m',q:'Which is the correct spelling?',o:['liek','lyke','like','lik'],a:'like'},
-      {t:'m',q:'Which of these is a sentence?',o:['big red','The cat sat.','cat mat','run fast jump'],a:'The cat sat.'},
-      {t:'m',q:'What does a sentence always start with?',o:['a full stop','a capital letter','a comma','a small letter'],a:'a capital letter'},
-      {t:'m',q:'What does a sentence usually end with?',o:['a comma','a capital letter','a full stop','a space'],a:'a full stop'},
-      {t:'m',q:'Which sentence makes sense?',o:['Dog the ran.','The dog ran.','Ran dog the.','The ran dog.'],a:'The dog ran.'},
-      {t:'m',q:'Which word can complete: "The ___ is hot."',o:['run','big','sun','jump'],a:'sun'},
-      {t:'m',q:'Which word can complete: "I like to ___ my bike."',o:['eat','ride','sleep','blue'],a:'ride'},
-      {t:'m',q:'Which word can complete: "The bird can ___."',o:['heavy','big','fly','loud'],a:'fly'},
-      {t:'m',q:'Which word can complete: "She has a red ___."',o:['run','tall','ball','jump'],a:'ball'}
+    tasks:[
+      {id:1,title:'🔤 Letter Friends',difficulty:'easy',locked:false,questions:[{t:'m',q:'Which letter is this? "A"',o:['A','B','C','D'],a:'A'},{t:'m',q:'Which letter is this? "M"',o:['N','M','W','H'],a:'M'},{t:'m',q:'Which letter is this? "S"',o:['Z','N','S','G'],a:'S'},{t:'m',q:'Which is the letter "b"?',o:['d','p','q','b'],a:'b'},{t:'m',q:'Which is the letter "d"?',o:['b','p','q','d'],a:'d'}]},
+      {id:2,title:'🎯 Tricky Letters',difficulty:'easy',locked:true,questions:[{t:'m',q:'Which is the letter "p"?',o:['b','d','p','q'],a:'p'},{t:'m',q:'What letter does "elephant" start with?',o:['a','e','i','o'],a:'e'},{t:'m',q:'What letter does "umbrella" start with?',o:['a','e','i','u'],a:'u'},{t:'m',q:'What letter does "orange" start with?',o:['a','e','o','u'],a:'o'}]},
+      {id:3,title:'🌟 First Letters',difficulty:'easy',locked:true,questions:[{t:'m',q:'What letter does "igloo" start with?',o:['a','e','i','u'],a:'i'},{t:'m',q:'What letter comes after "A" in the alphabet?',o:['B','C','D','E'],a:'B'},{t:'m',q:'What letter comes after "F"?',o:['D','E','G','H'],a:'G'},{t:'m',q:'What letter comes after "M"?',o:['K','L','N','O'],a:'N'}]},
+      {id:4,title:'📝 Letter Mix',difficulty:'easy',locked:true,questions:[{t:'m',q:'What letter comes before "D"?',o:['A','B','C','E'],a:'C'},{t:'m',q:'What letter comes before "P"?',o:['M','N','O','Q'],a:'O'},{t:'m',q:'Which comes first in the alphabet: "cat" or "bat"?',o:['cat','bat','they are the same'],a:'bat'},{t:'m',q:'Which comes first in the alphabet: "dog" or "fox"?',o:['dog','fox','they are the same'],a:'dog'},{t:'m',q:'Which comes first in the alphabet: "sun" or "moon"?',o:['sun','moon','they are the same'],a:'moon'}]},
+      {id:5,title:'🏆 Letter Champion',difficulty:'easy',locked:true,questions:[{t:'m',q:'How many letters are in the word "CAT"?',o:['2','3','4','5'],a:'3'},{t:'m',q:'How many letters are in the word "DOG"?',o:['2','3','4','5'],a:'3'},{t:'m',q:'How many letters are in "FISH"?',o:['3','4','5','6'],a:'4'},{t:'m',q:'Which of these is a real word?',o:['zfk','sat','bxm','qwp'],a:'sat'},{t:'m',q:'Which word is the name of an animal?',o:['jump','cat','run','big'],a:'cat'}]},
+      {id:6,title:'🔡 ABC Order',difficulty:'medium',locked:true,questions:[{t:'m',q:'Which word is a colour?',o:['cat','run','blue','jump'],a:'blue'},{t:'m',q:'Which word is a number?',o:['cat','big','run','three'],a:'three'},{t:'m',q:'Which word means something you eat?',o:['run','apple','big','jump'],a:'apple'},{t:'m',q:'Which is the correct spelling?',o:['smil','smille','smile','smyle'],a:'smile'},{t:'m',q:'Which is the correct spelling?',o:['thuh','the','teh','dhe'],a:'the'}]},
+      {id:7,title:'📏 Word Detective',difficulty:'medium',locked:true,questions:[{t:'m',q:'Which is the correct spelling?',o:['wos','woz','was','waz'],a:'was'},{t:'m',q:'Which is the correct spelling?',o:['sed','seid','sayd','said'],a:'said'},{t:'m',q:'Which is the correct spelling?',o:['com','cum','came','caim'],a:'came'},{t:'m',q:'Which is the correct spelling?',o:['liek','lyke','like','lik'],a:'like'},{t:'m',q:'Which of these is a sentence?',o:['big red','The cat sat.','cat mat','run fast jump'],a:'The cat sat.'}]},
+      {id:8,title:'🎨 Word Categories',difficulty:'medium',locked:true,questions:[{t:'m',q:'What does a sentence always start with?',o:['a full stop','a capital letter','a comma','a small letter'],a:'a capital letter'},{t:'m',q:'What does a sentence usually end with?',o:['a comma','a capital letter','a full stop','a space'],a:'a full stop'},{t:'m',q:'Which sentence makes sense?',o:['Dog the ran.','The dog ran.','Ran dog the.','The ran dog.'],a:'The dog ran.'},{t:'m',q:'Which word can complete: "The ___ is hot."',o:['run','big','sun','jump'],a:'sun'},{t:'m',q:'Which word can complete: "I like to ___ my bike."',o:['eat','ride','sleep','blue'],a:'ride'}]},
+      {id:9,title:'✨ Writing Wizard!',difficulty:'hard',locked:true,questions:[{t:'m',q:'Which word can complete: "The bird can ___."',o:['heavy','big','fly','loud'],a:'fly'},{t:'m',q:'Which word can complete: "She has a red ___."',o:['run','tall','ball','jump'],a:'ball'},{t:'m',q:'Which letter is this? "A"',o:['A','B','C','D'],a:'A'},{t:'m',q:'Which letter is this? "M"',o:['N','M','W','H'],a:'M'},{t:'m',q:'Which letter is this? "S"',o:['Z','N','S','G'],a:'S'},{t:'m',q:'Which is the letter "b"?',o:['d','p','q','b'],a:'b'},{t:'m',q:'Which is the letter "d"?',o:['b','p','q','d'],a:'d'}]}
     ]
   }
 }
 };
 
-let state={child:null,subject:null,qIdx:0,xp:0,currentCtx:null};
+let state={child:null,subject:null,taskId:null,qIdx:0,xp:0,currentCtx:null,taskAnswers:[]};
 
 function show(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
@@ -437,7 +189,7 @@ function show(id){
 }
 
 function goHome(){
-  state={child:null,subject:null,qIdx:0,xp:state.xp,currentCtx:null};
+  state={child:null,subject:null,taskId:null,qIdx:0,xp:state.xp,currentCtx:null,taskAnswers:[]};
   show('screen-home');
   document.getElementById('xp-display').style.display='none';
 }
@@ -452,8 +204,21 @@ function selectChild(c){
 
 function selectSubject(s){
   state.subject=s;
+  state.taskId=null;
   state.qIdx=0;
   state.currentCtx=null;
+  state.taskAnswers=[];
+  renderSubjectScreen();
+}
+
+function selectTask(taskId){
+  const sub=CUR[state.child][state.subject];
+  const task=sub.tasks.find(t=>t.id===taskId);
+  if(task.locked){alert('🔒 This task is locked! Complete the previous task first.');return;}
+  state.taskId=taskId;
+  state.qIdx=0;
+  state.currentCtx=null;
+  state.taskAnswers=[];
   renderTask();
 }
 
@@ -462,20 +227,34 @@ function renderChildScreen(){
   let html=`<div style="padding-top:16px;"><h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:6px;text-align:center;">Choose a subject</h2><p style="color:#7c3aed;font-size:14px;font-weight:700;margin-bottom:20px;text-align:center;">Complete all subjects to earn screen time! 🎮</p>`;
   for(let k in data){
     const sub=data[k];
-    html+=`<div class="subject-card pop" style="background:${sub.color};" onclick="selectSubject('${k}')"><span style="font-size:38px;">${sub.emoji}</span><div style="flex:1;"><div style="font-size:20px;font-weight:900;">${sub.title}</div><div style="font-size:13px;opacity:0.85;">${sub.qs.length} questions · rising difficulty</div></div><span style="font-size:20px;opacity:0.8;">▶</span></div>`;
+    html+=`<div class="subject-card pop" style="background:${sub.color};" onclick="selectSubject('${k}')"><span style="font-size:38px;">${sub.emoji}</span><div style="flex:1;"><div style="font-size:20px;font-weight:900;">${sub.title}</div><div style="font-size:13px;opacity:0.85;">${sub.tasks.length} tasks · rising difficulty</div></div><span style="font-size:20px;opacity:0.8;">▶</span></div>`;
   }
   html+=`</div>`;
   document.getElementById('screen-child').innerHTML=html;
   show('screen-child');
 }
 
+function renderSubjectScreen(){
+  const sub=CUR[state.child][state.subject];
+  let html=`<div style="padding-top:16px;"><button onclick="selectChild('${state.child}')" style="background:#f5f3ff;border:2px solid #e9d5ff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:800;color:#7c3aed;white-space:nowrap;margin-bottom:16px;">← Back</button><h2 style="font-size:22px;font-weight:900;color:#4c1d95;margin-bottom:16px;text-align:center;">${sub.emoji} ${sub.title}</h2>`;
+  sub.tasks.forEach(task=>{
+    const isLocked=task.locked;
+    const icon=isLocked?'🔒':'✅';
+    html+=`<div class="task-card ${isLocked?'locked':''}" style="background:${sub.color};${isLocked?'opacity:0.6;':''}cursor:${isLocked?'not-allowed':'pointer'};" onclick="${isLocked?'':'selectTask('+task.id+')'}"><span style="font-size:24px;">${task.emoji||icon}</span><div style="flex:1;"><div style="font-size:16px;font-weight:900;">${task.title}</div><div style="font-size:12px;opacity:0.85;">${task.questions.length} questions · ${task.difficulty}</div></div><span style="font-size:18px;opacity:0.8;">▶</span></div>`;
+  });
+  html+=`</div>`;
+  document.getElementById('screen-subject').innerHTML=html;
+  show('screen-subject');
+}
+
 function renderTask(){
   const sub=CUR[state.child][state.subject];
-  const q=sub.qs[state.qIdx];
-  const total=sub.qs.length;
+  const task=sub.tasks.find(t=>t.id===state.taskId);
+  const q=task.questions[state.qIdx];
+  const total=task.questions.length;
   const pct=Math.round((state.qIdx/total)*100);
   if(q.ctx) state.currentCtx=q.ctx;
-  let html=`<div style="padding-top:8px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button onclick="renderChildScreen()" style="background:#f5f3ff;border:2px solid #e9d5ff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:800;color:#7c3aed;white-space:nowrap;">← Back</button><div style="flex:1;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;"><span>${sub.title}</span><span>${state.qIdx+1} / ${total}</span></div><div style="background:#e0e7ff;border-radius:12px;height:8px;overflow:hidden;"><div class="bar-fill" style="background:#7c3aed;height:100%;width:${pct}%;"></div></div></div></div>`;
+  let html=`<div style="padding-top:8px;"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;"><button onclick="renderSubjectScreen()" style="background:#f5f3ff;border:2px solid #e9d5ff;border-radius:10px;padding:6px 12px;font-size:13px;font-weight:800;color:#7c3aed;white-space:nowrap;">← Back</button><div style="flex:1;"><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;color:#7c3aed;margin-bottom:4px;"><span>${task.title}</span><span>${state.qIdx+1} / ${total}</span></div><div style="background:#e0e7ff;border-radius:12px;height:8px;overflow:hidden;"><div class="bar-fill" style="background:#7c3aed;height:100%;width:${pct}%;"></div></div></div></div>`;
   if(state.currentCtx){
     html+=`<div class="passage-box">📖 <b>Read this:</b><br><br>${state.currentCtx}</div>`;
   }
@@ -499,11 +278,15 @@ document.addEventListener('DOMContentLoaded',function(){
   document.getElementById('screen-task').addEventListener('click',function(e){
     const btn=e.target.closest('[data-opt]');
     if(!btn) return;
-    const q=CUR[state.child][state.subject].qs[state.qIdx];
+    const sub=CUR[state.child][state.subject];
+    const task=sub.tasks.find(t=>t.id===state.taskId);
+    const q=task.questions[state.qIdx];
     const selected=q.o[parseInt(btn.dataset.opt)];
     if(selected===q.a){
+      state.taskAnswers.push({q:q.q,correct:true});
       markCorrect();
     }else{
+      state.taskAnswers.push({q:q.q,correct:false,userAns:selected,correctAns:q.a});
       btn.style.borderColor='#ef4444';
       btn.style.background='#fef2f2';
       setTimeout(()=>{btn.style.borderColor='#e2e8f0';btn.style.background='#f8fafc';},800);
@@ -516,13 +299,19 @@ function normalizeAnswer(str){
   return str.toString().toLowerCase().trim().replace(/\s+/g,' ').replace(/[,£$%]/g,'').replace(/\.0+$/,'');
 }
 function checkInputAnswer(){
-  const q=CUR[state.child][state.subject].qs[state.qIdx];
+  const sub=CUR[state.child][state.subject];
+  const task=sub.tasks.find(t=>t.id===state.taskId);
+  const q=task.questions[state.qIdx];
   const input=document.getElementById('answer-input').value.trim();
   const userAns=normalizeAnswer(input);
   const correctAns=normalizeAnswer(q.a);
-  if(userAns===correctAns){markCorrect();}
-  else if(!isNaN(userAns)&&!isNaN(correctAns)&&parseFloat(userAns)===parseFloat(correctAns)){markCorrect();}
-  else{alert('Not quite – try again! 💪');}
+  if(userAns===correctAns||(!isNaN(userAns)&&!isNaN(correctAns)&&parseFloat(userAns)===parseFloat(correctAns))){
+    state.taskAnswers.push({q:q.q,correct:true});
+    markCorrect();
+  }else{
+    state.taskAnswers.push({q:q.q,correct:false,userAns:input,correctAns:q.a});
+    alert('Not quite – try again! 💪');
+  }
 }
 
 function markCorrect(){
@@ -534,11 +323,12 @@ function markCorrect(){
 
 function nextQuestion(){
   const sub=CUR[state.child][state.subject];
+  const task=sub.tasks.find(t=>t.id===state.taskId);
   state.qIdx++;
-  if(state.qIdx<sub.qs.length){
+  if(state.qIdx<task.questions.length){
     renderTask();
   }else{
-    showComplete();
+    showResult();
   }
 }
 
@@ -550,13 +340,39 @@ function showStarBurst(){
   setTimeout(()=>star.remove(),1000);
 }
 
-function showComplete(){
+function showResult(){
   const sub=CUR[state.child][state.subject];
-  const earned=sub.qs.length*10;
-  sendTelegramNotification(`🎉 <b>${state.child}</b> finished <b>${sub.title}</b>! Earned <b>${earned} XP</b>. Session total: ${state.xp} XP`);
-  let html=`<div style="text-align:center;padding-top:40px;"><div class="pop" style="font-size:80px;margin-bottom:16px;">🎉</div><h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin-bottom:8px;">Amazing work!</h2><p style="font-size:16px;color:#7c3aed;margin-bottom:8px;">You finished <b>${sub.title}</b>!</p><p style="font-size:14px;color:#9ca3af;margin-bottom:28px;">+${earned} XP earned this session</p><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;margin-bottom:12px;" onclick="renderChildScreen()">Next Subject →</button><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:2px solid #e9d5ff;border-radius:12px;" onclick="goHome()">Change Child</button></div>`;
-  document.getElementById('screen-complete').innerHTML=html;
-  show('screen-complete');
+  const task=sub.tasks.find(t=>t.id===state.taskId);
+  const correct=state.taskAnswers.filter(a=>a.correct).length;
+  const total=task.questions.length;
+  const score=Math.round((correct/total)*100);
+  const passed=score>=80;
+  let xpBonus=0,msg='';
+  if(score===100){xpBonus=50;msg='🌟 PERFECT! You\'re a superstar!';}
+  else if(score>=90){xpBonus=20;msg='⭐ Amazing work!';}
+  else if(score>=80){xpBonus=0;msg='✅ Well done! You passed!';}
+  else{xpBonus=0;msg='💪 Keep trying! You got '+score+'%';}
+  state.xp+=xpBonus;
+  if(passed){
+    const nextTask=sub.tasks.find(t=>t.id===state.taskId+1);
+    if(nextTask) nextTask.locked=false;
+  }
+  let html=`<div class="result-screen"><div class="pop" style="font-size:60px;margin-bottom:16px;">${passed?'🎉':'💪'}</div><h2 style="font-size:26px;font-weight:900;color:#4c1d95;margin-bottom:8px;">${msg}</h2><p style="font-size:18px;font-weight:800;color:#7c3aed;margin-bottom:4px;">Score: ${score}% (${correct}/${total})</p><p style="font-size:14px;color:#9ca3af;margin-bottom:20px;">+${10*total+xpBonus} XP earned</p>`;
+  if(!passed){
+    html+=`<div style="background:#fef2f2;border-radius:12px;padding:16px;margin-bottom:16px;text-align:left;"><p style="font-size:14px;font-weight:800;color:#dc2626;margin-bottom:12px;">❌ Questions you missed:</p>`;
+    state.taskAnswers.forEach((a,i)=>{
+      if(!a.correct){
+        html+=`<div class="result-item"><p style="font-size:13px;font-weight:700;color:#1e293b;margin-bottom:4px;">Q${i+1}: ${a.q}</p><p style="font-size:12px;color:#6b7280;">Your answer: <b>${a.userAns}</b></p><p style="font-size:12px;color:#059669;font-weight:700;">Correct answer: <b>${a.correctAns}</b></p></div>`;
+      }
+    });
+    html+=`</div>`;
+  }
+  html+=`<button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#7c3aed;color:#fff;border-radius:12px;margin-bottom:12px;" onclick="${passed?'renderSubjectScreen()':'renderTask()'}">`;
+  html+=passed?'Next Task →':'Try Again';
+  html+=`</button><button style="width:100%;padding:14px;font-size:16px;font-weight:700;background:#f5f3ff;color:#7c3aed;border:2px solid #e9d5ff;border-radius:12px;" onclick="selectChild('${state.child}')">Change Subject</button></div>`;
+  document.getElementById('screen-result').innerHTML=html;
+  document.getElementById('xp-display').textContent=`⭐ ${state.xp} XP`;
+  show('screen-result');
 }
 
 function sendTelegramNotification(msg){
